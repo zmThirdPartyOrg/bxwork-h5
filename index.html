@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <title></title>
+    <script src="./assets/jweixin-1.6.0.js"></script>
+    <script>
+      // android cordova 直接是包含在原生代码里的
+      // iOS cordova 是为了支持 h5 的 post 请求，因此放在h5里
+      var ua = navigator.userAgent
+      if (ua.indexOf('HornApp') > -1) {
+        var isIos = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+        var script = document.createElement('script')
+        script.src = isIos ? './cordova/cordova.js' : 'local_intercept/www/cordova.js'
+        document.head.append(script)
+      }
+    </script>
+    <!-- <script src="https://cdn.bootcss.com/eruda/1.5.2/eruda.min.js"></script>
+    <script>eruda.init()</script> -->
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

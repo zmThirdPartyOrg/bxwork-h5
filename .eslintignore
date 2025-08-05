@@ -1,0 +1,23 @@
+*.sh
+*.md
+*.woff
+*.ttf
+
+*.hbs
+*.test.ts
+__tests__
+
+.vscode
+.idea
+.husky
+.local
+dist
+node_modules
+Dockerfile
+/public
+/docs
+/bin
+
+# build
+**/es
+**/lib
