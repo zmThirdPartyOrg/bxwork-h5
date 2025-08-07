@@ -26,10 +26,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { useVisible } from '@pkstar/vue-use'
   import { banana } from '@pkstar/banana'
-  import { proSchemaFilterPopupProps, type ProSchemaFilterPopupProps } from './types'
   import { filterEmptyValue } from '@pkstar/utils'
+  import { useVisible } from '@pkstar/vue-use'
+
+  import { type ProSchemaFilterPopupProps, proSchemaFilterPopupProps } from './types'
 
   defineEmits(['field-change'])
 

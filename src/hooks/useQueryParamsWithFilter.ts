@@ -1,8 +1,9 @@
-import type { ProSchemaFormMetadata } from '@/components'
-import { refreshTrap } from '@/utils'
 import banana from '@pkstar/banana'
 import { filterEmptyValue, isArray, isFunction, isUndefined } from '@pkstar/utils'
 import { useQuery } from '@pkstar/vue-use'
+
+import type { ProSchemaFormMetadata } from '@/components'
+import { refreshTrap } from '@/utils'
 
 export function useQueryParamsWithFilter(
   source: ProSchemaFormMetadata | (() => ProSchemaFormMetadata),

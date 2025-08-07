@@ -1,6 +1,7 @@
 import banana from '@pkstar/banana'
-import { type ProSchemaFilterPopupInstance } from '.'
+
 import { type ProSchemaFormMetadata } from '../ProSchemaForm'
+import { type ProSchemaFilterPopupInstance } from '.'
 
 export interface UseProSchemaFilterPopupGenerator {
   (action: 'reset' | 'initial'): ProSchemaFormMetadata | Promise<ProSchemaFormMetadata>

@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .c-test {
+    @apply font-bold underline text-[14px] italic;
+    // padding-top: constant(safe-area-inset-top);
+    // padding-top: env(safe-area-inset-top);
+  }
+}

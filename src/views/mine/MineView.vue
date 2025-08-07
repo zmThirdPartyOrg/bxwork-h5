@@ -11,17 +11,19 @@
     <div class="c-bar"></div>
 
     <van-button class="c-button" @click="handleLogout">退出登录</van-button>
-
+    <p class="c-test">测试文本</p>
     <HorActionSheet ref="horActionSheetInstance" />
   </HorView>
 </template>
 
 <script setup lang="ts">
-  import { useProSchemaRender } from '@/components'
-  import HeaderSection from './components/HeaderSection.vue'
   import { showConfirmDialog, showToast } from 'vant'
-  import { useUserinfoStore } from '@/stores'
+
+  import { useProSchemaRender } from '@/components'
   import { useRoleActionSheet } from '@/hooks'
+  import { useUserinfoStore } from '@/stores'
+
+  import HeaderSection from './components/HeaderSection.vue'
 
   const { logout } = useUserinfoStore()
   const [horActionSheetInstance, handleRole, userinfo] = useRoleActionSheet()

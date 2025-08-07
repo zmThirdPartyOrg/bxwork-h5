@@ -18,9 +18,10 @@
 </template>
 
 <script setup lang="ts">
-  import { getLocationNameByPoint, locationNameTrap, withLoading } from '@/utils'
   import { getLocationByBMap } from '@pkstar/horn-jssdk'
   import { useAsyncTask } from '@pkstar/vue-use'
+
+  import { getLocationNameByPoint, locationNameTrap, withLoading } from '@/utils'
 
   const {
     data: locationList,

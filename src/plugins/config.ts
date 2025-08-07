@@ -1,7 +1,8 @@
-import { __DEV__, excludeMessage } from '@/utils'
 import { formatMessage } from '@pkstar/utils'
 import { closeToast, showToast } from 'vant'
-import type { Plugin, AppConfig } from 'vue'
+import type { AppConfig, Plugin } from 'vue'
+
+import { __DEV__, excludeMessage } from '@/utils'
 
 // global error handler
 const errorHandler: AppConfig['errorHandler'] = (err) => {

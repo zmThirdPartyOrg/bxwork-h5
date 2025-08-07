@@ -1,5 +1,6 @@
-import type { GeocoderResult, SurroundingPois } from '@/types'
 import { insertScript } from '@pkstar/utils'
+
+import type { GeocoderResult, SurroundingPois } from '@/types'
 
 export const appendBmap = async () => {
   const bmpAk = 'CNX7X1fVOrSAODNDCAeMiWTkZjeruZK8'

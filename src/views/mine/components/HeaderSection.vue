@@ -15,11 +15,12 @@
 </template>
 
 <script setup lang="ts">
+  import { chooseImage, fileToBase64 } from '@pkstar/horn-jssdk'
+
+  import { doFileUploadWithBase64, doUserInfoUpdate } from '@/api'
+  import defSrc from '@/assets/img/default_user.png'
   import { useUserinfoStore } from '@/stores'
   import { showChooseSourceType, withLoading } from '@/utils'
-  import defSrc from '@/assets/img/default_user.png'
-  import { chooseImage, fileToBase64 } from '@pkstar/horn-jssdk'
-  import { doFileUploadWithBase64, doUserInfoUpdate } from '@/api'
 
   const { userinfo } = useUserinfoStore(true)
 

@@ -1,6 +1,7 @@
-import { usePreviewImageStore } from '@/stores'
-import type { Ref } from 'vue'
 import { isFunction } from '@pkstar/utils'
+import type { Ref } from 'vue'
+
+import { usePreviewImageStore } from '@/stores'
 
 export function usePreviewImageInArticle(refContent: Ref<any> | (() => HTMLElement)) {
   // 预览
@@ -21,10 +22,10 @@ export function usePreviewImageInArticle(refContent: Ref<any> | (() => HTMLEleme
     } else {
       dom = refContent.value.$el
     }
-    dom && dom.addEventListener('click', onPreviewImage)
+    if (dom) dom.addEventListener('click', onPreviewImage)
   })
 
   onBeforeUnmount(() => {
-    dom && dom.removeEventListener('click', onPreviewImage)
+    if (dom) dom.removeEventListener('click', onPreviewImage)
   })
 }

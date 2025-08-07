@@ -15,18 +15,20 @@
 </template>
 
 <script setup lang="ts">
-  import { reqLeaveInfo } from '@/api'
-  import { useSysConfigStore } from '@/stores'
-  import type { LeaveInfoItem, SysConfigDict } from '@/types'
-  import { selectLeaveTrap } from '@/utils'
+  import { isFunction } from '@pkstar/utils'
   import { useAsyncTask } from '@pkstar/vue-use'
 
-  const { sysConfig } = useSysConfigStore()
+  import { reqLeaveInfo } from '@/api'
+  import { useSysConfigStore } from '@/stores'
+  import type { LeaveInfoItem } from '@/types'
+  import { selectLeaveTrap } from '@/utils'
+
+  useSysConfigStore()
 
   const { data, error, loading, trigger } = useAsyncTask(
     async (cb: any) => {
       const res = await reqLeaveInfo()
-      cb && cb()
+      if (isFunction(cb)) cb()
       return res
     },
     {

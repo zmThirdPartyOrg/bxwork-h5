@@ -1,5 +1,6 @@
-import { showToast } from 'vant'
 import { formatMessage, isFunction } from '@pkstar/utils'
+import { showToast } from 'vant'
+
 import { excludeMessage } from '@/utils'
 
 type ToastCallback = ((err: unknown, message: string) => boolean | void) | boolean

@@ -1,8 +1,9 @@
+import type { HorActionSheetInstance } from '@daysnap/horn-ui'
+import { showSuccessToast } from 'vant'
+
 import { doUserRoleReset } from '@/api'
 import { useUserinfoStore } from '@/stores'
 import type { UserRole } from '@/types'
-import type { HorActionSheetInstance } from '@daysnap/horn-ui'
-import { showSuccessToast } from 'vant'
 
 export function useRoleActionSheet() {
   const instance = ref() as Ref<HorActionSheetInstance>

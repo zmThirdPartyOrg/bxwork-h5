@@ -40,14 +40,16 @@
 </template>
 
 <script setup lang="ts">
-  import { showConfirmDialog } from 'vant'
-  import { proUploaderProps, omitHorCellPropsInUploader } from './types'
-  import { pick, formatDate, isIOS } from '@pkstar/utils'
   import { extKeys } from '@daysnap/horn-ui/src/utils'
-  import { showChooseSourceType, isApp, withLoading, __DEV__ } from '@/utils'
   import { chooseImage, cropImage, fileToBase64, waterMark } from '@pkstar/horn-jssdk'
-  import { doFileUploadWithSdk, doFileUpload, doFileUploadWithBase64 } from '@/api'
+  import { formatDate, isIOS, pick } from '@pkstar/utils'
+  import { showConfirmDialog } from 'vant'
+
+  import { doFileUpload, doFileUploadWithBase64, doFileUploadWithSdk } from '@/api'
+  import { __DEV__, isApp, showChooseSourceType, withLoading } from '@/utils'
+
   import { ProImg } from '../ProImg'
+  import { omitHorCellPropsInUploader, proUploaderProps } from './types'
 
   const props = defineProps(proUploaderProps)
   const cellProps = computed(() => pick({ ...props }, extKeys(omitHorCellPropsInUploader)))
@@ -171,14 +173,15 @@
   // 删除
   const handleDel = async (i: number) => {
     await showConfirmDialog({ message: '确定删除图片?' })
-    let value = [...props.modelValue]
+    const value = [...props.modelValue]
     value.splice(i, 1)
     emits('update:modelValue', value)
   }
 </script>
 
 <style lang="scss" scoped>
-  @import 'src/assets/scss/define';
+  @use '@/assets/scss/define.scss' as *;
+
   .img-warp {
     @extend %df;
     @extend %fww;

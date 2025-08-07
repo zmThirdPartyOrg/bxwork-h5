@@ -1,5 +1,5 @@
-import { type Field } from '@pkstar/banana'
 import type { Loose } from '@daysnap/types'
+import { type Field } from '@pkstar/banana'
 import type { Raw } from 'vue'
 
 type IS =

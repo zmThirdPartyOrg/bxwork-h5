@@ -107,19 +107,21 @@
 </template>
 
 <script setup lang="ts">
-  import {
-    reqApplyDetail,
-    doApplyRemind,
-    doApplyWithdraw,
-    doApplyRefuse,
-    doApplyAgree,
-  } from '@/api'
+  import { sleep } from '@pkstar/utils'
   import { useAsyncTask, useParams } from '@pkstar/vue-use'
   import { useQuery } from '@pkstar/vue-use'
-  import { applyListTrap, applyStatusLabelMap } from '@/utils'
   import { showSuccessToast } from 'vant'
+
+  import {
+    doApplyAgree,
+    doApplyRefuse,
+    doApplyRemind,
+    doApplyWithdraw,
+    reqApplyDetail,
+  } from '@/api'
   import { useUserinfoStore } from '@/stores'
-  import { sleep } from '@pkstar/utils'
+  import { applyListTrap, applyStatusLabelMap } from '@/utils'
+
   import ResonDialog from './components/ResonDialog.vue'
   import { useApplyDetailHooks } from './useApplyDetailHooks'
 
@@ -192,7 +194,7 @@
 
     await doApplyRefuse({
       approveId: [+id],
-      approveUserId: userinfo?.content.userId!,
+      approveUserId: userinfo?.content.userId ?? '',
       comment: res.comment,
       status: 'deny',
     })
@@ -208,7 +210,7 @@
     })
     await doApplyAgree({
       approveId: [+id],
-      approveUserId: userinfo?.content.userId!,
+      approveUserId: userinfo?.content.userId ?? '',
       comment: res.comment,
       status: 'pass',
     })

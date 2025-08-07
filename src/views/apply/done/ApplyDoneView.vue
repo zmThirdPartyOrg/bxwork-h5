@@ -12,11 +12,13 @@
 </template>
 
 <script lang="ts" setup>
+  import { useKeepAlive, useKeepPosition } from '@pkstar/vue-use'
+  import { nextTick, ref } from 'vue'
+
   import { onBeforeMountOrActivated } from '@/hooks'
   import { applyListTrap } from '@/utils'
-  import { useKeepAlive, useKeepPosition } from '@pkstar/vue-use'
+
   import ApplyMyTabContent from './components/ApplyDoneTabContent.vue'
-  import { nextTick, ref } from 'vue'
 
   const active = ref(0)
   const tabs = [

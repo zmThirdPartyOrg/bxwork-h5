@@ -1,7 +1,9 @@
 import axios from 'axios'
+
 import { useUserinfoStore } from '@/stores'
-import { log } from './log'
+
 import { DEFAULT_CONFIG } from './config'
+import { log } from './log'
 
 export const instance = axios.create(DEFAULT_CONFIG)
 // 有些接口需要返回全部内容

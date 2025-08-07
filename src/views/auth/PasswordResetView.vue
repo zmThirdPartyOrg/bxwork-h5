@@ -7,13 +7,14 @@
 </template>
 
 <script setup lang="ts">
+  import banana from '@pkstar/banana'
+  import md5 from 'md5'
+  import { showSuccessToast } from 'vant'
+
   import { doUserPasswordReset } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useSuperRouter } from '@/hooks'
   import { withLoading } from '@/utils'
-  import banana from '@pkstar/banana'
-  import md5 from 'md5'
-  import { showSuccessToast } from 'vant'
 
   const objForm = useProSchemaForm({
     oldPassword: {

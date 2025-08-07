@@ -14,11 +14,13 @@
 </template>
 
 <script lang="ts">
+  import { useKeepPosition } from '@pkstar/vue-use'
+  import { defineComponent, nextTick, ref } from 'vue'
+
   import { onBeforeMountOrActivated } from '@/hooks'
   import { noticeListTrap } from '@/utils'
-  import { useKeepPosition } from '@pkstar/vue-use'
+
   import NoticeTabContent from './components/NoticeTabContent.vue'
-  import { defineComponent, nextTick, ref } from 'vue'
 
   export default defineComponent({
     setup() {

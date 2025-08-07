@@ -1,20 +1,21 @@
 import type {
-  NoticeItem,
-  AttendItem,
-  PagingParams,
-  PagingResult,
-  AttendRecord,
-  SignRecord,
-  AttendDto,
-  ApplyItem,
   ApplyDetailVo,
+  ApplyItem,
   ApplyLeaveDto,
   ApplyLeaveVoItem,
   ApplyOvertimeDto,
+  AttendDto,
+  AttendItem,
+  AttendRecord,
+  NoticeItem,
+  PagingParams,
+  PagingResult,
+  SignRecord,
 } from '@/types'
-import { withLoading } from '@/utils'
-import { curl } from './curl'
 import type { ReqVo } from '@/types/common'
+import { withLoading } from '@/utils'
+
+import { curl } from './curl'
 
 // 联系
 export const reqCustomerContact = () =>
@@ -196,14 +197,22 @@ export const reqApplyDetail = withLoading((data: { approveId: number }) =>
 
 // 批准审批
 export const doApplyAgree = withLoading(
-  (content: { status: 'pass'; approveId: number[]; comment: string; approveUserId: number }) =>
-    curl(`oa/applyDeal.json`, { content }),
+  (content: {
+    status: 'pass'
+    approveId: number[]
+    comment: string
+    approveUserId: number | string
+  }) => curl(`oa/applyDeal.json`, { content }),
 )
 
 // 拒绝审批
 export const doApplyRefuse = withLoading(
-  (content: { status: 'deny'; approveId: number[]; comment: string; approveUserId: number }) =>
-    curl(`oa/applyDeal.json`, { content }),
+  (content: {
+    status: 'deny'
+    approveId: number[]
+    comment: string
+    approveUserId: number | string
+  }) => curl(`oa/applyDeal.json`, { content }),
 )
 
 // 催促审批

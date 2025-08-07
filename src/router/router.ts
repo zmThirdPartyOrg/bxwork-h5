@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, type RouterOptions } from 'vue-router'
+
 import { setupGuards } from './guards'
 import { routes } from './routes'
 

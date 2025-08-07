@@ -1,9 +1,9 @@
 import { defineRoutes } from '@/router/defineRoutes'
-import MainView from '@/views/main/MainView.vue'
 import ApplyWaitView from '@/views/apply/wait/ApplyWaitView.vue'
-import WorkView from '@/views/work/WorkView.vue'
-import MineViewVue from '@/views/mine/MineView.vue'
+import MainView from '@/views/main/MainView.vue'
 import MessageView from '@/views/message/MessageView.vue'
+import MineViewVue from '@/views/mine/MineView.vue'
+import WorkView from '@/views/work/WorkView.vue'
 
 export default defineRoutes([
   {

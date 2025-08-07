@@ -1,4 +1,4 @@
-import { isBoolean, createWithLoading } from '@pkstar/utils'
+import { createWithLoading, isBoolean } from '@pkstar/utils'
 import { showLoadingToast, type ToastOptions } from 'vant'
 
 export type WithLoadingOptions = boolean | string | ToastOptions

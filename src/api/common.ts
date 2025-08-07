@@ -1,6 +1,7 @@
-import { curl } from './curl'
 import type { LeaveInfoItem, PagingParams, Userinfo, UserinfoContent } from '@/types'
-import type { DepItem, SysConfig, SysConfigDict } from '@/types/common'
+import type { DepItem, SysConfig } from '@/types/common'
+
+import { curl } from './curl'
 
 // 密码登录
 export const doUserLoginByPassword = (data: { username: string; password: string }) =>

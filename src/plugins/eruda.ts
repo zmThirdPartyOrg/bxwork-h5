@@ -1,5 +1,6 @@
-import { __DEV__, isApp } from '@/utils'
 import { insertScript } from '@pkstar/utils'
+
+import { __DEV__, isApp } from '@/utils'
 
 // 用于移动端 debug
 // app 且 开发环境下 默认载入 debug 工具

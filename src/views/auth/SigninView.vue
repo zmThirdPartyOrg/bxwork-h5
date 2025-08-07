@@ -25,12 +25,14 @@
 </template>
 
 <script setup lang="ts">
-  import { useUserinfoStore } from '@/stores'
-  import { doUserLoginByPassword } from '@/api'
-  import { showSuccessToast } from 'vant'
-  import md5 from 'md5'
   import banana, { type MetaDataObject } from '@pkstar/banana'
-  import { withLoading, __DEV__ } from '@/utils'
+  import md5 from 'md5'
+  import { showSuccessToast } from 'vant'
+
+  import { doUserLoginByPassword } from '@/api'
+  import { useUserinfoStore } from '@/stores'
+  import { __DEV__, withLoading } from '@/utils'
+
   import FormField from './components/FormField.vue'
 
   // 登录方式 1 验证码登录  2 账号密码登录

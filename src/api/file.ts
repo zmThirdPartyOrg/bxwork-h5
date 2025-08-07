@@ -1,9 +1,11 @@
-import { baseURL } from './curl/config'
-import { curl } from './curl'
-import { uploadFile, fileToBase64 } from '@pkstar/horn-jssdk'
-import { withLoading } from '@/utils'
+import { fileToBase64, uploadFile } from '@pkstar/horn-jssdk'
 import { blobToBase64, formatDate } from '@pkstar/utils'
 import { getRandomNumber } from '@pkstar/utils'
+
+import { withLoading } from '@/utils'
+
+import { curl } from './curl'
+import { baseURL } from './curl/config'
 
 type FileSourceType = 'attend' | 'userinfo' | string
 

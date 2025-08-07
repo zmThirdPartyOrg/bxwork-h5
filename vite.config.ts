@@ -1,12 +1,14 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
-import postCssPxToRem from 'postcss-pxtorem'
+
+import { kebabCase } from '@pkstar/utils'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import Components from 'unplugin-vue-components/vite'
-import { VantResolver } from 'unplugin-vue-components/resolvers'
+import postCssPxToRem from 'postcss-pxtorem'
 import AutoImport from 'unplugin-auto-import/vite'
-import { kebabCase } from '@pkstar/utils'
+import { VantResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
+import versionFile from 'vite-plugin-version-file'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -31,6 +33,10 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+
+    versionFile({
+      source: JSON.stringify({ status: 0, data: Date.now() }),
+    }),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
@@ -81,6 +87,10 @@ export default defineConfig({
           rootValue: 37.5, // 1rem的大小
           propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
         }),
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        require('tailwindcss'),
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        require('autoprefixer'),
       ],
     },
   },

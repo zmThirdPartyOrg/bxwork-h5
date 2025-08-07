@@ -25,14 +25,15 @@
 </template>
 
 <script setup lang="ts">
-  import { doSign, reqFaceCheck } from '@/api'
-  import { useUserinfoStore } from '@/stores'
-  import { __DEV__, appendBmap, isApp } from '@/utils'
+  import { getLocationByBMap, type GetLocationByBMapResult } from '@pkstar/horn-jssdk'
   import { formatDate, isIOS } from '@pkstar/utils'
   import { useKeepAlive } from '@pkstar/vue-use'
+  import { showConfirmDialog, showSuccessToast } from 'vant'
+
+  import { doSign, reqFaceCheck } from '@/api'
   import SignPopup from '@/components/SignPopup.vue'
-  import { showConfirmDialog, showFailToast, showSuccessToast } from 'vant'
-  import { getLocationByBMap, type GetLocationByBMapResult } from '@pkstar/horn-jssdk'
+  import { useUserinfoStore } from '@/stores'
+  import { __DEV__, appendBmap, isApp } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
   const router = useRouter()
@@ -41,9 +42,9 @@
   const signPopupRef = ref<InstanceType<typeof SignPopup>>()
   const now = new Date()
   const nowStr = formatDate(now, 'yyyy年MM月dd日 hh:mm:ss')
-  const week = now.getDay()
-  const weekStr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][week]
-  const time = now.getHours() + ':' + now.getMinutes()
+  // const week = now.getDay()
+  // const weekStr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][week]
+  // const time = now.getHours() + ':' + now.getMinutes()
   let locationInfo = reactive<Partial<GetLocationByBMapResult>>({})
   const computedAddress = computed(() => {
     return locationInfo?.poi || locationInfo?.address
@@ -56,7 +57,7 @@
     if (isApp && !__DEV__) {
       const res = await reqFaceCheck({
         dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
-        username: userinfo?.content.mobile!,
+        username: userinfo?.content.mobile ?? '',
         image: 'base64',
       })
       if (res !== '0') {

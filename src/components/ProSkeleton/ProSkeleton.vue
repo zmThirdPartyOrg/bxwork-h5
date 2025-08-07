@@ -42,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-  import type { PropType } from 'vue'
   import { formatMessage } from '@pkstar/utils'
+  import type { PropType } from 'vue'
 
   defineEmits(['refresh', 'update:loading', 'update:error'])
 

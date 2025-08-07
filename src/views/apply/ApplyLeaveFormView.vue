@@ -22,18 +22,20 @@
 </template>
 
 <script setup lang="ts">
-  import { doApplyLeave, reqLeaveInfo } from '@/api'
-  import { useProSchemaForm } from '@/components'
-  import { useLeaveTypeField } from '@/hooks'
   import type { HorDatePickerInstance, HorDateTimePickerInstance } from '@daysnap/horn-ui'
   import banana from '@pkstar/banana'
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useQuery } from '@pkstar/vue-use'
-  import ReceiverDialog from './components/ReciverDialog.vue'
-  import type { ApplyLeaveUser } from '@/types'
-  import { useUserinfoStore } from '@/stores'
   import { showSuccessToast } from 'vant'
+
+  import { doApplyLeave, reqLeaveInfo } from '@/api'
+  import { useProSchemaForm } from '@/components'
+  import { useLeaveTypeField } from '@/hooks'
+  import { useUserinfoStore } from '@/stores'
+  import type { ApplyLeaveUser } from '@/types'
   import { applyListTrap } from '@/utils'
+
+  import ReceiverDialog from './components/ReciverDialog.vue'
 
   useKeepAlive()
 
@@ -213,7 +215,9 @@
     }
     Object.values(receiver).forEach((item) => {
       receiverMap.receiveId.push(item.userId)
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       item.roleId && receiverMap.receiveRoleId.push(item.roleId)
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       item.approvalType && receiverMap.receiveType.push(item.approvalType)
     })
     const receiverObj: any = {}

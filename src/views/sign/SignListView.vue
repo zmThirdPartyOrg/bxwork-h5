@@ -27,12 +27,13 @@
 </template>
 
 <script setup lang="ts">
-  import { useAsyncTask } from '@pkstar/vue-use'
-  import { reqSignRecord } from '@/api'
   import { formatDate } from '@pkstar/utils'
+  import { useAsyncTask } from '@pkstar/vue-use'
+
+  import { reqSignRecord } from '@/api'
   import MonthSelect from '@/components/MonthPicker.vue'
-  import { withLoading } from '@/utils'
   import { useUserinfoStore } from '@/stores'
+  import { withLoading } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
   const currentMonth = ref(formatDate(new Date(), 'yyyy-MM'))

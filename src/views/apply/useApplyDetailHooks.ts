@@ -1,6 +1,7 @@
+import { formatDate } from '@pkstar/utils'
+
 import { useProSchemaRender } from '@/components'
 import type { ApplyLeaveDeatil, ApplyOvertimeDeatil } from '@/types'
-import { formatDate } from '@pkstar/utils'
 
 export function useApplyDetailHooks() {
   const leaveFields = useProSchemaRender<ApplyLeaveDeatil>((s) => {

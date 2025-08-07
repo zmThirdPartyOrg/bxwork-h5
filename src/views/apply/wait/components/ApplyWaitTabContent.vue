@@ -23,10 +23,11 @@
 </template>
 
 <script setup lang="ts">
-  import { reqApplyList } from '@/api'
   import { usePaging } from '@pkstar/vue-use'
-  import ApplyCell from '@/components/ApplyCell.vue'
+
+  import { reqApplyList } from '@/api'
   import { useProSearch } from '@/components'
+  import ApplyCell from '@/components/ApplyCell.vue'
 
   const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
   const props = defineProps({
@@ -40,24 +41,22 @@
   })
 
   // 分页 hooks
-  const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } =
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    usePaging(
-      async ([pageindex, pagesize], { loading }) => {
-        const content = await reqApplyList({
-          pageindex,
-          pagesize,
-          applyType: 'wait',
-          waitStatus: props.type,
-          title: keyword.value,
-        })
-        return [content, 99]
-      },
-      {
-        immediate: true,
-        scrollSelector: `.tab-content-${props.type}`,
-      },
-    )
+  const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
+    async ([pageindex, pagesize], { loading }) => {
+      const content = await reqApplyList({
+        pageindex,
+        pagesize,
+        applyType: 'wait',
+        waitStatus: props.type,
+        title: keyword.value,
+      })
+      return [content, 99]
+    },
+    {
+      immediate: true,
+      scrollSelector: `.tab-content-${props.type}`,
+    },
+  )
 
   defineExpose({
     pagingRefresh,
