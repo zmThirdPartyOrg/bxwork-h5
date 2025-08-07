@@ -63,8 +63,8 @@
     }
     let res: Array<string> = []
     // 修改数据
-    const callback = (res: any) => {
-      const value = [...props.modelValue, ...res]
+    const callback = (opt: any) => {
+      const value = [...props.modelValue, ...opt]
       emits('update:modelValue', value)
     }
     console.log(window.navigator.userAgent, window.navigator.userAgent.includes('HornApp'))
