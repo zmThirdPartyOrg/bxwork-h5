@@ -46,6 +46,15 @@
   const receiverDialogInstance = ref() as Ref<InstanceType<typeof ReceiverDialog>>
 
   const fields = useProSchemaForm({
+    xx: {
+      value: '',
+      label: '指派人员',
+      is: 'HorField',
+      props: {
+        placeholder: '请选择指派人员',
+      },
+      rules: [{ required: true, message: '请选择指派人员' }],
+    },
     location: {
       value: '',
       label: '加班地点',

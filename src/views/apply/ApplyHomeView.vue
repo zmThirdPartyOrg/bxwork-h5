@@ -63,6 +63,11 @@
       icon: new URL('@/assets/img/icon/approval_overtime.png', import.meta.url).href,
       path: '/apply/overtime',
     },
+     {
+      title: '指派加班',
+      icon: new URL('@/assets/img/icon/approval_assign.png', import.meta.url).href,
+      path: '/assign/overtime',
+    },
   ])
 </script>
 

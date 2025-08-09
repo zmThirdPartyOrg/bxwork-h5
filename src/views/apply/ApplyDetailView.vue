@@ -220,6 +220,10 @@
 </script>
 
 <style lang="scss" scoped>
+
+
+
+
   @import '@/assets/scss/define.scss';
   .header-section {
     @extend %df;

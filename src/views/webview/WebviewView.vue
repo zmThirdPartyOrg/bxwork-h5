@@ -1,12 +1,12 @@
 <template>
   <HorView class="is-fullscreen" :title="title" :use-nav-bar="query.noHeader !== '0'">
-    <div
+    <!-- <div
       :use-nav-bar="query.backBtn === '1'"
       class="back-btn"
       @click="$router.replace({ path: '/' })"
     >
       <img src="/assets/img/img-logo.png" alt="logo" class="logo" />
-    </div>
+    </div> -->
     <iframe
       v-if="src"
       class="webview-inner"

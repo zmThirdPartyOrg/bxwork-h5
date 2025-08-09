@@ -11,6 +11,7 @@ import type {
   ApplyLeaveDto,
   ApplyLeaveVoItem,
   ApplyOvertimeDto,
+  AssignOvertimeUser,
 } from '@/types'
 import { withLoading } from '@/utils'
 import { curl } from './curl'
@@ -231,3 +232,6 @@ export const doApplyLeave = withLoading((content: ApplyLeaveDto) =>
 export const doApplyOvertime = withLoading((content: ApplyOvertimeDto) =>
   curl(`/oa/submitOvertime.json`, { content }),
 )
+
+// 获取组员接口
+export const reqAssignUsers = () => curl<AssignOvertimeUser[]>(`/oa/otAssignUsers.json`)

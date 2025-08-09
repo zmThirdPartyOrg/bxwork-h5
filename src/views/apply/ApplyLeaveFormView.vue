@@ -29,7 +29,7 @@
   import banana from '@pkstar/banana'
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useQuery } from '@pkstar/vue-use'
-  import ReceiverDialog from './components/ReciverDialog.vue'
+  import ReceiverDialog from '@/views/apply/components/ReciverDialog.vue'
   import type { ApplyLeaveUser } from '@/types'
   import { useUserinfoStore } from '@/stores'
   import { showSuccessToast } from 'vant'

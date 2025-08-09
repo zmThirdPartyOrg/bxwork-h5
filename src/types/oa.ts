@@ -94,6 +94,7 @@ export interface ApplyDetailVo {
   approveSign: number
 }
 
+// 加班详情
 export interface ApplyOvertimeDeatil {
   reason: string
   endDt: string
@@ -116,6 +117,7 @@ export interface ApplyOvertimeDeatil {
   status: string
   pics: any[]
 }
+// 请假详情
 export interface ApplyLeaveDeatil {
   reason: string
   hours: number
@@ -323,4 +325,12 @@ export interface ApplyOvertimeDto {
   isAllDay: BooleanString
   endDt: string
   isProject: BooleanString
+}
+
+// 获取组员接口
+export interface AssignOvertimeUser {
+  realName: string;
+  hours: number;
+  totalHours: number;
+  userId: number;
 }
