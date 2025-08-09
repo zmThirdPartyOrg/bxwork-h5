@@ -29,18 +29,19 @@
 </template>
 
 <script setup lang="ts">
-  import { doAttend, reqAttendInit, reqFaceCheck } from '@/api'
-  import { useSysConfigStore, useUserinfoStore } from '@/stores'
-  import { __DEV__, appendBmap, isApp } from '@/utils'
-  import { formatDate, isIOS } from '@pkstar/utils'
-  import { showConfirmDialog, showSuccessToast } from 'vant'
-  import SignPopup from '@/components/SignPopup.vue'
-  import { useAsyncTask, useKeepAlive } from '@pkstar/vue-use'
   import {
     getLocationByBMap,
-    openAppAuthorizeSetting,
     type GetLocationByBMapResult,
+    openAppAuthorizeSetting,
   } from '@pkstar/horn-jssdk'
+  import { formatDate, isIOS } from '@pkstar/utils'
+  import { useAsyncTask, useKeepAlive } from '@pkstar/vue-use'
+  import { showConfirmDialog, showSuccessToast } from 'vant'
+
+  import { doAttend, reqAttendInit, reqFaceCheck } from '@/api'
+  import SignPopup from '@/components/SignPopup.vue'
+  import { useSysConfigStore, useUserinfoStore } from '@/stores'
+  import { __DEV__, appendBmap, isApp } from '@/utils'
 
   useKeepAlive()
 

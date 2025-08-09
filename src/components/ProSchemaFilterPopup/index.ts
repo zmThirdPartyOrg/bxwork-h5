@@ -1,7 +1,7 @@
 import Component from './ProSchemaFilterPopup.vue'
 
-export * from './useProSchemaFilterPopup'
 export * from './types'
+export * from './useProSchemaFilterPopup'
 
 export const ProSchemaFilterPopup = Component
 export default ProSchemaFilterPopup

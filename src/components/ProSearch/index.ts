@@ -1,7 +1,7 @@
 import Component from './ProSearch.vue'
 
-export * from './useProSearch'
 export * from './types'
+export * from './useProSearch'
 
 export const ProSearch = Component
 export default ProSearch

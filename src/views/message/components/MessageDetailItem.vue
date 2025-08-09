@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
   import type { MessageItem } from '@/types'
-  import { bisTypeValueMap, applyTypeValueMap } from '@/utils'
+  import { applyTypeValueMap, bisTypeValueMap } from '@/utils'
 
   defineProps({
     item: {

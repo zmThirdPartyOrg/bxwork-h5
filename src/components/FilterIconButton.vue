@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
   import { isEmptyObject } from '@pkstar/utils'
+
   import { isMiniProgram } from '@/utils'
 
   const props = defineProps({

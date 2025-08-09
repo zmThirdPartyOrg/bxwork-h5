@@ -9,10 +9,12 @@
 </template>
 
 <script setup lang="ts">
-  import type { PropType } from 'vue'
-  import DEF_IMG from './def.png'
   import { isArray, isBoolean, isString } from '@pkstar/utils'
+  import type { PropType } from 'vue'
+
   import { usePreviewImageStore } from '@/stores'
+
+  import DEF_IMG from './def.png'
 
   const props = defineProps({
     src: {
@@ -48,7 +50,8 @@
   })
 
   const getUrl = (props: Record<string, any>) => {
-    let { src, ratio, defSrc, baseUrl } = props
+    let { src } = props
+    const { ratio, defSrc, baseUrl } = props
     if (!src) {
       return defSrc
     }
@@ -93,7 +96,7 @@
   const handleError = (event: Event) => {
     const target = event.target as HTMLImageElement
     const { src } = target
-    let { defSrc } = props
+    const { defSrc } = props
     if (defSrc && src !== defSrc) {
       target.src = defSrc
     }

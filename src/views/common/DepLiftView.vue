@@ -25,14 +25,14 @@
 </template>
 
 <script setup lang="ts">
+  import { usePaging } from '@pkstar/vue-use'
+
   import { getDepList } from '@/api'
   import type { DepItem } from '@/types'
   import { selectDepTrap } from '@/utils'
-  import { usePaging } from '@pkstar/vue-use'
 
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } =
-    // eslint-disable-next-line vue/no-setup-props-destructure
     usePaging<DepItem>(
       async ([pageindex, pagesize], { loading }) => {
         const content = await getDepList({ pageindex, pagesize })

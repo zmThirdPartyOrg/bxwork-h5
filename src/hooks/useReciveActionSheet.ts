@@ -1,7 +1,8 @@
+import type { HorActionSheetInstance } from '@daysnap/horn-ui'
+
 import { doUserRoleReset } from '@/api'
 import { useUserinfoStore } from '@/stores'
 import type { ApplyLeaveUser, UserRole } from '@/types'
-import type { HorActionSheetInstance } from '@daysnap/horn-ui'
 
 export function useReceiveActionSheet() {
   const instance = ref() as Ref<HorActionSheetInstance>

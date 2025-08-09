@@ -8,6 +8,7 @@ import { showActionSheet } from '@daysnap/horn-ui'
 export function showChooseSourceType(type?: 'camera' | 'album' | 'all') {
   let actions = []
   if (type && type !== 'all') {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     type === 'camera'
       ? (actions = [{ name: '拍照', value: 'camera' }])
       : (actions = [{ name: '相册选取', value: 'album' }])

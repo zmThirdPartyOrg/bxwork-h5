@@ -1,5 +1,6 @@
-import { registerAdapter } from '@/api'
 import { isFunction, isObject, sleep } from '@pkstar/utils'
+
+import { registerAdapter } from '@/api'
 
 // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
 const modules = import.meta.glob(`./modules/**/*.{json,ts}`)
@@ -37,7 +38,6 @@ registerAdapter('mock', async (config) => {
     if (isObject(error)) {
       error.config = config
     } else {
-      // eslint-disable-next-line no-ex-assign
       error = { message: error, config }
     }
     return Promise.reject(error)

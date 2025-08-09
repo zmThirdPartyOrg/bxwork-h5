@@ -1,2 +1,9 @@
 node_modules/
 dist
+/public
+/docs
+/bin
+
+# build
+**/es
+**/lib

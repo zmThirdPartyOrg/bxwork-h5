@@ -1,11 +1,11 @@
 import {
-  storeToRefs,
-  type StoreGeneric,
-  type StoreState,
   type PiniaCustomStateProperties,
+  type StoreGeneric,
   type StoreGetters,
+  type StoreState,
+  storeToRefs,
 } from 'pinia'
-import type { ToRef, ToRefs, ComputedRef, Ref } from 'vue'
+import type { ComputedRef, Ref, ToRef, ToRefs } from 'vue'
 
 type WithToRefsResult<T, P> = Omit<T, keyof P> & P
 

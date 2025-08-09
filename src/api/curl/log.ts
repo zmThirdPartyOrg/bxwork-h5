@@ -1,5 +1,6 @@
-import { __DEV__ } from '@/utils'
 import type { InternalAxiosRequestConfig } from 'axios'
+
+import { __DEV__ } from '@/utils'
 
 export const log = (config: InternalAxiosRequestConfig, ...args: any[]) => {
   if (__DEV__) {

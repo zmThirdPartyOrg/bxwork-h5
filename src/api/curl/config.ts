@@ -1,4 +1,5 @@
 import type { CreateAxiosDefaults } from 'axios'
+
 import { __DEV__ } from '@/utils'
 
 export const baseURL = __DEV__ ? 'top' : 'https://bianxiukaoqing.top'

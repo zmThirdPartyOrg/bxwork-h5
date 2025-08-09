@@ -1,7 +1,8 @@
+// import { setStatusBarStyle } from '@pkstar/horn-jssdk'
+import type { Router } from 'vue-router'
+
 import { useUserinfoStore } from '@/stores'
 import { isApp, isMiniProgram } from '@/utils'
-import { setStatusBarStyle } from '@pkstar/horn-jssdk'
-import type { Router } from 'vue-router'
 
 export function setupGuards(router: Router) {
   // 鉴定权限

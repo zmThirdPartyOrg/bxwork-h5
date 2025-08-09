@@ -23,11 +23,14 @@
 </template>
 
 <script setup lang="ts">
-  import { useAsyncTask, useQuery } from '@pkstar/vue-use'
-  import MessageItem from './components/MessageItem.vue'
+  import { isFunction } from '@pkstar/utils'
+  import { useAsyncTask } from '@pkstar/vue-use'
+
   import { reqConfig, reqCustomerContact, reqMessageList, reqVersionVerify } from '@/api'
   import { onBeforeMountOrActivated } from '@/hooks'
   import { useSysConfigStore } from '@/stores'
+
+  import MessageItem from './components/MessageItem.vue'
 
   const {
     data,
@@ -36,8 +39,8 @@
     trigger: handleRefresh,
   } = useAsyncTask(async (cb: any) => {
     const res = await reqMessageList()
-    const contact = await reqCustomerContact()
-    cb && cb()
+    await reqCustomerContact()
+    if (isFunction(cb)) cb()
     return res
   }, {})
 

@@ -1,4 +1,5 @@
 import { makePhoneCall as call } from '@pkstar/horn-jssdk'
+
 import { isApp } from './constants'
 
 export function makePhoneCall(options: { phoneNumber: string }) {

@@ -8,15 +8,16 @@
 </template>
 
 <script setup lang="ts">
+  import banana from '@pkstar/banana'
+  import { isEmail } from '@pkstar/utils'
+  import { useKeepAlive } from '@pkstar/vue-use'
+  import { showSuccessToast } from 'vant'
+
   import { doUserInfoUpdate } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useDepField } from '@/hooks'
   import { useUserinfoStore } from '@/stores'
   import { NOTICE_METHOD, withLoading } from '@/utils'
-  import banana from '@pkstar/banana'
-  import { isEmail } from '@pkstar/utils'
-  import { useKeepAlive } from '@pkstar/vue-use'
-  import { showSuccessToast } from 'vant'
 
   const { userinfo, setUserinfo } = useUserinfoStore()
   useKeepAlive()

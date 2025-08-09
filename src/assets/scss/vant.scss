@@ -20,16 +20,16 @@
 .van-sticky--fixed,
 .van-popup__close-icon--top-right,
 .van-image-preview__index,
-.van-image-preview__close-icon{
+.van-image-preview__close-icon {
   margin-top: constant(safe-area-inset-top);
   margin-top: env(safe-area-inset-top);
 }
 
-.van-step{
-  color: unset!important;
+.van-step {
+  color: unset !important;
 }
 .van-step__title {
-    color: #333;
+  color: #333;
 }
 
 .van-tab__panel {

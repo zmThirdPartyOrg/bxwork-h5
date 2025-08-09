@@ -3,8 +3,9 @@
 </template>
 
 <script setup lang="ts">
-  import { usePreviewImageStore } from '@/stores'
   import { showImagePreview } from 'vant'
+
+  import { usePreviewImageStore } from '@/stores'
 
   const router = useRouter()
   const { previewImage } = usePreviewImageStore()

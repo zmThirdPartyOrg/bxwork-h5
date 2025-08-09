@@ -1,7 +1,9 @@
+import { isBoolean } from '@pkstar/utils'
+
 import type { ProSchemaFormField } from '@/components'
 import { selectDepTrap } from '@/utils'
+
 import { onBeforeMountOrActivated } from './onBeforeMountOrActivated'
-import { isBoolean } from '@pkstar/utils'
 
 export function useDepField(options: boolean | Partial<ProSchemaFormField> = false) {
   if (isBoolean(options)) {

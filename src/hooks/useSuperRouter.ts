@@ -1,5 +1,6 @@
-import { isMiniProgram } from '@/utils'
 import { sleep } from '@pkstar/utils'
+
+import { isMiniProgram } from '@/utils'
 
 export function useSuperRouter() {
   const router = useRouter()

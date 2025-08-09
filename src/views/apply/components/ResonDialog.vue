@@ -12,9 +12,10 @@
 </template>
 
 <script setup lang="ts">
-  import { useProSchemaForm } from '@/components'
   import banana from '@pkstar/banana'
   import { useVisible } from '@pkstar/vue-use'
+
+  import { useProSchemaForm } from '@/components'
 
   const props = defineProps({
     title: {

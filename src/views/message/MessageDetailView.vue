@@ -13,9 +13,11 @@
 
 <script setup lang="ts">
   import { useQuery } from '@pkstar/vue-use'
-  import MessageDetailItem from './components/MessageDetailItem.vue'
-  import { bisTypeValueMap } from '@/utils'
+
   import type { MessageItem } from '@/types'
+  import { bisTypeValueMap } from '@/utils'
+
+  import MessageDetailItem from './components/MessageDetailItem.vue'
 
   const { dataList } = useQuery()
   const sourceData: MessageItem[] = JSON.parse(dataList)

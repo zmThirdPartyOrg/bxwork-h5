@@ -1,5 +1,6 @@
-import { __DEV__, isApp } from '@/utils'
 import type { AxiosAdapter } from 'axios'
+
+import { __DEV__, isApp } from '@/utils'
 
 // 适配器集合
 export const adapters: Record<string, AxiosAdapter> = {}

@@ -1,9 +1,11 @@
-import { defineStore } from 'pinia'
-import { createNamespace, isIOS } from '@/utils'
+import { previewImage as previewImageNavtive } from '@pkstar/horn-jssdk'
 import { useState } from '@pkstar/vue-use'
+import { defineStore } from 'pinia'
+
+import { createNamespace, isIOS } from '@/utils'
+
 import { withOut } from '../withOut'
 import { withToRefs } from '../withToRefs'
-import { previewImage as previewImageNavtive } from '@pkstar/horn-jssdk'
 
 interface UsePreviewImageStoreState {
   images: string[]

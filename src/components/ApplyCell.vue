@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
   import type { ApplyItem } from '@/types'
-  import { applyTypeValueMap, applyStatusLabelMap } from '@/utils'
+  import { applyStatusLabelMap, applyTypeValueMap } from '@/utils'
 
   const props = defineProps({
     item: {

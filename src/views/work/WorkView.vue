@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
-  import { __DEV__ } from '@/utils'
   import { useTransfer } from '@pkstar/vue-use'
+
+  import { __DEV__ } from '@/utils'
 
   const handleTransfer = useTransfer()
 

@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-  import type { NoticeItem } from '@/types'
   import { useQuery } from '@pkstar/vue-use'
+
+  import type { NoticeItem } from '@/types'
 
   const { item } = useQuery()
 

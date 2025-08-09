@@ -1,7 +1,9 @@
+import { isBoolean } from '@pkstar/utils'
+
 import type { ProSchemaFormField } from '@/components'
 import { locationNameTrap } from '@/utils'
+
 import { onBeforeMountOrActivated } from './onBeforeMountOrActivated'
-import { isBoolean } from '@pkstar/utils'
 
 export function useLocationField(options: boolean | Partial<ProSchemaFormField> = false) {
   if (isBoolean(options)) {

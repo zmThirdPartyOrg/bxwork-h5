@@ -1,8 +1,10 @@
-import type { ProSchemaFormField } from '@/components'
-import { selectLeaveTrap } from '@/utils'
-import { onBeforeMountOrActivated } from './onBeforeMountOrActivated'
 import { isBoolean } from '@pkstar/utils'
+
+import type { ProSchemaFormField } from '@/components'
 import type { SysConfigDict } from '@/types'
+import { selectLeaveTrap } from '@/utils'
+
+import { onBeforeMountOrActivated } from './onBeforeMountOrActivated'
 
 export function useLeaveTypeField(options: boolean | Partial<ProSchemaFormField> = false) {
   if (isBoolean(options)) {

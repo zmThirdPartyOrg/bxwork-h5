@@ -1,9 +1,11 @@
 import { formatDate, formatPathParams } from '@pkstar/utils'
+
 import { useUserinfoStore } from '@/stores'
 import { isAndroid } from '@/utils'
-import type { CurlOptions } from './types'
+
+import { formatAdapter, getAdapter } from './adapter'
 import { instance } from './instance'
-import { getAdapter, formatAdapter } from './adapter'
+import type { CurlOptions } from './types'
 
 export * from './adapter'
 

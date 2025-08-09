@@ -42,7 +42,9 @@ export const omitHorCellPropsInUploader = {
     default: false,
   },
   upload: {
-    type: [Boolean, Function] as PropType<false | Function>,
+    type: [Boolean, Function] as PropType<
+      false | ((str: string[], cb: (res: any) => void) => void)
+    >,
     default: false,
   },
   sizeType: {

@@ -21,9 +21,11 @@
 </template>
 
 <script setup lang="ts">
+  import { usePaging } from '@pkstar/vue-use'
+
   import { reqNoticeList } from '@/api'
   import type { NoticeItem } from '@/types'
-  import { usePaging } from '@pkstar/vue-use'
+
   import NoticeCell from './NoticeCell.vue'
 
   const props = defineProps({
@@ -38,7 +40,6 @@
 
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } =
-    // eslint-disable-next-line vue/no-setup-props-destructure
     usePaging<NoticeItem>(
       async ([pageindex, pagesize], { loading }) => {
         const content = await reqNoticeList(

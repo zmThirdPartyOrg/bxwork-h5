@@ -13,11 +13,13 @@
 </template>
 
 <script setup lang="ts">
-  import { useVisible } from '@pkstar/vue-use'
-  import { useProSchemaForm } from './ProSchemaForm'
-  import { useLocationField } from '@/hooks'
   import banana from '@pkstar/banana'
   import type { GetLocationByBMapResult } from '@pkstar/horn-jssdk'
+  import { useVisible } from '@pkstar/vue-use'
+
+  import { useLocationField } from '@/hooks'
+
+  import { useProSchemaForm } from './ProSchemaForm'
 
   const fields = useProSchemaForm({
     remark: {

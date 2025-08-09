@@ -41,8 +41,6 @@
   import '@daysnap/horn-ui/src/hor-select-picker/style'
   import '@daysnap/horn-ui/src/hor-uploader/style'
 
-  import { ProUploader } from '../ProUploader'
-  import type { MetaDataObject } from '@pkstar/banana'
   import {
     HorCell,
     HorCellGroup,
@@ -62,9 +60,11 @@
     HorUploader,
   } from '@daysnap/horn-ui'
   import { isFunction } from '@daysnap/utils'
+  import type { MetaDataObject } from '@pkstar/banana'
   import { useTransfer } from '@pkstar/vue-use'
   import { type PropType } from 'vue'
 
+  import { ProUploader } from '../ProUploader'
   import type { ProSchemaFormMetadata } from './types'
 
   export default defineComponent({

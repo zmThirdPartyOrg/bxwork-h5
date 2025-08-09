@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
+
 import type { ProSchemaFormMetadata } from '../ProSchemaForm'
 
 export const proSchemaFilterPopupProps = {

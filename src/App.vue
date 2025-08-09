@@ -18,10 +18,11 @@
 </template>
 
 <script setup lang="ts">
-  import { useTransitionName, useKeepAlive } from '@pkstar/vue-use'
-  import { __DEV__, isMiniProgram } from '@/utils'
-  import type { RouteLocationNormalizedLoaded } from 'vue-router'
   import jssdk from '@pkstar/horn-jssdk'
+  import { useKeepAlive, useTransitionName } from '@pkstar/vue-use'
+  import type { RouteLocationNormalizedLoaded } from 'vue-router'
+
+  import { __DEV__, isMiniProgram } from '@/utils'
 
   const { includes, keepAliveList } = useKeepAlive(300)
   // 重置 keepAlive

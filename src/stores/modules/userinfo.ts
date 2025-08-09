@@ -1,11 +1,13 @@
-import { useState } from '@pkstar/vue-use'
 import { throttle } from '@pkstar/utils'
+import { useState } from '@pkstar/vue-use'
 import { defineStore } from 'pinia'
+
+import { router } from '@/router'
 import type { Userinfo } from '@/types'
 import { createNamespace, isApp, isMiniProgram } from '@/utils'
-import { router } from '@/router'
-import { withOut } from '../withOut'
+
 import { withToRefs } from '..'
+import { withOut } from '../withOut'
 
 export const useUserinfoStore = withToRefs(
   withOut(
