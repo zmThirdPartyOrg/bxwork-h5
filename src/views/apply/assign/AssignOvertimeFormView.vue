@@ -9,6 +9,8 @@
       <VanButton class="c-button" type="primary" @click="handleSubmit">提交</VanButton>
     </HorFixedActions>
 
+    <HorPicker ref="horPickerInstance" />
+
     <HorDatePicker ref="datePickerInstance"></HorDatePicker>
 
     <HorDateTimePicker
@@ -22,13 +24,17 @@
 </template>
 
 <script setup lang="ts">
-  import type { HorDatePickerInstance, HorDateTimePickerInstance } from '@daysnap/horn-ui'
+  import type {
+    HorDatePickerInstance,
+    HorDateTimePickerInstance,
+    HorPickerInstance,
+  } from '@daysnap/horn-ui'
   import banana from '@pkstar/banana'
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useQuery } from '@pkstar/vue-use'
   import { showSuccessToast } from 'vant'
 
-  import { doApplyOvertime, reqLeaveInfo } from '@/api'
+  import { doAssignOvertime, reqAssignUsers, reqLeaveInfo } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useUserinfoStore } from '@/stores'
   import type { ApplyLeaveUser } from '@/types'
@@ -42,19 +48,26 @@
   const detailObj = detail ? JSON.parse(detail) : ''
   console.log(detailObj)
 
+  const horPickerInstance = ref<HorPickerInstance>()
   const datePickerInstance = ref() as Ref<HorDatePickerInstance>
   const dateTimePickerInstance = ref() as Ref<HorDateTimePickerInstance>
   const receiverDialogInstance = ref() as Ref<InstanceType<typeof ReceiverDialog>>
 
   const fields = useProSchemaForm({
     xx: {
-      value: '',
+      value: [],
       label: '指派人员',
-      is: 'HorField',
+      is: 'HorCheckboxButton',
+      disabled: true,
+      options: [{ label: '无可用指派人员', value: '' }],
       props: {
-        placeholder: '请选择指派人员',
+        direction: 'column',
+        span: '2',
       },
-      rules: [{ required: true, message: '请选择指派人员' }],
+      rules: [
+        { required: true, message: '请选择指派人员' },
+        { validator: (v) => v.length > 0, message: '请选择指派人员' },
+      ],
     },
     location: {
       value: '',
@@ -227,7 +240,7 @@
       receiverObj[key] = receiverMap[key].join(',')
     })
     console.log('receiver', receiver, receiverMap, receiverObj, isAllDay)
-    await doApplyOvertime({
+    await doAssignOvertime({
       ...options,
       ...receiverObj,
       userId: userinfo?.content.userId,
@@ -259,6 +272,15 @@
         },
         fields,
       )
+    }
+    const assignUsers = await reqAssignUsers()
+    if (assignUsers.length) {
+      fields.xx.options = [...assignUsers].map((item, i) => ({
+        ...item,
+        label: `${item.realName}(${item.hours}/${item.totalHours})`,
+        value: item.userId + '-' + i,
+      }))
+      fields.xx.disabled = false
     }
   })
 </script>

@@ -329,8 +329,17 @@ export interface ApplyOvertimeDto {
 
 // 获取组员接口
 export interface AssignOvertimeUser {
-  realName: string;
-  hours: number;
-  totalHours: number;
-  userId: number;
+  realName: string
+  hours: number
+  totalHours: number
+  userId: number
+}
+
+export interface AssignOvertimeDto {
+  userId: string
+  createBy: string
+  sourceType: string
+  approvalId?: number
+  isProject: BooleanString
+  projectId?: string
 }
