@@ -11,7 +11,7 @@ export function setupGuards(router: Router) {
 
   // 鉴定权限
   router.beforeEach((to) => {
-    // checkVersion()
+    checkVersion()
     const { userinfo } = useUserinfoStore()
 
     // 小程序希望早点触发 title

@@ -15,7 +15,7 @@ jssdk.bootstrap(() => {
   app.mount('#app')
 })
 
-type P<T> = T extends 'x' ? string : number
-type A3 = P<'x' | 'y'> // string | number
-const a = 1 as A3
-console.log(a)
+// type P<T> = T extends 'x' ? string : number
+// type A3 = P<'x' | 'y'> // string | number
+// const a = 1 as A3
+// console.log(a)
