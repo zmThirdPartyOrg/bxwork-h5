@@ -2,11 +2,16 @@
 import type { Router } from 'vue-router'
 
 import { useUserinfoStore } from '@/stores'
-import { isApp, isMiniProgram } from '@/utils'
+import { checkVersion, errorHandler, isApp, isMiniProgram } from '@/utils'
 
 export function setupGuards(router: Router) {
+  router.onError((error) => {
+    errorHandler(error)
+  })
+
   // 鉴定权限
   router.beforeEach((to) => {
+    // checkVersion()
     const { userinfo } = useUserinfoStore()
 
     // 小程序希望早点触发 title

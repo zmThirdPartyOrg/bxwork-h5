@@ -1,7 +1,16 @@
 import type { LeaveInfoItem, PagingParams, Userinfo, UserinfoContent } from '@/types'
 import type { DepItem, SysConfig } from '@/types/common'
+import { __DEV__ } from '@/utils'
 
 import { curl } from './curl'
+
+// 获取h5版本
+export const reqH5Version = () =>
+  curl<{ version: number }>(
+    `${__DEV__ ? `${window.location.origin}` : '//www.bianxiukaoqing.top/h5-page'}/version.json`,
+    {},
+    { method: 'GET' },
+  )
 
 // 密码登录
 export const doUserLoginByPassword = (data: { username: string; password: string }) =>

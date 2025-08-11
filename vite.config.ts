@@ -35,7 +35,7 @@ export default defineConfig({
     vueJsx(),
 
     versionFile({
-      source: JSON.stringify({ status: 0, data: Date.now() }),
+      source: JSON.stringify({ rtnCode: '0', content: { version: Date.now() } }),
     }),
 
     // https://github.com/antfu/unplugin-auto-import
