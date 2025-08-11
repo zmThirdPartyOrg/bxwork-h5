@@ -278,7 +278,7 @@
       fields.xx.options = [...assignUsers].map((item, i) => ({
         ...item,
         label: `${item.realName}(${item.hours}/${item.totalHours})`,
-        value: item.userId + '-' + i,
+        value: item.userId,
       }))
       fields.xx.disabled = false
     }
