@@ -32,7 +32,6 @@
   import { useProSchemaForm } from '@/components'
   import { useLeaveTypeField } from '@/hooks'
   import { useUserinfoStore } from '@/stores'
-  import type { ApplyLeaveUser } from '@/types'
   import { applyListTrap } from '@/utils'
   import ReceiverDialog from '@/views/apply/components/ReciverDialog.vue'
 
@@ -202,28 +201,13 @@
     console.log('options=>', options)
     // 审批人参数
     const { days, hours } = options
-    const receiver: Record<string, ApplyLeaveUser> = await receiverDialogInstance.value.show({
+    const receiverObj = await receiverDialogInstance.value.show({
       days,
       hours,
       type: 'leave',
     })
-    const receiverMap: Record<string, Array<number | string>> = {
-      receiveId: [],
-      receiveRoleId: [],
-      receiveType: [],
-    }
-    Object.values(receiver).forEach((item) => {
-      receiverMap.receiveId.push(item.userId)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      item.roleId && receiverMap.receiveRoleId.push(item.roleId)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      item.approvalType && receiverMap.receiveType.push(item.approvalType)
-    })
-    const receiverObj: any = {}
-    Object.keys(receiverMap).forEach((key) => {
-      receiverObj[key] = receiverMap[key].join(',')
-    })
-    console.log('receiver', receiver, receiverMap, receiverObj)
+
+    console.log('receiver', receiverObj)
     await doApplyLeave({
       ...options,
       ...receiverObj,

@@ -31,7 +31,6 @@
   import { doApplyOvertime, reqLeaveInfo } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useUserinfoStore } from '@/stores'
-  import type { ApplyLeaveUser } from '@/types'
   import { applyListTrap } from '@/utils'
   import ReceiverDialog from '@/views/apply/components/ReciverDialog.vue'
 
@@ -196,28 +195,13 @@
     console.log('options=>', options)
     // 审批人参数
     const { days, hours, isAllDay } = options
-    const receiver: Record<string, ApplyLeaveUser> = await receiverDialogInstance.value.show({
+    const receiverObj = await receiverDialogInstance.value.show({
       days,
       hours,
       type: 'overtime',
     })
-    const receiverMap: Record<string, Array<number | string>> = {
-      receiveId: [],
-      receiveRoleId: [],
-      receiveType: [],
-    }
-    Object.values(receiver).forEach((item) => {
-      receiverMap.receiveId.push(item.userId)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      item.roleId && receiverMap.receiveRoleId.push(item.roleId)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      item.approvalType && receiverMap.receiveType.push(item.approvalType)
-    })
-    const receiverObj: any = {}
-    Object.keys(receiverMap).forEach((key) => {
-      receiverObj[key] = receiverMap[key].join(',')
-    })
-    console.log('receiver', receiver, receiverMap, receiverObj, isAllDay)
+
+    console.log('receiver', receiverObj, isAllDay)
     await doApplyOvertime({
       ...options,
       ...receiverObj,

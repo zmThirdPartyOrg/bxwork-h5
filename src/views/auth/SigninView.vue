@@ -125,7 +125,7 @@
     margin-bottom: j(20);
   }
   .form-section {
-    width: j(300);
+    min-width: j(300);
     padding: j(20) j(20) j(100);
     background-color: #fff;
     border-radius: j(8);

@@ -66,7 +66,7 @@
     {
       title: '指派加班',
       icon: new URL('@/assets/img/icon/approval_assign.png', import.meta.url).href,
-      path: '/assign/overtime',
+      path: '/assign/overtime/list',
     },
   ])
 </script>

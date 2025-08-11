@@ -21,7 +21,7 @@
   import { reqReciveRoleList } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useReceiveActionSheet } from '@/hooks'
-  import type { ApplyLeaveDto, ApplyLeaveVoItem } from '@/types'
+  import type { ApplyLeaveDto, ApplyLeaveUser, ApplyLeaveVoItem } from '@/types'
 
   const [horActionSheetInstance, handle] = useReceiveActionSheet()
 
@@ -76,43 +76,26 @@
     },
     confirmCallback() {
       console.log('formFileds.value', formFileds.value)
-      return banana.validate(formFileds.value)
+      const receiver: Record<string, ApplyLeaveUser> = banana.validate(formFileds.value)
+      const receiverMap: Record<string, Array<number | string>> = {
+        receiveId: [],
+        receiveRoleId: [],
+        receiveType: [],
+      }
+      Object.values(receiver).forEach((item) => {
+        receiverMap.receiveId.push(item.userId)
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        item.roleId && receiverMap.receiveRoleId.push(item.roleId)
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        item.approvalType && receiverMap.receiveType.push(item.approvalType)
+      })
+      const receiverObj: any = {}
+      Object.keys(receiverMap).forEach((key) => {
+        receiverObj[key] = receiverMap[key].join(',')
+      })
+      return receiverObj
     },
   })
-  // const fields = computed(() => {
-  // const form = reciveRoleList.value?.reduce((pre, cur, index) => {
-  //   const { approvalType, roleId, roleName } = cur
-  //   cur.userList = cur.userList.map((item) => ({
-  //     ...item,
-  //     approvalType,
-  //     roleId,
-  //     roleName,
-  //   }))
-  //   pre[index] = {
-  //     value: cur.userList[0] ?? '',
-  //     label: cur.roleName,
-  //     is: 'HorCellPicker',
-  //     fn: async (item: any) => {
-  //       const res = await handle(cur.userList)
-  //       console.log(res)
-  //       console.log('item=>', item)
-  //       item.value = res
-  //     },
-  //     props: {
-  //       formatter: (v: any) => {
-  //         console.log('v', v)
-  //         return v.username
-  //       },
-  //     },
-  //     rules: [{ required: true, message: '请选择请假审批人' }],
-  //   }
-  //   // console.log('pre', pre)
-  //   return pre
-  // }, {} as any)
-  // // console.log('form', form)
-  // return useProSchemaForm(form)
-  // })
-
   defineExpose({
     show,
   })
