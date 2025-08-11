@@ -5,6 +5,7 @@ import type {
   ApplyLeaveVoItem,
   ApplyOvertimeDto,
   AssignOvertimeDto,
+  AssignOvertimeItem,
   AssignOvertimeUser,
   AttendDto,
   AttendItem,
@@ -249,3 +250,7 @@ export const reqAssignUsers = () => curl<AssignOvertimeUser[]>(`/oa/otAssignUser
 export const doAssignOvertime = withLoading((content: AssignOvertimeDto) =>
   curl(`/oa/submitOvertimeAssign.json`, { content }),
 )
+
+// 指派加班列表
+export const reqAssignOvertimeList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
+  curl<Array<AssignOvertimeItem>>(`/oa/otAssignList.json`, data)

@@ -86,9 +86,15 @@ export default defineRoutes([
     meta: { title: '加班申请', requiresAuth: 1 },
   },
   {
-    path: '/assign/overtime',
+    path: '/assign/overtime/list',
+    name: 'AssignOvertimeView',
+    component: () => import('@/views/apply/assign/AssignOvertimeView.vue'),
+    meta: { title: '指派加班', requiresAuth: 1 },
+  },
+  {
+    path: '/assign/overtime/form',
     name: 'AssignOvertimeFormView',
     component: () => import('@/views/apply/assign/AssignOvertimeFormView.vue'),
-    meta: { title: '指派加班', requiresAuth: 1 },
+    meta: { title: '新增指派', requiresAuth: 1 },
   },
 ])

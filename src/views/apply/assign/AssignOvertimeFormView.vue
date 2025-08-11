@@ -36,14 +36,11 @@
 
   import { doAssignOvertime, reqAssignUsers, reqLeaveInfo } from '@/api'
   import { useProSchemaForm } from '@/components'
-  import { useUserinfoStore } from '@/stores'
-  import type { ApplyLeaveUser } from '@/types'
   import { applyListTrap } from '@/utils'
   import ReceiverDialog from '@/views/apply/components/ReciverDialog.vue'
 
   useKeepAlive()
 
-  const { userinfo } = useUserinfoStore()
   const { detail } = useQuery()
   const detailObj = detail ? JSON.parse(detail) : ''
   console.log(detailObj)
@@ -54,7 +51,7 @@
   const receiverDialogInstance = ref() as Ref<InstanceType<typeof ReceiverDialog>>
 
   const fields = useProSchemaForm({
-    xx: {
+    userId: {
       value: [],
       label: '指派人员',
       is: 'HorCheckboxButton',
@@ -68,6 +65,18 @@
         { required: true, message: '请选择指派人员' },
         { validator: (v) => v.length > 0, message: '请选择指派人员' },
       ],
+      get(v, f) {
+        console.log('userId', v, f)
+        const { options } = f
+        const res = v.map((o: string) => {
+          const item = options.find((item: any) => item.value === o)
+          return item
+        })
+        return {
+          userId: res.map((item: any) => item.value).join(','),
+          createBy: res.map((item: any) => item.realName).join(','),
+        }
+      },
     },
     location: {
       value: '',
@@ -218,33 +227,16 @@
     console.log('options=>', options)
     // 审批人参数
     const { days, hours, isAllDay } = options
-    const receiver: Record<string, ApplyLeaveUser> = await receiverDialogInstance.value.show({
+    const receiverObj = await receiverDialogInstance.value.show({
       days,
       hours,
       type: 'overtime',
     })
-    const receiverMap: Record<string, Array<number | string>> = {
-      receiveId: [],
-      receiveRoleId: [],
-      receiveType: [],
-    }
-    Object.values(receiver).forEach((item) => {
-      receiverMap.receiveId.push(item.userId)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      item.roleId && receiverMap.receiveRoleId.push(item.roleId)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      item.approvalType && receiverMap.receiveType.push(item.approvalType)
-    })
-    const receiverObj: any = {}
-    Object.keys(receiverMap).forEach((key) => {
-      receiverObj[key] = receiverMap[key].join(',')
-    })
-    console.log('receiver', receiver, receiverMap, receiverObj, isAllDay)
+
+    console.log('receiver', receiverObj, isAllDay)
     await doAssignOvertime({
       ...options,
       ...receiverObj,
-      userId: userinfo?.content.userId,
-      approvalId: detailObj.approvalId,
       isProject: 'N',
       days: isAllDay === 'Y' ? days : 0,
     })
@@ -275,12 +267,12 @@
     }
     const assignUsers = await reqAssignUsers()
     if (assignUsers.length) {
-      fields.xx.options = [...assignUsers].map((item, i) => ({
+      fields.userId.options = [...assignUsers].map((item, i) => ({
         ...item,
         label: `${item.realName}(${item.hours}/${item.totalHours})`,
         value: item.userId,
       }))
-      fields.xx.disabled = false
+      fields.userId.disabled = false
     }
   })
 </script>

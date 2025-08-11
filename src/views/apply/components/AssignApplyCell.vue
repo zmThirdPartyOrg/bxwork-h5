@@ -1,27 +1,28 @@
 <template>
   <div class="c-col-item van-hairline--bottom" @click="handleClick">
-    <img class="icon" :src="applyTypeValueMap[item?.type!]?.icon" alt="" srcset="" />
+    <img class="icon" :src="applyTypeValueMap.overtime?.icon" alt="" srcset="" />
     <div class="c-col-item-content">
       <div class="c-col-item-title">
-        <span class="title">{{ item?.title }}</span>
-        <span class="sub-text">{{ item?.modifyDt }}</span>
+        <span class="title">{{ `${item.assignCreateBy}指派${item.createBy}加班` }}</span>
+        <span class="sub-text">{{ item.createDt }}</span>
       </div>
       <div class="c-col-item-text">
-        <span class="c-text-primary">{{
+        <!-- <span class="c-text-primary">{{
           applyStatusLabelMap(item?.submitStatus!, item?.status!)
-        }}</span>
+        }}</span> -->
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import type { ApplyItem, AssignOvertimeItem } from '@/types'
+  import type { AssignOvertimeItem } from '@/types'
   import { applyStatusLabelMap, applyTypeValueMap } from '@/utils'
 
   const props = defineProps({
     item: {
-      type: Object as PropType<ApplyItem>,
+      type: Object as PropType<AssignOvertimeItem>,
+      default: () => ({}),
     },
     applyType: {
       type: String,
@@ -32,13 +33,13 @@
   const router = useRouter()
   const handleClick = () => {
     console.log(props.item)
-    router.push({
-      path: `/apply/${props.item?.approveId}`,
-      query: {
-        title: props.item?.title,
-        applyType: props.applyType,
-      },
-    })
+    // router.push({
+    //   path: `/apply/${props.item?.approveId}`,
+    //   query: {
+    //     title: props.item?.title,
+    //     applyType: props.applyType,
+    //   },
+    // })
   }
 </script>
 

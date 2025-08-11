@@ -335,11 +335,42 @@ export interface AssignOvertimeUser {
   userId: number
 }
 
+// 指派加班
 export interface AssignOvertimeDto {
   userId: string
   createBy: string
-  sourceType: string
+  sourceType: 'assign'
   approvalId?: number
   isProject: BooleanString
   projectId?: string
+  location: string
+  reason: string
+  isAllDay: string
+  startDt: string
+  endDt: string
+  days: number
+  hours: number
+  receiveId: number
+  receiveType: string
+  receiveRoleId: string
+}
+
+// 指派加班列表item
+export interface AssignOvertimeItem {
+  overtimeId: number
+  assignUserId: string
+  assignCreateBy: string
+  sourceType: string
+  startDt: string
+  endDt: string
+  days: number
+  hours: number
+  location: string
+  reason: string
+  createDt: string
+  createBy: string
+  auditStatus: string
+  submitStatus: string
+  userId: number
+  isProject: string
 }

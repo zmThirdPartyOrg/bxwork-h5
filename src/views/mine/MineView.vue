@@ -11,7 +11,6 @@
     <div class="c-bar"></div>
 
     <van-button class="c-button" @click="handleLogout">退出登录</van-button>
-    <p class="c-test">测试文本</p>
     <HorActionSheet ref="horActionSheetInstance" />
   </HorView>
 </template>
