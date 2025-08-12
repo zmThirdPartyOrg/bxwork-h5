@@ -24,7 +24,7 @@
       </ul>
       <div class="c-bar"></div>
       <dl class="sign-list">
-        <dt class="sign-list-title">外勤记录</dt>
+        <dt class="sign-list-title">加班签到记录</dt>
         <dd class="sign-list-item" v-for="(item, index) in data?.sign" :key="index">
           <HorIcon class="icon" name="location-o" size="30" />
           <!-- <img src="@/assets/img/icon/woke_sign.png" alt="" srcset="" /> -->
@@ -77,7 +77,7 @@
       key: 'normalAttend',
     },
     {
-      label: '外勤天数',
+      label: '加班时间',
       key: 'signDays',
     },
     {

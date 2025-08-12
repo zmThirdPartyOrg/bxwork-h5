@@ -33,7 +33,7 @@
       to: '/attend',
     },
     {
-      title: '签到',
+      title: '加班签到',
       icon: new URL('@/assets/img/icon/woke_sign.png', import.meta.url).href,
       to: '/sign',
     },
