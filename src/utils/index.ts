@@ -1,6 +1,4 @@
-// /* eslint-disable simple-import-sort/exports */
 export * from './bmap'
-export * from './checkVersion'
 export * from './constants'
 export * from './copy'
 export * from './createNamespace'

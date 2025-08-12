@@ -1,8 +1,9 @@
 // import { setStatusBarStyle } from '@pkstar/horn-jssdk'
 import type { Router } from 'vue-router'
 
+import { checkVersion } from '@/api'
 import { useUserinfoStore } from '@/stores'
-import { checkVersion, errorHandler, isApp, isMiniProgram } from '@/utils'
+import { errorHandler, isApp, isMiniProgram } from '@/utils'
 
 export function setupGuards(router: Router) {
   router.onError((error) => {

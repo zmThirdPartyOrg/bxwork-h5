@@ -1,6 +1,6 @@
 import { showConfirmDialog } from 'vant'
 
-import { reqH5Version } from '@/api'
+import { reqH5Version } from './common'
 
 export const checkVersion = (function () {
   let preVersion = 0,
