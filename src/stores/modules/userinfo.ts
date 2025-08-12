@@ -6,8 +6,8 @@ import { router } from '@/router'
 import type { Userinfo } from '@/types'
 import { createNamespace, isApp, isMiniProgram } from '@/utils'
 
-import { withToRefs } from '..'
 import { withOut } from '../withOut'
+import { withToRefs } from '../withToRefs'
 
 export const useUserinfoStore = withToRefs(
   withOut(

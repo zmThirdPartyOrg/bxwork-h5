@@ -4,8 +4,8 @@ import { defineStore } from 'pinia'
 import type { SysConfig } from '@/types'
 import { createNamespace, isMiniProgram } from '@/utils'
 
-import { withToRefs } from '..'
 import { withOut } from '../withOut'
+import { withToRefs } from '../withToRefs'
 
 export const useSysConfigStore = withToRefs(
   withOut(

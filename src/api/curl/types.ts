@@ -12,6 +12,7 @@ export type CurlOptions = Omit<AxiosRequestConfig, 'adapter' | 'params' | 'data'
   adapterName?: string
   adapter?: string
   mockUrl?: string
+  withPublicParams?: boolean
 }
 
 // 扩展类型

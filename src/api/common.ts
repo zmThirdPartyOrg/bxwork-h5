@@ -8,8 +8,8 @@ import { curl } from './curl'
 export const reqH5Version = () =>
   curl<{ version: number }>(
     `${__DEV__ ? `${window.location.origin}` : '//www.bianxiukaoqing.top/h5-page'}/version.json`,
-    {},
-    { method: 'GET' },
+    { t: Date.now() },
+    { method: 'GET', withPublicParams: false },
   )
 
 // 密码登录

@@ -1,6 +1,7 @@
 import { navigateToWebview as navigateToWebviewNative } from '@pkstar/horn-jssdk'
 
-import { isApp, isMiniProgram } from '.'
+import { isApp } from './constants'
+import { isMiniProgram } from './isMiniProgram'
 
 export function navigateToWebview(options: { url: string; title?: string }) {
   if (isMiniProgram) {

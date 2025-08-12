@@ -6,6 +6,7 @@ import { DEFAULT_CONFIG } from './config'
 import { log } from './log'
 
 export const instance = axios.create(DEFAULT_CONFIG)
+
 // 有些接口需要返回全部内容
 const resAllUrls = ['oa/applyDetail.json', 'user/login.json']
 
