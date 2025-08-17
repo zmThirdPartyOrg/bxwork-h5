@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
   import banana from '@pkstar/banana'
+  import { formatDate } from '@pkstar/utils'
   import { useVisible } from '@pkstar/vue-use'
 
   import { reqReciveRoleList } from '@/api'
@@ -30,13 +31,21 @@
 
   const { visible, show, hide, confirm } = useVisible<Partial<ApplyLeaveDto>>({
     showCallback: async (options) => {
-      const { days, hours = 0, type = 'leave' } = options!
+      const { days, hours = 0, type = 'leave', startDt, endDt, userId } = options!
       const leaveDays = days || +(hours / 8).toFixed(2)
-
-      const res = await reqReciveRoleList({
+      const params = {
         leaveDays: Math.max(leaveDays, 8),
         type,
-      })
+      } as any
+      if (startDt && endDt) {
+        params.startDt = startDt
+        params.endDt = endDt
+      }
+      if (userId) {
+        params.userIds = userId
+      }
+      const res = await reqReciveRoleList(params)
+
       reciveRoleList.value = res
       // 初始化表单字段
       if (reciveRoleList.value) {

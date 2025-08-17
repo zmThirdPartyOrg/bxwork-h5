@@ -194,10 +194,12 @@
     const options = await banana.validate(fields)
     console.log('options=>', options)
     // 审批人参数
-    const { days, hours, isAllDay } = options
+    const { days, hours, isAllDay, startDt, endDt } = options
     const receiverObj = await receiverDialogInstance.value.show({
       days,
       hours,
+      startDt,
+      endDt,
       type: 'overtime',
     })
 

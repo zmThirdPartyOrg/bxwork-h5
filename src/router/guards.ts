@@ -13,8 +13,12 @@ export function setupGuards(router: Router) {
   // 鉴定权限
   router.beforeEach((to) => {
     checkVersion()
-    const { userinfo } = useUserinfoStore()
-
+    const { userinfo, setUserinfo } = useUserinfoStore()
+    const { token } = to.query as Record<string, any>
+    if (token) {
+      console.log('token=>', token)
+      setUserinfo({ token } as any)
+    }
     // 小程序希望早点触发 title
     if (isMiniProgram) {
       window.document.title = to?.meta?.title || ''

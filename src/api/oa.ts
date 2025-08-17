@@ -229,8 +229,14 @@ export const doApplyWithdraw = withLoading((data: { approvalId: number }) =>
 
 // 获取审批人列表
 export const reqReciveRoleList = withLoading(
-  (data: { leaveDays: number; type: 'leave' | 'overtime' }) =>
-    curl<ApplyLeaveVoItem[]>(`/oa/approverRoleList.json`, data),
+  (data: {
+    leaveDays: number
+    type: 'leave' | 'overtime'
+    // 当type为'overtime'时，这两个字段为必填
+    startDt?: string
+    endDt?: string
+    userIds?: string
+  }) => curl<ApplyLeaveVoItem[]>(`/oa/approverRoleList.json`, data),
 )
 
 // 请假申请
