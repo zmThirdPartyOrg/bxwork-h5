@@ -31,6 +31,9 @@ declare global {
 
   const BMapGL: any
   const BMap: any
+
+  const webkit: any
+  const app: any
   interface Window {
     resetKeepAlive(): void
   }

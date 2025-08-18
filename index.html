@@ -8,7 +8,7 @@
       content="width=device-width,initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
     />
     <title></title>
-    <script src="./assets/jweixin-1.6.0.js"></script>
+    <!-- <script src="./assets/jweixin-1.6.0.js"></script> -->
     <script>
       // android cordova 直接是包含在原生代码里的
       // iOS cordova 是为了支持 h5 的 post 请求，因此放在h5里
@@ -20,8 +20,10 @@
         document.head.append(script)
       }
     </script>
-    <!-- <script src="https://cdn.bootcss.com/eruda/1.5.2/eruda.min.js"></script>
-    <script>eruda.init()</script> -->
+    <script src="./assets/eruda.min.js"></script>
+    <script>
+      eruda.init()
+    </script>
   </head>
   <body>
     <div id="app"></div>
