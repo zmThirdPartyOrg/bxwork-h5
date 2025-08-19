@@ -328,7 +328,7 @@ body {
   @extend %bsb;
   background-color: #fff;
   padding: j(10) j(15);
-  font-size: j(13);
+  font-size: j(14);
   .icon {
     margin-right: j(10);
     width: j(28);
@@ -346,10 +346,13 @@ body {
   }
   .sub-text {
     color: #999;
-    font-size: j(11);
+    font-size: j(12);
   }
   .color-999 {
     color: #999;
+  }
+  .c-col-item-text {
+    margin-bottom: j(3);
   }
 }
 

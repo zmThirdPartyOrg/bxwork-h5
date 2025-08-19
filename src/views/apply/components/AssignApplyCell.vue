@@ -1,15 +1,18 @@
 <template>
-  <div class="c-col-item van-hairline--bottom" @click="handleClick">
+  <div class="c-col-item van-hairline--bottom c-m10" @click="handleClick">
     <img class="icon" :src="applyTypeValueMap.overtime?.icon" alt="" srcset="" />
     <div class="c-col-item-content">
       <div class="c-col-item-title">
-        <span class="title">{{ `${item.assignCreateBy}指派${item.createBy}加班` }}</span>
+        <span class="title">{{ `指派${item.createBy ?? '--'}加班 ` }}</span>
         <span class="sub-text">{{ item.createDt }}</span>
       </div>
       <div class="c-col-item-text">
-        <!-- <span class="c-text-primary">{{
-          applyStatusLabelMap(item?.submitStatus!, item?.status!)
-        }}</span> -->
+        加班时长：{{ item.isAllDay === 'Y' ? item.days + '天' : item.hours + '小时' }}
+      </div>
+      <div class="c-col-item-text">
+        <span class="c-text-primary">{{
+          applyStatusLabelMap(item?.submitStatus!, item?.auditStatus!)
+        }}</span>
       </div>
     </div>
   </div>
@@ -33,13 +36,14 @@
   const router = useRouter()
   const handleClick = () => {
     console.log(props.item)
-    // router.push({
-    //   path: `/apply/${props.item?.approveId}`,
-    //   query: {
-    //     title: props.item?.title,
-    //     applyType: props.applyType,
-    //   },
-    // })
+    const item = props.item
+    router.push({
+      path: `/apply/${item?.approvalId}`,
+      query: {
+        title: `指派${item.createBy ?? '--'}加班`,
+        applyType: props.applyType,
+      },
+    })
   }
 </script>
 

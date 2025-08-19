@@ -1,5 +1,5 @@
 <template>
-  <HorView class="">
+  <HorView class="" @left="backToApp">
     <ProSearch :model-value="keyword" @search="handleSearch" />
     <!-- 刷新 下拉加载 -->
     <HorScroll
@@ -19,7 +19,7 @@
         @refresh="pagingRefresh"
       />
       <AssignApplyCell
-        applyType="my"
+        applyType="assign"
         :item="item"
         v-for="(item, index) in pagingData"
         :key="index"
@@ -38,6 +38,7 @@
 
   import { reqAssignOvertimeList } from '@/api'
   import { useProSearch } from '@/components'
+  import { backToApp } from '@/utils'
 
   import AssignApplyCell from '../components/AssignApplyCell.vue'
 

@@ -1,4 +1,4 @@
-import { ato } from '@daysnap/utils'
+import { ato, isAndroid as isAndroidFn, isIOS as isIOSFn } from '@daysnap/utils'
 import jssdk from '@pkstar/horn-jssdk'
 
 // 是否是开发环境
@@ -10,10 +10,10 @@ export const NAME = 'BXKQ-APP'
 export const isApp = jssdk.canIUse()
 
 // 是否安卓
-export const isAndroid = /os-name\/android/.test(navigator.userAgent.toLowerCase())
+export const isAndroid = isAndroidFn()
 
 // 是否ios
-export const isIOS = navigator.userAgent.includes('HornIOSApp')
+export const isIOS = isIOSFn()
 
 // app 下载页
 export const DOWNLOAD_URL = `https://gyzj.gongyujjh.org.cn/app/#/download`

@@ -3,7 +3,7 @@ import type { Router } from 'vue-router'
 
 import { checkVersion } from '@/api'
 import { useUserinfoStore } from '@/stores'
-import { errorHandler, isApp, isMiniProgram } from '@/utils'
+import { errorHandler, getUserInfo, isApp, isMiniProgram } from '@/utils'
 
 export function setupGuards(router: Router) {
   router.onError((error) => {
@@ -18,7 +18,7 @@ export function setupGuards(router: Router) {
     if (token) {
       console.log('token=>', token)
       setUserinfo({ token } as any)
-      const userInfo = (window as any).getUserInfo()
+      const userInfo = getUserInfo()
       console.log('userInfo', userInfo)
     }
     // 小程序希望早点触发 title
