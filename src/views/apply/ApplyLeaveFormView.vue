@@ -32,7 +32,7 @@
   import { useProSchemaForm } from '@/components'
   import { useLeaveTypeField } from '@/hooks'
   import { useUserinfoStore } from '@/stores'
-  import { applyListTrap } from '@/utils'
+  import { applyListTrap, calculateLeaveHours } from '@/utils'
   import ReceiverDialog from '@/views/apply/components/ReciverDialog.vue'
 
   useKeepAlive()
@@ -185,10 +185,8 @@
         console.log('days=>', days)
         fields.days.value = days + 1
       } else {
-        const diff = end - start
-        const hours = diff / (1000 * 60 * 60)
-        console.log('hours=>', hours)
-        fields.hours.value = Math.ceil(hours)
+        const hours = calculateLeaveHours(start, end)
+        fields.hours.value = hours
       }
     } else {
       fields.days.value = ''

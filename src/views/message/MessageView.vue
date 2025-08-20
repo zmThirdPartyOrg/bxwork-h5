@@ -47,8 +47,8 @@
   // 系统配置数据
   const getSysConfig = async () => {
     const res = await reqConfig()
-    const { setSysConfig } = useSysConfigStore()
-    setSysConfig(res)
+    const { sysConfig, setSysConfig } = useSysConfigStore()
+    setSysConfig({ ...sysConfig, ...res })
   }
 
   onBeforeMountOrActivated(async () => {

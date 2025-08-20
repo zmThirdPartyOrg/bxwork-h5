@@ -1,4 +1,6 @@
-import { isAndroid, isIOS } from './constants'
+import { router } from '@/router'
+
+import { __DEV__, isAndroid, isIOS } from './constants'
 const __w = window as any
 
 // 统一回调原生
@@ -28,7 +30,7 @@ export function callNative(options = {}, callback?: (data: any) => void) {
 }
 
 // 返回APP
-export const backToApp = (path = '') => {
+export const backToApp = (path: string = '') => {
   try {
     if (isIOS) {
       __w.webkit.messageHandlers.backToApp.postMessage({
@@ -36,9 +38,7 @@ export const backToApp = (path = '') => {
       })
     }
     if (isAndroid) {
-      __w.app.backToApp({
-        path,
-      })
+      __w.app.backToApp(path)
     }
   } catch (err) {
     console.log('backToApp => ', err)
@@ -57,5 +57,13 @@ export const getUserInfo = () => {
     }
   } catch (err) {
     console.log('getUserInfo => ', err)
+  }
+}
+
+export const goBack = () => {
+  if (__DEV__) {
+    router.go(-1)
+  } else {
+    backToApp('')
   }
 }

@@ -4,7 +4,7 @@
     <div class="c-col-item-content">
       <div class="c-col-item-title">
         <span class="title">{{ `指派${item.createBy ?? '--'}加班 ` }}</span>
-        <span class="sub-text">{{ item.createDt }}</span>
+        <span class="sub-text">{{ item.modifyDt }}</span>
       </div>
       <div class="c-col-item-text">
         加班时长：{{ item.isAllDay === 'Y' ? item.days + '天' : item.hours + '小时' }}

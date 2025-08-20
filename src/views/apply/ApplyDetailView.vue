@@ -47,19 +47,13 @@
 
       <ProEndDivider />
 
-      <HorFixedActions
-        v-if="
-          computedApplyDetail &&
-          !['notice'].includes(query.applyType) &&
-          ['init', 'submit', 'deny', 'part'].includes(computedApplyDetail?.status)
-        "
-      >
+      <HorFixedActions v-if="computedApplyDetail">
         <!-- 我发起的 -->
         <template v-if="computedApplyDetail.applyUserId === userinfo?.content.userId">
           <VanButton
             v-if="
               ['init', 'part'].includes(computedApplyDetail.status) &&
-              !['withdraw'].includes(computedApplyDetail.submitStatus)
+              ['submit'].includes(computedApplyDetail.submitStatus)
             "
             class="c-button"
             type="danger"
@@ -70,7 +64,7 @@
           <VanButton
             v-if="
               ['init'].includes(computedApplyDetail.status) &&
-              !['withdraw'].includes(computedApplyDetail.submitStatus)
+              ['submit'].includes(computedApplyDetail.submitStatus)
             "
             class="c-button"
             type="warning"
@@ -80,7 +74,7 @@
 
           <VanButton
             v-if="
-              ['withdraw'].includes(computedApplyDetail.submitStatus) ||
+              !['submit'].includes(computedApplyDetail.submitStatus) ||
               ['deny'].includes(computedApplyDetail.status)
             "
             class="c-button"
@@ -91,12 +85,7 @@
         </template>
 
         <!-- 待我审批的 -->
-        <template
-          v-if="
-            computedApplyDetail.myStatus === 'init' &&
-            ['submit'].includes(computedApplyDetail.submitStatus)
-          "
-        >
+        <template v-if="data.approveSign === 1">
           <VanButton class="c-button" type="danger" @click="handleRefuse">拒绝</VanButton>
           <VanButton class="c-button" type="success" @click="handleAgree">同意</VanButton>
         </template>
@@ -222,10 +211,6 @@
 </script>
 
 <style lang="scss" scoped>
-
-
-
-
   @import '@/assets/scss/define.scss';
   .header-section {
     @extend %df;

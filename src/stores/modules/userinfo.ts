@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 
 import { router } from '@/router'
 import type { Userinfo } from '@/types'
-import { createNamespace, isApp, isMiniProgram } from '@/utils'
+import { __DEV__, backToApp, createNamespace, isApp, isMiniProgram } from '@/utils'
 
 import { withOut } from '../withOut'
 import { withToRefs } from '../withToRefs'
@@ -33,7 +33,11 @@ export const useUserinfoStore = withToRefs(
               window.resetKeepAlive()
               router.replace('/')
               setTimeout(() => {
-                router.push('/signin')
+                if (__DEV__) {
+                  router.push('/signin')
+                } else {
+                  backToApp('login')
+                }
               }, 10)
             }
 

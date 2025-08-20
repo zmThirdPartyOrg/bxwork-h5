@@ -43,3 +43,7 @@ export interface SysConfigDict {
   priority: number
   parentId: number
 }
+
+export interface Headers {
+  [key: string]: string
+}

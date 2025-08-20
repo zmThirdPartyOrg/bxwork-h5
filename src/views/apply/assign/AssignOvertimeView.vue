@@ -1,5 +1,5 @@
 <template>
-  <HorView class="" @left="backToApp">
+  <HorView class="" :use-left-event="false" @left="goBack">
     <ProSearch :model-value="keyword" @search="handleSearch" />
     <!-- 刷新 下拉加载 -->
     <HorScroll
@@ -38,7 +38,7 @@
 
   import { reqAssignOvertimeList } from '@/api'
   import { useProSearch } from '@/components'
-  import { backToApp } from '@/utils'
+  import { goBack } from '@/utils'
 
   import AssignApplyCell from '../components/AssignApplyCell.vue'
 

@@ -193,8 +193,9 @@ export const reqApplyList = (
 ) => curl<Array<ApplyItem>>(`oa/applyList.json`, data)
 
 // 审批详情
-export const reqApplyDetail = withLoading((data: { approveId: number }) =>
-  curl<ApplyDetailVo>(`/oa/applyDetail.json`, data),
+export const reqApplyDetail = withLoading(
+  (data: { approveId: number }) => curl<ApplyDetailVo>(`/oa/applyDetail.json`, data),
+  false,
 )
 
 // 批准审批

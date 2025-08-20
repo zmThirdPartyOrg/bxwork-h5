@@ -46,6 +46,7 @@
   })
 
   onMounted(() => {
+    console.log('App mounted')
     jssdk.closeScreenAnimation()
   })
 
