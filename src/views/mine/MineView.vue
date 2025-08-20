@@ -11,6 +11,10 @@
     <div class="c-bar"></div>
 
     <van-button class="c-button" @click="handleLogout">退出登录</van-button>
+    <van-button class="c-button disconnect-btn" plain type="danger" @click="handleDisconnect"
+      >账号注销</van-button
+    >
+
     <HorActionSheet ref="horActionSheetInstance" />
   </HorView>
 </template>
@@ -82,6 +86,16 @@
     logout()
     showToast('退出登录成功')
   }
+
+  const handleDisconnect = async () => {
+    await showConfirmDialog({
+      title: '提示',
+      allowHtml: true,
+      message: `注销账号会影响您的考勤!!!\n如果仍然需要注销，请联系管理员操作。\n管理员电话：13310020581`,
+      showCancelButton: false,
+      closeOnClickOverlay: true,
+    })
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -116,5 +130,8 @@
   }
   .c-button {
     width: 100% !important;
+    &.disconnect-btn {
+      margin-top: j(20);
+    }
   }
 </style>

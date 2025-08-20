@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { ApplyItem, AssignOvertimeItem } from '@/types'
+  import type { ApplyItem } from '@/types'
   import { applyStatusLabelMap, applyTypeValueMap } from '@/utils'
 
   const props = defineProps({
