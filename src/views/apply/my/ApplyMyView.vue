@@ -51,7 +51,7 @@
 
   // 获取实例
   const tabContentRefs = ref<any[]>([])
-  const triggerTabContentRefresh = (data: string | Record<string, any> | undefined) => {
+  const triggerTabContentRefresh = () => {
     const ref = tabContentRefs.value[active.value]
     nextTick(() => {
       // 刷新列表
@@ -60,7 +60,7 @@
   }
   const tabChange = (name: string | number, title: string) => {
     console.log(name, title)
-    triggerTabContentRefresh(undefined)
+    triggerTabContentRefresh()
   }
 
   onBeforeMountOrActivated(() => {

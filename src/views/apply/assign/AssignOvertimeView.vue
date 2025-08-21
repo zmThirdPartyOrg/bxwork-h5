@@ -34,14 +34,19 @@
 </template>
 
 <script setup lang="ts">
-  import { usePaging } from '@pkstar/vue-use'
+  import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
 
   import { reqAssignOvertimeList } from '@/api'
   import { useProSearch } from '@/components'
-  import { goBack } from '@/utils'
+  import { onBeforeMountOrActivated } from '@/hooks'
+  import { applyListTrap, goBack } from '@/utils'
 
   import AssignApplyCell from '../components/AssignApplyCell.vue'
 
+  useKeepAlive()
+  useKeepPosition({
+    getTarget: () => document.querySelector(`.assign-overtime-scroll`)!,
+  })
   const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
 
   // 分页 hooks
@@ -57,9 +62,12 @@
     },
     {
       immediate: true,
-      scrollSelector: 'assign-overtime-scroll',
     },
   )
+
+  onBeforeMountOrActivated(() => {
+    applyListTrap.create(pagingRefresh.bind(this, true))
+  })
 </script>
 
 <style lang="scss" scoped>

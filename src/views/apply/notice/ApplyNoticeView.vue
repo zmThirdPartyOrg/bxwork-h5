@@ -46,7 +46,7 @@
   })
   // 获取实例
   const tabContentRefs = ref<any[]>([])
-  const triggerTabContentRefresh = (data: string | Record<string, any> | undefined) => {
+  const triggerTabContentRefresh = () => {
     const ref = tabContentRefs.value[active.value]
     nextTick(() => {
       // 刷新列表
