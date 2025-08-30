@@ -183,7 +183,7 @@
 
     await doApplyRefuse({
       approveId: [+id],
-      approveUserId: userinfo?.content.userId ?? '',
+      approveUserId: userinfo?.content?.userId ?? '',
       comment: res.comment,
       status: 'deny',
     })

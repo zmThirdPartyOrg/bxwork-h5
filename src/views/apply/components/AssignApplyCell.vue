@@ -19,8 +19,9 @@
 </template>
 
 <script setup lang="ts">
+  import { reqApplyDetail } from '@/api'
   import type { AssignOvertimeItem } from '@/types'
-  import { applyStatusLabelMap, applyTypeValueMap } from '@/utils'
+  import { applyStatusLabelMap, applyTypeValueMap, withLoading } from '@/utils'
 
   const props = defineProps({
     item: {
@@ -34,16 +35,19 @@
   })
 
   const router = useRouter()
-  const handleClick = () => {
-    console.log(props.item)
-    const item = props.item
-    router.push({
-      path: `/apply/${item?.approvalId}`,
-      query: {
-        title: `指派${item.createBy ?? '--'}加班`,
-        applyType: props.applyType,
-      },
-    })
+  const handleClick = async () => {
+    await withLoading(async () => {
+      console.log(props.item)
+      const item = props.item
+      await reqApplyDetail({ approveId: item?.approvalId })
+      router.push({
+        path: `/apply/${item?.approvalId}`,
+        query: {
+          title: `指派${item.createBy ?? '--'}加班`,
+          applyType: props.applyType,
+        },
+      })
+    })()
   }
 </script>
 

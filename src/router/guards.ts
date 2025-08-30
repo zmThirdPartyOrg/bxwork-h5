@@ -22,8 +22,7 @@ export function setupGuards(router: Router) {
     console.log('bxkq-webview', window.location.href, token)
     // ios app获取__getUserInfo太慢，这里先取url token使用下
     if (token && token !== userinfo.value?.token) {
-      await sleep(500)
-      setUserinfo({ ...userinfo, token } as any)
+      setUserinfo({ ...userinfo.value, token } as any)
     }
 
     // 小程序希望早点触发 title
