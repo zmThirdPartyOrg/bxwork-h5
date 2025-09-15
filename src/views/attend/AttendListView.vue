@@ -77,7 +77,7 @@
       key: 'normalAttend',
     },
     {
-      label: '加班时间',
+      label: '加班',
       key: 'signDays',
     },
     {
