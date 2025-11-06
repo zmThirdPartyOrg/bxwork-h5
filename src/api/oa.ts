@@ -9,6 +9,7 @@ import type {
   AssignOvertimeUser,
   AttendDto,
   AttendItem,
+  AttendManageItem,
   AttendRecord,
   NoticeItem,
   PagingParams,
@@ -261,3 +262,29 @@ export const doAssignOvertime = withLoading((content: AssignOvertimeDto) =>
 // 指派加班列表
 export const reqAssignOvertimeList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
   curl<Array<AssignOvertimeItem>>(`/oa/otAssignList.json`, data)
+
+// 考勤管理列表
+export const reqAttendManageList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
+  curl<Array<AttendManageItem>>(`/oa/otAssignList1.json`, data).catch(
+    () =>
+      [
+        {
+          id: '123',
+          username: '黄鑫',
+          depName: '综合部',
+          date: '2025-11-06',
+          time: '07:43:57',
+          address: '市北数智大厦',
+          type: '上班',
+        },
+        {
+          id: '124',
+          username: '黄鑫',
+          depName: '综合部',
+          date: '2025-11-06',
+          time: '17:43:57',
+          address: '市北数智大厦',
+          type: '下班',
+        },
+      ] as AttendManageItem[],
+  )

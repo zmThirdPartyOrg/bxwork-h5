@@ -47,7 +47,7 @@
 
       <ProEndDivider />
 
-      <HorFixedActions v-if="computedApplyDetail">
+      <HorFixedActions v-if="computedApplyDetail" check-empty>
         <!-- 我发起的 -->
         <template v-if="computedApplyDetail.applyUserId === userinfo?.content.userId">
           <VanButton
@@ -251,6 +251,12 @@
         padding-left: 0;
         border-left: none;
       }
+    }
+  }
+
+  :deep() {
+    .hor-fixed-actions {
+      z-index: 99;
     }
   }
 </style>

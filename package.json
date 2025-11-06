@@ -14,7 +14,7 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
-    "@daysnap/horn-ui": "^0.0.40",
+    "@daysnap/horn-ui": "^0.0.51",
     "@pkstar/banana": "^0.0.3",
     "@pkstar/horn-jssdk": "^0.0.2",
     "@pkstar/utils": "^0.0.5",

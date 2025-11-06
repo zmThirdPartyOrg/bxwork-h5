@@ -382,3 +382,12 @@ export interface AssignOvertimeItem {
   budgetVersionNo: number
   sysUser: Record<string, any>
 }
+export interface AttendManageItem {
+  id: string
+  username: string
+  depName: string
+  date: string
+  time: string
+  address: string
+  type: '上班' | '下班'
+}

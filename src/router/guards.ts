@@ -55,7 +55,7 @@ export function setupGuards(router: Router) {
   router.afterEach((to) => {
     // 设置标题
     const { title, statusTheme = 'dark' } = to.meta
-    window.document.title = title || ''
+    window.document.title = title ? `${title} - 变修考勤` : `变修考勤`
 
     // 设置状态栏颜色
     if (isApp) {

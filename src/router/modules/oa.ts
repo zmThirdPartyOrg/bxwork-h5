@@ -26,6 +26,12 @@ export default defineRoutes([
     meta: { title: '考勤统计', requiresAuth: 1 },
   },
   {
+    path: '/attend/manage',
+    name: 'AttendManageView',
+    component: () => import('@/views/attend/AttendManageView.vue'),
+    meta: { title: '考勤管理', requiresAuth: 1 },
+  },
+  {
     path: '/sign',
     name: 'SignView',
     component: () => import('@/views/sign/SignView.vue'),
@@ -36,6 +42,12 @@ export default defineRoutes([
     name: 'SignListView',
     component: () => import('@/views/sign/SignListView.vue'),
     meta: { title: '足迹', requiresAuth: 1 },
+  },
+  {
+    path: '/sign/manage',
+    name: 'SignManageView',
+    component: () => import('@/views/sign/SignManageView.vue'),
+    meta: { title: '签到管理', requiresAuth: 1 },
   },
   {
     path: '/apply',

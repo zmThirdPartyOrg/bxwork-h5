@@ -42,13 +42,13 @@ export function useApplyDetailHooks() {
         is: 'HorCell',
         label: '请假天数',
         key: 'days',
-        hidden: () => isAllDay === 'N',
+        // hidden: () => isAllDay === 'N',
       },
       {
         is: 'HorCell',
         label: '请假小时',
         key: 'hours',
-        hidden: () => isAllDay === 'Y',
+        // hidden: () => isAllDay === 'Y',
       },
       {
         is: 'HorCell',
@@ -103,13 +103,13 @@ export function useApplyDetailHooks() {
         is: 'HorCell',
         label: '加班天数',
         key: 'days',
-        hidden: () => isAllDay === 'N',
+        // hidden: () => isAllDay === 'N',
       },
       {
         is: 'HorCell',
         label: '加班小时',
         key: 'hours',
-        hidden: () => isAllDay === 'Y',
+        // hidden: () => isAllDay === 'Y',
       },
     ]
   })

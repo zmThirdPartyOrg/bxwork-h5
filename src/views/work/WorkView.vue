@@ -43,6 +43,16 @@
       to: '/apply',
     },
     {
+      title: '考勤管理',
+      icon: new URL('@/assets/img/icon/attendance_manage.png', import.meta.url).href,
+      to: '/attend/manage',
+    },
+    {
+      title: '签到管理',
+      icon: new URL('@/assets/img/icon/sign_manage.png', import.meta.url).href,
+      to: '/sign/manage',
+    },
+    {
       title: '刷新页面',
       icon: new URL('@/assets/img/icon/woke_approval.png', import.meta.url).href,
       fn: () => {
@@ -68,7 +78,6 @@
     margin-top: j(15);
     display: flex; // 使用 Flexbox 布局
     flex-wrap: wrap; // 允许换行
-    justify-content: space-between; // 项目均匀分布
   }
   .work-meun-item {
     flex: 0 0 25%; // 每个菜单项占 25% 的宽度
@@ -78,7 +87,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: j(5);
+    margin-bottom: j(15);
   }
   .work-meun-item img {
     width: j(20); // 设置图片宽度

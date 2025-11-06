@@ -1,9 +1,14 @@
 <template>
-  <HorView class="" :use-left-event="false" @left="goBack">
-    <ProSearch :model-value="keyword" @search="handleSearch" />
+  <HorView class="">
+    <template #right>
+      <HorIcon name="filter" size="22" />
+    </template>
+
+    <ProSearch placeholder="请输入姓名" :model-value="keyword" @search="handleSearch" />
+
     <!-- 刷新 下拉加载 -->
     <HorScroll
-      class="assign-overtime-scroll"
+      class="attend-manage-scroll"
       :list-disabled="pagingStatus.pagingTotal <= 0"
       :pull-disabled="pagingStatus.pagingTotal <= 0"
       :finished="pagingFinished"
@@ -17,56 +22,44 @@
         :loading="pagingStatus.pagingLoading"
         @refresh="pagingRefresh"
       />
-      <AssignApplyCell
+      <AttendManageCell
         applyType="assign"
         :item="item"
         v-for="(item, index) in pagingData"
         :key="index"
       />
     </HorScroll>
-    <HorFixedActions>
-      <VanButton class="c-button" type="primary" @click="$router.push('/assign/overtime/form')"
-        >新增指派加班</VanButton
-      >
-    </HorFixedActions>
   </HorView>
 </template>
 
 <script setup lang="ts">
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
 
-  import { reqAssignOvertimeList } from '@/api'
+  import { reqAttendManageList } from '@/api'
   import { useProSearch } from '@/components'
-  import { onBeforeMountOrActivated } from '@/hooks'
-  import { applyListTrap, goBack } from '@/utils'
 
-  import AssignApplyCell from '../components/AssignApplyCell.vue'
+  import AttendManageCell from './components/AttendManageCell.vue'
 
   useKeepAlive()
   useKeepPosition({
-    getTarget: () => document.querySelector(`.assign-overtime-scroll`)!,
+    getTarget: () => document.querySelector(`.attend-manage-scroll`)!,
   })
-  const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
 
+  const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
     async ([pageindex, pagesize], {}) => {
-      const content = await reqAssignOvertimeList({
+      const content = await reqAttendManageList({
         pageindex,
         pagesize,
-        keyword: keyword.value,
-        waitStatus: '',
-      })
-      return [content, 99]
+        keyword,
+      } as any)
+      return [content, 9999]
     },
     {
       immediate: true,
     },
   )
-
-  onBeforeMountOrActivated(() => {
-    applyListTrap.create(pagingRefresh.bind(this, true))
-  })
 </script>
 
 <style lang="scss" scoped>
