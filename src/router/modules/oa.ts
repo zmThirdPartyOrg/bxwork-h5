@@ -32,6 +32,12 @@ export default defineRoutes([
     meta: { title: '考勤管理', requiresAuth: 1 },
   },
   {
+    path: '/attend/manage/filter',
+    name: 'AttendManageFilterView',
+    component: () => import('@/views/attend/AttendManageFilterView.vue'),
+    meta: { title: '筛选', requiresAuth: 1 },
+  },
+  {
     path: '/sign',
     name: 'SignView',
     component: () => import('@/views/sign/SignView.vue'),

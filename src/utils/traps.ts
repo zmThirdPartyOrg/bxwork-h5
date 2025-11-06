@@ -5,6 +5,9 @@ import type { DepItem, SysConfigDict } from '@/types'
 // 通用页面刷新 & 筛选
 export const refreshTrap = createTrapInstance<Record<string, any>>('trap:view:refresh')
 
+// 通用筛选条件
+export const commonFilterTrap = createTrapInstance<Record<string, any>>('trap:common:filter')
+
 // 公告列表刷新
 export const noticeListTrap = createTrapInstance('trap:notice-list:refresh')
 

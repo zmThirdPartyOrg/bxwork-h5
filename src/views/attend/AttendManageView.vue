@@ -1,7 +1,8 @@
 <template>
   <HorView class="">
     <template #right>
-      <HorIcon name="filter" size="22" />
+      <FilterIconButton class="filter-btn" path="/attend/manage/filter" :query-params="queryParams">
+      </FilterIconButton>
     </template>
 
     <ProSearch placeholder="请输入姓名" :model-value="keyword" @search="handleSearch" />
@@ -37,6 +38,7 @@
 
   import { reqAttendManageList } from '@/api'
   import { useProSearch } from '@/components'
+  import { useQueryParamsRefresh } from '@/hooks'
 
   import AttendManageCell from './components/AttendManageCell.vue'
 
@@ -46,6 +48,9 @@
   })
 
   const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
+  // 筛选
+  const queryParams = useQueryParamsRefresh(() => pagingRefresh(true))
+
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
     async ([pageindex, pagesize], {}) => {
@@ -53,6 +58,7 @@
         pageindex,
         pagesize,
         keyword,
+        ...queryParams.value,
       } as any)
       return [content, 9999]
     },

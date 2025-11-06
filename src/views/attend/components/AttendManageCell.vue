@@ -22,13 +22,16 @@
       </li>
     </ul>
     <div class="c-item-footer">
-      <button @click="handleClick">修改</button>
-      <button>删除</button>
+      <button @click="handleEdit">修改</button>
+      <button @click="handleDel">删除</button>
     </div>
   </dl>
 </template>
 
 <script setup lang="ts">
+  import { sleep } from '@pkstar/utils'
+  import { showConfirmDialog, showToast } from 'vant'
+
   import type { AttendManageItem } from '@/types'
 
   const props = defineProps({
@@ -39,13 +42,19 @@
   })
   const router = useRouter()
 
-  const handleClick = () => {
-    router.push({
-      path: '/attend/attend-manage/attend-manage-edit',
-      query: {
-        id: props.item.id,
-      },
+  const handleEdit = () => {
+    console.log('点击了修改', props.item)
+  }
+
+  // 删除
+  const handleDel = async () => {
+    await showConfirmDialog({
+      title: '确认删除吗？',
+      // confirmButtonText: '确定',
+      // cancelButtonText: '取消',
     })
+    sleep(1000)
+    showToast('删除成功')
   }
 </script>
 

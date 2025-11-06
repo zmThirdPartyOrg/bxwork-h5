@@ -1,11 +1,17 @@
-import { refreshTrap } from '@/utils'
+import { commonFilterTrap } from '@/utils'
 
-export function useQueryParamsRefresh(task: (loading?: boolean) => void) {
-  const queryParams = ref<Record<string, any>>({})
+export function useQueryParamsRefresh(
+  task: (loading?: boolean) => void,
+  options?: {
+    initialParams?: Record<string, any>
+  },
+) {
+  const { initialParams } = options || {}
+  const queryParams = ref<Record<string, any>>({ ...initialParams })
 
   onBeforeMount(() => {
     let callback: any = task
-    refreshTrap.create((value) => {
+    commonFilterTrap.create((value) => {
       queryParams.value = value
       callback(true)
       callback = null
@@ -14,7 +20,7 @@ export function useQueryParamsRefresh(task: (loading?: boolean) => void) {
   })
 
   onActivated(() => {
-    refreshTrap.create((value) => {
+    commonFilterTrap.create((value) => {
       if (value) {
         queryParams.value = value
       }

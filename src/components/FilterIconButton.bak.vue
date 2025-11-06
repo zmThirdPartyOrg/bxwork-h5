@@ -1,12 +1,19 @@
 <template>
-  <div class="filter-button" :class="{ 'is-active': isActive }" @click="handleFilter">
-    <HorIcon class="icon" size="18" name="filter-o" />
-    <slot></slot>
-  </div>
+  <VanFloatingBubble v-if="isMiniProgram" icon="filter-o" @click="handleFilter" />
+  <VanIcon
+    v-else
+    class="filter-icon-button"
+    :class="{ 'is-active': isActive }"
+    size="24"
+    name="filter-o"
+    @click="handleFilter"
+  />
 </template>
 
 <script setup lang="ts">
-  import { isEmptyObject } from '@daysnap/utils'
+  import { isEmptyObject } from '@pkstar/utils'
+
+  import { isMiniProgram } from '@/utils'
 
   const props = defineProps({
     path: {
@@ -31,23 +38,11 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/scss/define.scss';
-
-  .filter-button {
+  @use '@/assets/scss/define.scss' as *;
+  .filter-icon-button {
     @extend %c9;
-    @extend %df;
-    @extend %fdc;
-    @extend %aic;
-    font-size: j(12);
-    line-height: j(14);
-    .icon {
-      @extend %c9;
-    }
     &.is-active {
       color: $color-primary;
-      .icon {
-        color: $color-primary;
-      }
     }
   }
 </style>

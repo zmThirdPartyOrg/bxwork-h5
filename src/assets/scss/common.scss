@@ -90,6 +90,31 @@ body {
       margin-top: 0;
     }
   }
+  
+  &.is-write {
+    background-color: #fff;
+    border-top: 1px solid #eee;
+  }
+
+  &.is-button-group,
+  > .is-button-group {
+    @extend %df;
+    @extend %fww;
+    .c-button {
+      @extend %df1;
+      margin-left: j(12);
+      &.van-button {
+        margin-top: 0;
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+    .is-w125 {
+      width: 125px;
+      flex: none;
+    }
+  }
 }
 
 .c-ios-seat {
