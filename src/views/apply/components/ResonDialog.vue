@@ -44,11 +44,12 @@
 
   const { visible, show, hide, confirm } = useVisible<Partial<typeof props>>({
     showCallback: async (options) => {
+      formFileds.comment.value = ''
       dynamicProps.value = options
     },
     confirmCallback() {
-      const options = banana.validate(formFileds)
-      console.log('formFileds.value', formFileds, options)
+      const options = banana.validate(formFileds.value)
+      console.log('formFileds.value', formFileds.value, options)
       return options
     },
   })

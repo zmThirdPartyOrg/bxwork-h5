@@ -43,7 +43,7 @@
       to: '/apply',
     },
     {
-      title: '考勤管理',
+      title: '打卡管理',
       icon: new URL('@/assets/img/icon/attendance_manage.png', import.meta.url).href,
       to: '/attend/manage',
     },

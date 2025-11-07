@@ -18,7 +18,16 @@
       :loading="pagingStatus.pagingLoading"
       @refresh="pagingRefresh"
     />
-    <ApplyCell applyType="wait" :item="item" v-for="item in pagingData" :key="item.approveId" />
+    <ApplyCell
+      class="c-m10"
+      v-for="item in pagingData"
+      :item="item"
+      :key="item.approveId"
+      :checked="!!hasSelectedMap[item.approveId]"
+      @select="handleSelect(item)"
+      applyType="wait"
+      with-checkbox
+    />
   </HorScroll>
 </template>
 
@@ -28,8 +37,9 @@
   import { reqApplyList } from '@/api'
   import { useProSearch } from '@/components'
   import ApplyCell from '@/components/ApplyCell.vue'
+  import type { ApplyItem } from '@/types'
+  import { withLoading } from '@/utils'
 
-  const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
   const props = defineProps({
     title: {
       type: String,
@@ -40,16 +50,20 @@
     },
   })
 
+  const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
     async ([pageindex, pagesize], { loading }) => {
-      const content = await reqApplyList({
-        pageindex,
-        pagesize,
-        applyType: 'wait',
-        waitStatus: props.type,
-        title: keyword.value,
-      })
+      const content = await withLoading(reqApplyList)(
+        {
+          pageindex,
+          pagesize,
+          applyType: 'wait',
+          waitStatus: props.type,
+          title: keyword.value,
+        },
+        loading,
+      )
       return [content, 99]
     },
     {
@@ -58,11 +72,40 @@
     },
   )
 
+  // 选择
+  const selected = ref<ApplyItem[]>([])
+  const hasSelectedMap = computed(() => {
+    return selected.value.reduce<Record<string, boolean>>((res, item) => {
+      res[item.approveId] = true
+      return res
+    }, {})
+  })
+  const limitImportNum = 20
+  const handleSelect = (item: ApplyItem) => {
+    const { approveId } = item
+    const index = selected.value.findIndex((item) => item.approveId === approveId)
+    if (index > -1) {
+      selected.value.splice(index, 1)
+    } else {
+      if (selected.value.length >= limitImportNum) {
+        throw `单次最多可审批${limitImportNum}人`
+      }
+      selected.value.push(item)
+    }
+  }
+
   defineExpose({
     pagingRefresh,
+    selected,
   })
 </script>
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
+
+  .batch-btn {
+    position: fixed;
+    right: 10px;
+    bottom: 100px;
+  }
 </style>

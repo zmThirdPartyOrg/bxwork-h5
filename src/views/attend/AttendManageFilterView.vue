@@ -5,8 +5,6 @@
     <template v-else>
       <ProSchemaForm :metadata="metadata" />
 
-      <ProEndDivider />
-
       <div class="c-fixed-bottom is-write">
         <div class="is-button-group">
           <VanButton class="c-button is-w125 is-transparent" plain @click="handleReset">
@@ -42,9 +40,9 @@
     const maxDate = new Date(year + 1, month, day)
 
     return {
-      dealTime: {
+      xxx: {
         is: 'HorDateRangePicker',
-        label: '下单日期',
+        label: '考勤日期',
         value: [],
         minDate,
         maxDate,
@@ -55,16 +53,6 @@
             orderDateStart,
             orderDateEnd,
           }
-        },
-      },
-      auctionTypeStr: {
-        is: 'HorCheckboxButton',
-        label: '拍卖类型',
-        value: [],
-        get: (v) => v.join(','),
-        set: (s, f) => (f.value = s.auctionTypeStr ? s.auctionTypeStr.split(',') : []),
-        props: {
-          direction: 'column',
         },
       },
     }

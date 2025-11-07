@@ -1,5 +1,16 @@
 <template>
   <HorView use-tab-scroll :left-arrow="$route.path === '/apply/wait'">
+    <template v-if="active === 0" #right>
+      <VanButton
+        size="small"
+        class="batch-btn"
+        icon="completed-o"
+        type="primary"
+        round
+        @click="handleBatchApproval"
+        >批量审批</VanButton
+      >
+    </template>
     <VanTabs @change="tabChange" v-model:active="active" sticky>
       <VanTab :title="item.name" v-for="(item, index) in tabs" :key="index">
         <ApplyWaitTabContent
@@ -9,6 +20,8 @@
         ></ApplyWaitTabContent>
       </VanTab>
     </VanTabs>
+
+    <BatchApprovalDialog ref="batchApprovalDialogInstance" />
   </HorView>
 </template>
 
@@ -19,6 +32,9 @@
   import { applyListTrap } from '@/utils'
 
   import ApplyWaitTabContent from './components/ApplyWaitTabContent.vue'
+  import BatchApprovalDialog from './components/BatchApprovalDialog.vue'
+
+  const batchApprovalDialogInstance = ref() as Ref<InstanceType<typeof BatchApprovalDialog>>
 
   const active = ref(0)
   const tabs = [
@@ -55,12 +71,26 @@
     })
   }
   const tabChange = () => {
-    triggerTabContentRefresh()
+    // triggerTabContentRefresh()
   }
 
   onBeforeMountOrActivated(() => {
     applyListTrap.create(triggerTabContentRefresh)
   })
+
+  // 批量审批
+  const handleBatchApproval = async () => {
+    const ref = tabContentRefs.value[active.value]
+    const selected = ref?.selected
+    // 检查是否有选中项
+    if (!selected?.length) {
+      throw '请选择要审批的项'
+    }
+    await batchApprovalDialogInstance.value?.show({
+      selected,
+    })
+    triggerTabContentRefresh()
+  }
 
   defineExpose({
     tabs,
