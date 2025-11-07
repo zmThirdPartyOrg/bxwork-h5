@@ -29,7 +29,13 @@ export default defineRoutes([
     path: '/attend/manage',
     name: 'AttendManageView',
     component: () => import('@/views/attend/AttendManageView.vue'),
-    meta: { title: '考勤管理', requiresAuth: 1 },
+    meta: { title: '打卡管理', requiresAuth: 1 },
+  },
+  {
+    path: '/attend/manage/form/:id?',
+    name: 'AttendManageFormView',
+    component: () => import('@/views/attend/AttendManageFormView.vue'),
+    meta: { title: '打卡编辑', requiresAuth: 1 },
   },
   {
     path: '/attend/manage/filter',

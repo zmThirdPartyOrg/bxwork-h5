@@ -18,12 +18,12 @@
       </li>
       <li class="c-item-cell">
         <span>备注：</span>
-        <span></span>
+        <span>{{ item.remark || '-' }}</span>
       </li>
     </ul>
     <div class="c-item-footer">
       <button @click="handleEdit">修改</button>
-      <button @click="handleDel">删除</button>
+      <button @click="emit('del')">删除</button>
     </div>
   </dl>
 </template>
@@ -41,20 +41,11 @@
     },
   })
   const router = useRouter()
+  const emit = defineEmits(['edit', 'del'])
 
   const handleEdit = () => {
     console.log('点击了修改', props.item)
-  }
-
-  // 删除
-  const handleDel = async () => {
-    await showConfirmDialog({
-      title: '确认删除吗？',
-      // confirmButtonText: '确定',
-      // cancelButtonText: '取消',
-    })
-    sleep(1000)
-    showToast('删除成功')
+    router.push(`/attend/manage/form/${props.item.id}`)
   }
 </script>
 

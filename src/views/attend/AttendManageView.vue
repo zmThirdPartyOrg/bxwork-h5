@@ -27,17 +27,27 @@
         :item="item"
         v-for="(item, index) in pagingData"
         :key="index"
+        @del="handleDel(index, item)"
       />
     </HorScroll>
+    <HorFixedActions>
+      <VanButton class="c-button" type="primary" @click="$router.push('/attend/manage/form')"
+        >新增打卡</VanButton
+      >
+    </HorFixedActions>
   </HorView>
 </template>
 
 <script setup lang="ts">
+  import { sleep } from '@pkstar/utils'
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
+  import { showConfirmDialog, showToast } from 'vant'
 
   import { reqAttendManageList } from '@/api'
   import { useProSearch } from '@/components'
-  import { useQueryParamsRefresh } from '@/hooks'
+  import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
+  import type { AttendManageItem } from '@/types'
+  import { refreshTrap } from '@/utils'
 
   import AttendManageCell from './components/AttendManageCell.vue'
 
@@ -65,6 +75,21 @@
       immediate: true,
     },
   )
+
+  // 删除
+  const handleDel = async (index: number, item: AttendManageItem) => {
+    console.log(index, item)
+    await showConfirmDialog({
+      message: `确认删除${item.username} ${item.date} ${item.time}的${item.type}打卡吗？`,
+    })
+    sleep(1000)
+    pagingData.value.splice(index, 1)
+    showToast('删除成功' + index)
+  }
+
+  onBeforeMountOrActivated(() => {
+    refreshTrap.create(pagingRefresh)
+  })
 </script>
 
 <style lang="scss" scoped>
