@@ -12,11 +12,27 @@
     <!-- 表单 -->
     <ProSchemaForm :metadata="formFileds">
       <template #selected="{ item }">
-        <VanSpace>
+        <dl class="c-item" v-for="(i, index) in item.value" :key="index" :item="i">
+          <div class="c-item-header">
+            <h3>{{ i.title }}</h3>
+            <span class="c-item-status">状态</span>
+          </div>
+          <ul class="c-item-content">
+            <li class="c-item-cell">
+              <span>申请时间：</span>
+              <span>{{ i.modifyDt }}</span>
+            </li>
+          </ul>
+        </dl>
+        <!-- <dl v-for="(tag, index) in item.value" :key="index">
+          <dt></dt>
+          <dd>{{ tag.title }}-{{ tag.modifyDt }}</dd>
+        </dl> -->
+        <!-- <VanSpace>
           <VanTag type="primary" plain v-for="(tag, index) in item.value" :key="index"
             >{{ tag.title }}-{{ tag.modifyDt }}</VanTag
           >
-        </VanSpace>
+        </VanSpace> -->
       </template>
     </ProSchemaForm>
     <template #footer>
@@ -58,7 +74,7 @@
   const formFileds = useProSchemaForm({
     selected: {
       value: [],
-      label: '申请',
+      label: '',
       is: 'HorCell',
       disabled: true,
       options: [],
@@ -85,6 +101,7 @@
   const { visible, show, hide, confirm } = useVisible<Partial<typeof props & { selected: any[] }>>({
     showCallback: async (options) => {
       formFileds.comment.value = ''
+      formFileds.selected.label = `共计${options?.selected?.length}条申请`
       formFileds.selected.value = options?.selected || []
     },
     confirmCallback() {},
@@ -124,10 +141,20 @@
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
   :deep(.selected-cell) {
-    .hor-cell-value span {
-      padding: var(--van-tag-padding);
+    .hor-cell-value {
+      display: flex;
+      flex-direction: column;
+      max-height: 170px;
+      overflow: hidden auto;
+    }
+    .c-item-status {
       flex: 0 1 auto;
     }
+  }
+  .c-item {
+    background-color: #f7f7f7;
+    border: 1px solid #1989fa;
+    border-radius: 5px;
   }
 
   .btn-bar {
