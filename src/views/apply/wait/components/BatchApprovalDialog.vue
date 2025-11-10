@@ -38,7 +38,7 @@
     <template #footer>
       <div class="btn-bar">
         <VanButton type="danger" size="small" @click="handleRefuse">拒绝</VanButton>
-        <VanButton type="success" size="small" @click="handleAgree">同意</VanButton>
+        <VanButton type="primary" size="small" @click="handleAgree">同意</VanButton>
       </div>
     </template>
   </VanDialog>
@@ -153,8 +153,9 @@
   }
   .c-item {
     background-color: #f7f7f7;
-    border: 1px solid #1989fa;
+    border-radius: #1989fa;
     border-radius: 5px;
+    box-sizing: border-box;
   }
 
   .btn-bar {

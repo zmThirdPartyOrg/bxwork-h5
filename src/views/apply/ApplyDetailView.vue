@@ -87,7 +87,7 @@
         <!-- 待我审批的 -->
         <template v-if="data.approveSign === 1">
           <VanButton class="c-button" type="danger" @click="handleRefuse">拒绝</VanButton>
-          <VanButton class="c-button" type="success" @click="handleAgree">同意</VanButton>
+          <VanButton class="c-button" type="primary" @click="handleAgree">同意</VanButton>
         </template>
       </HorFixedActions>
     </template>
