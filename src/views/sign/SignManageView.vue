@@ -92,7 +92,7 @@
   // 编辑
   const handleEdit = (index: number, item: SignManageItem) => {
     console.log('点击了修改', item)
-    router.push(`/sign/mange/form/${item.id}`)
+    router.push(`/sign/manage/form/${item.id}`)
   }
 
   onBeforeMountOrActivated(() => {

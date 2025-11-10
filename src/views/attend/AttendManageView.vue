@@ -1,8 +1,7 @@
 <template>
   <HorView class="">
     <template #right>
-      <FilterIconButton class="filter-btn" path="/attend/manage/filter" :query-params="queryParams">
-      </FilterIconButton>
+      <FilterIconButton path="/attend/manage/filter" :query-params="queryParams" />
     </template>
 
     <ProSearch placeholder="请输入姓名" :model-value="keyword" @search="handleSearch" />

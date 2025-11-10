@@ -1,6 +1,6 @@
 <template>
   <div class="filter-button" :class="{ 'is-active': isActive }" @click="handleFilter">
-    <HorIcon class="icon" size="18" name="filter-o" />
+    <HorIcon class="icon" size="22" name="filter-o" />
     <slot></slot>
   </div>
 </template>
