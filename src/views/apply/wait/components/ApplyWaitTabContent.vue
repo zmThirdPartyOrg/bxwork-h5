@@ -26,7 +26,7 @@
       :checked="!!hasSelectedMap[item.approveId]"
       @select="handleSelect(item)"
       applyType="wait"
-      with-checkbox
+      :with-checkbox="type === 'me'"
     />
   </HorScroll>
 </template>
