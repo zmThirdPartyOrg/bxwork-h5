@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-  import { isEmptyObject } from '@daysnap/utils'
+  import { isEmptyObject } from '@pkstar/utils'
 
   const props = defineProps({
     path: {

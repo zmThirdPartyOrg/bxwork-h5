@@ -11,6 +11,7 @@
     <VanTabbar fixed route placeholder v-model="current">
       <VanTabbarItem
         v-for="(item, index) in computedTabbarRoutes"
+        @click="handleTab($event, index)"
         :key="item.path"
         replace
         :to="{ path: item.path, query: $route.query }"
@@ -24,6 +25,8 @@
 
 <script setup lang="ts">
   import { useKeepAlive } from '@pkstar/vue-use'
+
+  import { __DEV__ } from '@/utils'
 
   const router = useRouter()
   const computedTabbarRoutes = computed(() => {
@@ -44,6 +47,13 @@
     const isContain = computedTabbarRoutes.value.find((item) => item.path === route.path)
     return isContain ? '' : 'fix'
   })
+
+  const handleTab = (e: Event, index: number) => {
+    if (__DEV__) {
+      return
+    }
+    alert(index)
+  }
 </script>
 
 <style lang="scss" scoped>

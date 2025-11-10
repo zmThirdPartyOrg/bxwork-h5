@@ -26,7 +26,7 @@
       :checked="!!hasSelectedMap[item.approveId]"
       @select="handleSelect(item)"
       applyType="wait"
-      :with-checkbox="type === 'me'"
+      :with-checkbox="['overtime', 'leave'].includes(props.applyType)"
     />
   </HorScroll>
 </template>
@@ -47,6 +47,10 @@
     },
     type: {
       type: String,
+    },
+    applyType: {
+      type: String,
+      default: '',
     },
   })
 

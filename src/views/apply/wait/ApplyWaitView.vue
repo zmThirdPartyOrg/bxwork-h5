@@ -1,6 +1,6 @@
 <template>
   <HorView use-tab-scroll :left-arrow="$route.path === '/apply/wait'">
-    <template v-if="active === 0" #right>
+    <template v-if="[0, 1].includes(active)" #right>
       <VanButton
         size="small"
         class="batch-btn"
@@ -17,6 +17,7 @@
           :ref="(el: any) => (tabContentRefs[index] = el)"
           :title="item.name"
           :type="item.type"
+          :apply-type="item.applyType"
         ></ApplyWaitTabContent>
       </VanTab>
     </VanTabs>
@@ -39,9 +40,16 @@
   const active = ref(0)
   const tabs = [
     {
-      name: '待我审批',
+      name: '待我审批(加班)',
       is: 'ApplyWaitMeTabContent',
       type: 'me',
+      applyType: 'overtime',
+    },
+    {
+      name: '待我审批(请假)',
+      is: 'ApplyWaitMeTabContent',
+      type: 'me',
+      applyType: 'leave',
     },
     {
       name: '等待他人审批',
