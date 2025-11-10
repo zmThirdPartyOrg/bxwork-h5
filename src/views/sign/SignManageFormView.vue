@@ -1,5 +1,5 @@
 <template>
-  <HorView :title="id ? '编辑打卡' : '新增打卡'">
+  <HorView :title="id ? '编辑签到' : '新增签到'">
     <div class="c-bar"></div>
     <ProSchemaForm :metadata="fields"> </ProSchemaForm>
 
@@ -75,26 +75,15 @@
         }
       },
     },
-    type: {
-      value: '1',
-      label: '打卡类型',
-      is: 'HorRadio',
-      options: [
-        { label: '上班', value: '1' },
-        { label: '下班', value: '2' },
-      ],
-      props: {},
-      rules: [{ required: true, message: '请选择打卡类型' }],
-    },
     location: {
       value: '',
       label: '地点',
       is: 'HorField',
       props: {
-        placeholder: '请输入加班地点',
+        placeholder: '请输入地点',
         maxlength: 50,
       },
-      rules: [{ required: true, message: '请输入加班地点' }],
+      rules: [{ required: true, message: '请输入地点' }],
     },
     startDt: {
       value: '',

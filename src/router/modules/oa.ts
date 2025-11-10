@@ -40,7 +40,7 @@ export default defineRoutes([
   {
     path: '/attend/manage/filter',
     name: 'AttendManageFilterView',
-    component: () => import('@/views/attend/AttendManageFilterView.vue'),
+    component: () => import('@/views/common/AttendManageFilterView.vue'),
     meta: { title: '筛选', requiresAuth: 1 },
   },
   {
@@ -60,6 +60,12 @@ export default defineRoutes([
     name: 'SignManageView',
     component: () => import('@/views/sign/SignManageView.vue'),
     meta: { title: '签到管理', requiresAuth: 1 },
+  },
+  {
+    path: '/sign/manage/form/:id?',
+    name: 'SignManageFormView',
+    component: () => import('@/views/sign/SignManageFormView.vue'),
+    meta: { title: '签到编辑', requiresAuth: 1 },
   },
   {
     path: '/apply',

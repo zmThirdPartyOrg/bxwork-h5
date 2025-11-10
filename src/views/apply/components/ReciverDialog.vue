@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
   import banana from '@pkstar/banana'
-  import { formatDate } from '@pkstar/utils'
   import { useVisible } from '@pkstar/vue-use'
 
   import { reqReciveRoleList } from '@/api'
