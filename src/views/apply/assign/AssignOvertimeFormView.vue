@@ -30,17 +30,19 @@
     HorPickerInstance,
   } from '@daysnap/horn-ui'
   import banana from '@pkstar/banana'
-  import { formatDate } from '@pkstar/utils'
+  import { formatDate, sleep } from '@pkstar/utils'
   import { useKeepAlive, useQuery } from '@pkstar/vue-use'
   import { showSuccessToast } from 'vant'
 
   import { doAssignOvertime, reqAssignUsers, reqLeaveInfo } from '@/api'
   import { useProSchemaForm } from '@/components'
-  import { applyListTrap } from '@/utils'
+  import { useUserinfoStore } from '@/stores'
+  import { applyListTrap, withLoading } from '@/utils'
   import ReceiverDialog from '@/views/apply/components/ReciverDialog.vue'
 
   useKeepAlive()
 
+  const { userinfo } = useUserinfoStore()
   const { detail } = useQuery()
   const detailObj = detail ? JSON.parse(detail) : ''
   console.log(detailObj)
@@ -236,16 +238,28 @@
       type: 'overtime',
     })
 
-    console.log('receiver', receiverObj, isAllDay)
-    await doAssignOvertime({
-      ...options,
-      ...receiverObj,
-      isProject: 'N',
-      days: isAllDay === 'Y' ? days : 0,
-    })
-    showSuccessToast('申请成功')
-    applyListTrap.trigger()
-    router.go(-1)
+    // console.log('receiver', receiverObj, isAllDay)
+    const firstReceiver = receiverObj.receiveId.split(',')[0]
+    withLoading(async () => {
+      await sleep(3000)
+      // await doAssignOvertime({
+      //   ...options,
+      //   ...receiverObj,
+      //   isProject: 'N',
+      //   days: isAllDay === 'Y' ? days : 0,
+      // })
+
+      //第一位审批人是当前用户，自动审批成功
+      if (+firstReceiver === userinfo?.content.userId!) {
+        // TODO 待接口
+        alert('第一位审批人是当前用户，自动审批成功')
+      }
+      return
+
+      showSuccessToast('申请成功')
+      applyListTrap.trigger()
+      router.go(-1)
+    })()
   }
 
   onBeforeMount(async () => {

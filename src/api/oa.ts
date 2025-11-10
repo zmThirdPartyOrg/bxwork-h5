@@ -256,9 +256,8 @@ export const doApplyOvertime = withLoading((content: ApplyOvertimeDto) =>
 export const reqAssignUsers = () => curl<AssignOvertimeUser[]>(`/oa/otAssignUsers.json`)
 
 // 加班指派
-export const doAssignOvertime = withLoading((content: AssignOvertimeDto) =>
-  curl(`/oa/submitOvertimeAssign.json`, { content }),
-)
+export const doAssignOvertime = (content: AssignOvertimeDto) =>
+  curl(`/oa/submitOvertimeAssign.json`, { content })
 
 // 指派加班列表
 export const reqAssignOvertimeList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
