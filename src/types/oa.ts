@@ -391,3 +391,13 @@ export interface AttendManageItem {
   address: string
   type: '上班' | '下班'
 }
+
+export interface SignManageItem {
+  id: string
+  username: string
+  depName: string
+  dt: string
+  locationDetail: string
+  location: string
+  remark?: string
+}

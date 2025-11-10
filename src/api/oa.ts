@@ -14,6 +14,7 @@ import type {
   NoticeItem,
   PagingParams,
   PagingResult,
+  SignManageItem,
   SignRecord,
 } from '@/types'
 import { withLoading } from '@/utils'
@@ -287,4 +288,28 @@ export const reqAttendManageList = (data: PagingParams & { keyword: string; wait
           type: '下班',
         },
       ] as AttendManageItem[],
+  )
+
+//签到管理列表
+export const reqSignManageList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
+  curl<Array<SignManageItem>>(`/oa/otAssignList1.json`, data).catch(
+    () =>
+      [
+        {
+          id: '123',
+          username: '黄鑫',
+          depName: '综合部',
+          dt: '2025-11-10 10:04:22',
+          location: '上海市普陀区真北路真北路2251号商务办公中心',
+          locationDetail: '上海市普陀区真北路真北路2251号商务办公中心',
+        },
+        {
+          id: '124',
+          username: '黄鑫',
+          depName: '综合部',
+          dt: '2025-11-10 10:04:22',
+          location: '上海市普陀区真北路真北路2251号商务办公中心',
+          locationDetail: '上海市普陀区真北路真北路2251号商务办公中心',
+        },
+      ] as SignManageItem[],
   )

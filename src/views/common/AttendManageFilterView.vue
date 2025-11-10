@@ -42,7 +42,7 @@
     return {
       xxx: {
         is: 'HorDateRangePicker',
-        label: '考勤日期',
+        label: '日期',
         value: [],
         minDate,
         maxDate,

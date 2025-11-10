@@ -1,8 +1,104 @@
 <template>
-  <HorView class=""></HorView>
+  <HorView class="">
+    <template #right>
+      <FilterIconButton class="filter-btn" path="/attend/manage/filter" :query-params="queryParams">
+      </FilterIconButton>
+    </template>
+
+    <ProSearch placeholder="请输入姓名" :model-value="keyword" @search="handleSearch" />
+
+    <!-- 刷新 下拉加载 -->
+    <HorScroll
+      class="attend-manage-scroll"
+      :list-disabled="pagingStatus.pagingTotal <= 0"
+      :pull-disabled="pagingStatus.pagingTotal <= 0"
+      :finished="pagingFinished"
+      @refresh="pagingRefresh"
+      @load="pagingLoad"
+    >
+      <!-- 骨架屏 -->
+      <ProSkeleton
+        v-if="pagingStatus.pagingTotal <= 0"
+        v-model:error="pagingStatus.pagingError"
+        :loading="pagingStatus.pagingLoading"
+        @refresh="pagingRefresh"
+      />
+      <SignManageCell
+        applyType="assign"
+        :item="item"
+        v-for="(item, index) in pagingData"
+        :key="index"
+        @del="handleDel(index, item)"
+        @edit="handleEdit(index, item)"
+      />
+    </HorScroll>
+    <HorFixedActions>
+      <VanButton class="c-button" type="primary" @click="$router.push('/sign/manage/form')"
+        >新增签到</VanButton
+      >
+    </HorFixedActions>
+  </HorView>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { sleep } from '@pkstar/utils'
+  import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
+  import { showConfirmDialog, showToast } from 'vant'
+
+  import { reqSignManageList } from '@/api'
+  import { useProSearch } from '@/components'
+  import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
+  import type { SignManageItem } from '@/types'
+  import { refreshTrap } from '@/utils'
+
+  import SignManageCell from './components/SignManageCell.vue'
+
+  useKeepAlive()
+  useKeepPosition({
+    getTarget: () => document.querySelector(`.attend-manage-scroll`)!,
+  })
+
+  const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
+  // 筛选
+  const queryParams = useQueryParamsRefresh(() => pagingRefresh(true))
+
+  // 分页 hooks
+  const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
+    async ([pageindex, pagesize], {}) => {
+      const content = await reqSignManageList({
+        pageindex,
+        pagesize,
+        keyword,
+        ...queryParams.value,
+      } as any)
+      return [content, 9999]
+    },
+    {
+      immediate: true,
+    },
+  )
+
+  // 删除
+  const handleDel = async (index: number, item: SignManageItem) => {
+    console.log(index, item)
+    await showConfirmDialog({
+      message: `确认删除${item.username} ${item.dt}的签到吗？`,
+    })
+    sleep(1000)
+    pagingData.value.splice(index, 1)
+    showToast('删除成功' + index)
+  }
+  const router = useRouter()
+  // 编辑
+  const handleEdit = (index: number, item: SignManageItem) => {
+    console.log('点击了修改', item)
+    router.push(`/sign/manage/form/${item.id}`)
+  }
+
+  onBeforeMountOrActivated(() => {
+    refreshTrap.create(pagingRefresh)
+  })
+</script>
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;

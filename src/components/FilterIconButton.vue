@@ -43,11 +43,11 @@
     .icon {
       @extend %c9;
     }
-    &.is-active {
-      color: $color-primary;
-      .icon {
-        color: $color-primary;
-      }
-    }
+    // &.is-active {
+    //   color: $color-primary;
+    //   .icon {
+    //     color: $color-primary;
+    //   }
+    // }
   }
 </style>

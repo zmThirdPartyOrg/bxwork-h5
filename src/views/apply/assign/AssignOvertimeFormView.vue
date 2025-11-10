@@ -201,8 +201,8 @@
   )
   watchEffect(() => {
     if (fields.startDt.value && fields.endDt.value) {
-      console.log('fields.startDt.value=>', fields.startDt.value)
-      console.log('fields.endDt.value=>', fields.endDt.value)
+      // console.log('fields.startDt.value=>', fields.startDt.value)
+      // console.log('fields.endDt.value=>', fields.endDt.value)
       const start = new Date(fields.startDt.value).getTime()
       const end = new Date(fields.endDt.value).getTime()
       if (fields.isAllDay.value === 'Y') {
