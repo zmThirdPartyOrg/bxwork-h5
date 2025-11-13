@@ -1,4 +1,5 @@
-import { insertScript } from '@pkstar/utils'
+import { insertScript, sleep } from '@pkstar/utils'
+import { showLoadingToast } from 'vant'
 
 import type { GeocoderResult, SurroundingPois } from '@/types'
 
@@ -34,5 +35,55 @@ export const getLocationNameByPoint = async (longitude: number, latitude: number
       },
       { poiRadius: 500 },
     )
+  })
+}
+
+// 根据地址查询经纬度
+export const parseAddressLngLatByBMap = async (address: string): Promise<any> => {
+  const loading = showLoadingToast({ duration: 0 })
+  if (!address) {
+    await sleep(200)
+    loading.close()
+    return Promise.reject('请完善地址信息')
+  }
+  await appendBmap()
+  const map = new BMap.Map({
+    zoom: 14, //比例
+    point: { lat: 31.14, lng: 121.2 }, //默认显示区
+    search: false, //支持查询
+  })
+  const geocoder = new BMap.LocalSearch(map)
+  const getPoint = function () {
+    return new Promise((resolve, reject) => {
+      geocoder.setSearchCompleteCallback(function (data: any) {
+        loading.close()
+        const sda = []
+        for (let i = 0; i < data.getCurrentNumPois(); i++) {
+          sda.push(data.getPoi(i))
+        }
+        if (sda && sda[0] && sda[0].point) {
+          resolve(sda[0].point)
+        } else {
+          resolve({})
+        }
+      })
+      geocoder.search(address)
+    })
+  }
+
+  return new Promise(async (resolve, reject) => {
+    let point = await getPoint()
+    for (let i = 0; i < 6; i++) {
+      if (!point?.hasOwnProperty('lng')) {
+        point = await getPoint()
+      } else {
+        break
+      }
+    }
+
+    if (!point?.hasOwnProperty('lng')) {
+      console.log('失败了')
+    }
+    resolve(point)
   })
 }

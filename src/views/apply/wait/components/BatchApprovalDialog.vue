@@ -12,7 +12,7 @@
     <!-- 表单 -->
     <ProSchemaForm :metadata="formFileds">
       <template #selected="{ item }">
-        <dl class="c-item" v-for="(i, index) in item.value" :key="index" :item="i">
+        <div class="c-item" v-for="(i, index) in item.value" :key="index" :item="i">
           <div class="c-item-header">
             <h3>{{ i.title }}</h3>
             <span class="c-item-status">状态</span>
@@ -23,7 +23,7 @@
               <span>{{ i.modifyDt }}</span>
             </li>
           </ul>
-        </dl>
+        </div>
         <!-- <dl v-for="(tag, index) in item.value" :key="index">
           <dt></dt>
           <dd>{{ tag.title }}-{{ tag.modifyDt }}</dd>
@@ -95,6 +95,7 @@
         maxlength: 150,
         placeholder: '请输入内容',
       },
+      hidden: true,
     },
   })
 
@@ -144,7 +145,7 @@
     .hor-cell-value {
       display: flex;
       flex-direction: column;
-      max-height: 170px;
+      max-height: 340px;
       overflow: hidden auto;
     }
     .c-item-status {

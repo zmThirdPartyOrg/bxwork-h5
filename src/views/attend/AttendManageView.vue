@@ -43,11 +43,11 @@
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
   import { showConfirmDialog, showToast } from 'vant'
 
-  import { reqAttendManageList } from '@/api'
+  import { doAssignDelAttend, reqAttendManageList } from '@/api'
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
   import type { AttendManageItem } from '@/types'
-  import { refreshTrap } from '@/utils'
+  import { refreshTrap, withLoading } from '@/utils'
 
   import AttendManageCell from './components/AttendManageCell.vue'
 
@@ -82,6 +82,8 @@
     await showConfirmDialog({
       message: `确认删除${item.username} ${item.date} ${item.time}的${item.type}打卡吗？`,
     })
+
+    await withLoading(doAssignDelAttend)({ attendId: item.id })
     sleep(1000)
     pagingData.value.splice(index, 1)
     showToast('删除成功' + index)

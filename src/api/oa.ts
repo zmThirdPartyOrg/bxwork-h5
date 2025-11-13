@@ -321,3 +321,28 @@ export const reqSignManageList = (
         },
       ] as SignManageItem[],
   )
+
+// 打卡&签到 编辑、新增
+export const doAssignAttend = withLoading(
+  (
+    data: {
+      attendId?: string
+      type: 'attend' | 'sign'
+      attendType?: string
+      userId: string
+      userName: string
+      attendTime: string
+      latitude: number
+      longitude: number
+      remark: string
+    } & Record<string, any>,
+  ) => curl<Record<string, any>>(`/oa/assignAttend.json`, { signContent: data }),
+  false,
+)
+
+// 打卡&签到 删除
+export const doAssignDelAttend = withLoading(
+  (data: { attendId: string }) =>
+    curl<Record<string, any>>(`/oa/assignDelAttend.json`, { signContent: data }),
+  false,
+)

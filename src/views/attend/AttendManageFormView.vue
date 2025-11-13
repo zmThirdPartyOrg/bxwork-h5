@@ -25,9 +25,9 @@
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useParams, useQuery } from '@pkstar/vue-use'
 
-  import { reqAssignUsers, reqLeaveInfo } from '@/api'
+  import { doAssignAttend, reqAssignUsers, reqLeaveInfo } from '@/api'
   import { useProSchemaForm } from '@/components'
-  import { refreshTrap } from '@/utils'
+  import { parseAddressLngLatByBMap, refreshTrap } from '@/utils'
 
   useKeepAlive()
 
@@ -40,7 +40,7 @@
   const dateTimePickerInstance = ref() as Ref<HorDateTimePickerInstance>
 
   const fields = useProSchemaForm({
-    user: {
+    userId: {
       value: [],
       label: '人员',
       is: 'HorCheckboxButton',
@@ -95,6 +95,12 @@
         maxlength: 50,
       },
       rules: [{ required: true, message: '请输入地点' }],
+      get(v) {
+        return {
+          locationName: '',
+          locationDetail: v,
+        }
+      },
     },
     attendTime: {
       value: '',
@@ -114,7 +120,6 @@
         return formatDate(v, 'yyyy-MM-dd hh:mm:ss')
       },
     },
-
     remark: {
       value: '',
       label: '备注',
@@ -131,6 +136,12 @@
   const handleSubmit = async () => {
     const options = await banana.validate(fields)
     console.log('options=>', options)
+    const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
+    await doAssignAttend({
+      ...options,
+      latitude: lat || 0,
+      longitude: lng || 0,
+    })
     refreshTrap.trigger()
   }
 
