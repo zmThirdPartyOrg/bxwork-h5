@@ -60,7 +60,7 @@
 
   const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
   // 筛选
-  const queryParams = useQueryParamsRefresh(() => pagingRefresh(true))
+  const queryParams = useQueryParamsRefresh((loading) => pagingRefresh(loading))
 
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
@@ -68,13 +68,13 @@
       const content = await reqSignManageList({
         pageindex,
         pagesize,
-        keyword,
+        userName: keyword.value,
         ...queryParams.value,
-      } as any)
+      })
       return [content, 9999]
     },
     {
-      immediate: true,
+      immediate: false,
     },
   )
 

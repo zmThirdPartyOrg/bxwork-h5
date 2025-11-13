@@ -191,6 +191,7 @@ export const reqApplyList = (
     waitStatus?: string
     auditStatus?: string
     title?: string
+    type?: string
   },
 ) => curl<Array<ApplyItem>>(`oa/applyList.json`, data)
 
@@ -264,35 +265,42 @@ export const doAssignOvertime = withLoading((content: AssignOvertimeDto) =>
 export const reqAssignOvertimeList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
   curl<Array<AssignOvertimeItem>>(`/oa/otAssignList.json`, data)
 
-// 考勤管理列表
-export const reqAttendManageList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
-  curl<Array<AttendManageItem>>(`/oa/otAssignList1.json`, data).catch(
-    () =>
-      [
-        {
-          id: '123',
-          username: '黄鑫',
-          depName: '综合部',
-          date: '2025-11-06',
-          time: '07:43:57',
-          address: '市北数智大厦',
-          type: '上班',
-        },
-        {
-          id: '124',
-          username: '黄鑫',
-          depName: '综合部',
-          date: '2025-11-06',
-          time: '17:43:57',
-          address: '市北数智大厦',
-          type: '下班',
-        },
-      ] as AttendManageItem[],
-  )
+// 打卡管理列表
+export const reqAttendManageList = (
+  data: PagingParams & Partial<{ userName: string; fromDate: string; toDate: string }>,
+) =>
+  curl<Array<AttendManageItem>>(`/oa/assignAttendList.json`, {
+    attendType: 'attend',
+    ...data,
+  }).catch((e) => {
+    console.log(e)
+    return [
+      {
+        id: '123',
+        username: '黄鑫',
+        depName: '综合部',
+        date: '2025-11-06',
+        time: '07:43:57',
+        address: '市北数智大厦',
+        type: '上班',
+      },
+      {
+        id: '124',
+        username: '黄鑫',
+        depName: '综合部',
+        date: '2025-11-06',
+        time: '17:43:57',
+        address: '市北数智大厦',
+        type: '下班',
+      },
+    ] as AttendManageItem[]
+  })
 
 //签到管理列表
-export const reqSignManageList = (data: PagingParams & { keyword: string; waitStatus: '' }) =>
-  curl<Array<SignManageItem>>(`/oa/otAssignList1.json`, data).catch(
+export const reqSignManageList = (
+  data: PagingParams & Partial<{ userName: string; fromDate: string; toDate: string }>,
+) =>
+  curl<Array<SignManageItem>>(`/oa/assignAttendList.json`, { attendType: 'sign', ...data }).catch(
     () =>
       [
         {

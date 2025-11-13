@@ -65,6 +65,7 @@
           applyType: 'wait',
           waitStatus: props.type,
           title: keyword.value,
+          type: props.applyType,
         },
         loading,
       )

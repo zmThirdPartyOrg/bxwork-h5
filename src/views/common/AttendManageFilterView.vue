@@ -40,18 +40,18 @@
     const maxDate = new Date(year + 1, month, day)
 
     return {
-      xxx: {
+      attendDate: {
         is: 'HorDateRangePicker',
         label: '日期',
         value: [],
         minDate,
         maxDate,
         get: (v) => {
-          const [orderDateStart = '', orderDateEnd = ''] = v
+          const [fromDate = '', toDate = ''] = v
           return {
-            orderDate: v,
-            orderDateStart,
-            orderDateEnd,
+            attendDate: v,
+            fromDate,
+            toDate,
           }
         },
       },

@@ -4,7 +4,7 @@
       <FilterIconButton path="/attend/manage/filter" :query-params="queryParams" />
     </template>
 
-    <ProSearch placeholder="请输入姓名" :model-value="keyword" @search="handleSearch" />
+    <ProSearch placeholder="请输入姓名" :model-value="userName" @search="handleSearch" />
 
     <!-- 刷新 下拉加载 -->
     <HorScroll
@@ -56,9 +56,9 @@
     getTarget: () => document.querySelector(`.attend-manage-scroll`)!,
   })
 
-  const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
+  const [userName, handleSearch] = useProSearch(() => pagingRefresh(true))
   // 筛选
-  const queryParams = useQueryParamsRefresh(() => pagingRefresh(true))
+  const queryParams = useQueryParamsRefresh((loading) => pagingRefresh(loading))
 
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
@@ -66,13 +66,13 @@
       const content = await reqAttendManageList({
         pageindex,
         pagesize,
-        keyword,
+        userName: userName.value,
         ...queryParams.value,
-      } as any)
+      })
       return [content, 9999]
     },
     {
-      immediate: true,
+      immediate: false,
     },
   )
 

@@ -40,7 +40,7 @@
   const dateTimePickerInstance = ref() as Ref<HorDateTimePickerInstance>
 
   const fields = useProSchemaForm({
-    userId: {
+    user: {
       value: [],
       label: '人员',
       is: 'HorCheckboxButton',
@@ -71,17 +71,17 @@
         })
         return {
           userId: res.map((item: any) => item.value).join(','),
-          createBy: res.map((item: any) => item.realName).join(','),
+          userName: res.map((item: any) => item.realName).join(','),
         }
       },
     },
-    type: {
+    attendType: {
       value: '1',
       label: '打卡类型',
       is: 'HorRadio',
       options: [
-        { label: '上班', value: '1' },
-        { label: '下班', value: '2' },
+        { label: '上班', value: 'startwork' },
+        { label: '下班', value: 'endwork' },
       ],
       props: {},
       rules: [{ required: true, message: '请选择打卡类型' }],
@@ -96,7 +96,7 @@
       },
       rules: [{ required: true, message: '请输入地点' }],
     },
-    startDt: {
+    attendTime: {
       value: '',
       label: '时间',
       is: 'HorCellPicker',
