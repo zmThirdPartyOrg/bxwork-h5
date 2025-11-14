@@ -253,4 +253,10 @@
       }
     }
   }
+
+  :deep() {
+    .hor-fixed-actions {
+      z-index: 99;
+    }
+  }
 </style>
