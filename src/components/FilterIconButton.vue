@@ -41,7 +41,7 @@
     font-size: j(12);
     line-height: j(14);
     .icon {
-      @extend %c9;
+      // @extend %c9;
     }
     // &.is-active {
     //   color: $color-primary;

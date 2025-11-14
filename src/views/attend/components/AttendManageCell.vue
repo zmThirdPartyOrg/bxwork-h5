@@ -1,20 +1,22 @@
 <template>
   <dl class="attend-manage-cell c-item">
     <div class="c-item-header">
-      <h3>{{ item.depName }}-{{ item.username }}</h3>
-      <span class="c-item-status" :class="item.type === '上班' ? 'is-info' : 'is-success'"
-        >{{ item.type }}
+      <h3>{{ item.createBy }}</h3>
+      <span
+        class="c-item-status"
+        :class="item.attendType === 'startwork' ? 'is-info' : 'is-success'"
+        >{{ item.attendType === 'startwork' ? '上班' : '下班' }}
         <HorIcon name="i-filter" size="22" />
       </span>
     </div>
     <ul class="c-item-content">
       <div class="c-item-cell">
         <span>打卡时间：</span>
-        <span>{{ item.date }} {{ item.time }}</span>
+        <span>{{ item.createDt }} </span>
       </div>
       <li class="c-item-cell is-fixed-label">
         <span>打卡地点：</span>
-        <span>{{ item.address }}{{ item.address }}{{ item.address }}{{ item.address }}</span>
+        <span>{{ item.location || '-' }}</span>
       </li>
       <li class="c-item-cell">
         <span>备注：</span>
@@ -29,8 +31,7 @@
 </template>
 
 <script setup lang="ts">
-  import { sleep } from '@pkstar/utils'
-  import { showConfirmDialog, showToast } from 'vant'
+  import { omit } from '@pkstar/utils'
 
   import type { AttendManageItem } from '@/types'
 
@@ -45,7 +46,12 @@
 
   const handleEdit = () => {
     console.log('点击了修改', props.item)
-    router.push(`/attend/manage/form/${props.item.id}`)
+    router.push({
+      path: `/attend/manage/form/${props.item.attendId}`,
+      query: {
+        detail: JSON.stringify(omit(props.item, ['sysUser'])),
+      },
+    })
   }
 </script>
 

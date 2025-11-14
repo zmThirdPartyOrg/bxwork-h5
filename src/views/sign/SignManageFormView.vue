@@ -25,9 +25,9 @@
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useParams, useQuery } from '@pkstar/vue-use'
 
-  import { reqAssignUsers, reqLeaveInfo } from '@/api'
+  import { doAssignAttend, reqAssignUsers, reqLeaveInfo } from '@/api'
   import { useProSchemaForm } from '@/components'
-  import { refreshTrap } from '@/utils'
+  import { parseAddressLngLatByBMap, refreshTrap } from '@/utils'
 
   useKeepAlive()
 
@@ -84,6 +84,12 @@
         maxlength: 50,
       },
       rules: [{ required: true, message: '请输入地点' }],
+      get(v) {
+        return {
+          locationName: v,
+          locationDetail: v,
+        }
+      },
     },
     startDt: {
       value: '',
@@ -120,7 +126,15 @@
   const handleSubmit = async () => {
     const options = await banana.validate(fields)
     console.log('options=>', options)
+    const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
+    await doAssignAttend({
+      ...options,
+      type: 'sign',
+      latitude: lat || 0,
+      longitude: lng || 0,
+    })
     refreshTrap.trigger()
+    router.go(-1)
   }
 
   onBeforeMount(async () => {

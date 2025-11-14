@@ -51,7 +51,7 @@
           return {
             attendDate: v,
             fromDate,
-            toDate,
+            toDate: toDate || '',
           }
         },
       },

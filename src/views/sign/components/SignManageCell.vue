@@ -1,16 +1,16 @@
 <template>
   <dl class="attend-manage-cell c-item">
     <div class="c-item-header">
-      <h3>{{ item.depName }}-{{ item.username }}</h3>
+      <h3>{{ item.createBy }}</h3>
     </div>
     <ul class="c-item-content">
       <div class="c-item-cell">
         <span>签到时间：</span>
-        <span>{{ item.dt }}</span>
+        <span>{{ item.createDt }}</span>
       </div>
       <li class="c-item-cell is-fixed-label">
         <span>签到地点：</span>
-        <span>{{ item.locationDetail || '-' }}</span>
+        <span>{{ item.location || '-' }}</span>
       </li>
       <li class="c-item-cell">
         <span>备注：</span>

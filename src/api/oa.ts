@@ -272,55 +272,12 @@ export const reqAttendManageList = (
   curl<Array<AttendManageItem>>(`/oa/assignAttendList.json`, {
     attendType: 'attend',
     ...data,
-  }).catch((e) => {
-    console.log(e)
-    return [
-      {
-        id: '123',
-        username: '黄鑫',
-        depName: '综合部',
-        date: '2025-11-06',
-        time: '07:43:57',
-        address: '市北数智大厦',
-        type: '上班',
-      },
-      {
-        id: '124',
-        username: '黄鑫',
-        depName: '综合部',
-        date: '2025-11-06',
-        time: '17:43:57',
-        address: '市北数智大厦',
-        type: '下班',
-      },
-    ] as AttendManageItem[]
   })
 
 //签到管理列表
 export const reqSignManageList = (
   data: PagingParams & Partial<{ userName: string; fromDate: string; toDate: string }>,
-) =>
-  curl<Array<SignManageItem>>(`/oa/assignAttendList.json`, { attendType: 'sign', ...data }).catch(
-    () =>
-      [
-        {
-          id: '123',
-          username: '黄鑫',
-          depName: '综合部',
-          dt: '2025-11-10 10:04:22',
-          location: '上海市普陀区真北路真北路2251号商务办公中心',
-          locationDetail: '上海市普陀区真北路真北路2251号商务办公中心',
-        },
-        {
-          id: '124',
-          username: '黄鑫',
-          depName: '综合部',
-          dt: '2025-11-10 10:04:22',
-          location: '上海市普陀区真北路真北路2251号商务办公中心',
-          locationDetail: '上海市普陀区真北路真北路2251号商务办公中心',
-        },
-      ] as SignManageItem[],
-  )
+) => curl<Array<SignManageItem>>(`/oa/assignAttendList.json`, { attendType: 'sign', ...data })
 
 // 打卡&签到 编辑、新增
 export const doAssignAttend = withLoading(
@@ -342,7 +299,7 @@ export const doAssignAttend = withLoading(
 
 // 打卡&签到 删除
 export const doAssignDelAttend = withLoading(
-  (data: { attendId: string }) =>
+  (data: { attendId: string | number }) =>
     curl<Record<string, any>>(`/oa/assignDelAttend.json`, { signContent: data }),
   false,
 )

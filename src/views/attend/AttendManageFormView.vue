@@ -74,6 +74,7 @@
           userName: res.map((item: any) => item.realName).join(','),
         }
       },
+      hidden: !!id,
     },
     attendType: {
       value: '1',
@@ -97,7 +98,7 @@
       rules: [{ required: true, message: '请输入地点' }],
       get(v) {
         return {
-          locationName: '',
+          locationName: v,
           locationDetail: v,
         }
       },
@@ -139,10 +140,12 @@
     const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
     await doAssignAttend({
       ...options,
+      type: 'attend',
       latitude: lat || 0,
       longitude: lng || 0,
     })
     refreshTrap.trigger()
+    router.go(-1)
   }
 
   onBeforeMount(async () => {
@@ -154,11 +157,6 @@
       const dateFormat = 'yyyy/MM/dd hh:mm:ss'
       banana.assignment(
         {
-          startDt: formatDate(startDt, dateFormat),
-          type: {
-            longName: typeName,
-            shortCode: type,
-          },
           ...res,
         },
         fields,
@@ -170,8 +168,8 @@
     if (assignUsers.length) {
       fields.userId.options = [...assignUsers].map((item) => ({
         ...item,
-        label: `${item.realName}(${item.hours}/${item.totalHours})`,
-        name: `${item.realName}(${item.hours}/${item.totalHours})`,
+        label: `${item.realName}`,
+        name: `${item.realName}`,
         value: item.userId,
       }))
       fields.userId.disabled = false

@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-  import { sleep } from '@pkstar/utils'
+  import { omit, sleep } from '@pkstar/utils'
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
   import { showConfirmDialog, showToast } from 'vant'
 
@@ -47,7 +47,7 @@
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
   import type { AttendManageItem } from '@/types'
-  import { refreshTrap, withLoading } from '@/utils'
+  import { refreshTrap } from '@/utils'
 
   import AttendManageCell from './components/AttendManageCell.vue'
 
@@ -67,7 +67,7 @@
         pageindex,
         pagesize,
         userName: userName.value,
-        ...queryParams.value,
+        ...omit(queryParams.value, ['attendDate']),
       })
       return [content, 9999]
     },
@@ -80,10 +80,10 @@
   const handleDel = async (index: number, item: AttendManageItem) => {
     console.log(index, item)
     await showConfirmDialog({
-      message: `确认删除${item.username} ${item.date} ${item.time}的${item.type}打卡吗？`,
+      message: `确认删除${item.createBy} ${item.createDt}打卡吗？`,
     })
 
-    await withLoading(doAssignDelAttend)({ attendId: item.id })
+    await doAssignDelAttend({ attendId: item.attendId })
     sleep(1000)
     pagingData.value.splice(index, 1)
     showToast('删除成功' + index)

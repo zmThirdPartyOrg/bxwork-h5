@@ -383,21 +383,30 @@ export interface AssignOvertimeItem {
   sysUser: Record<string, any>
 }
 export interface AttendManageItem {
-  id: string
-  username: string
-  depName: string
-  date: string
-  time: string
-  address: string
-  type: '上班' | '下班'
+  attendId: number
+  userId: number
+  type: string
+  attendTime: string
+  location: string
+  longitude: string
+  latitude: string
+  createBy: string
+  createDt: string
+  remark: string
+  attendType: string
+  sysUser?: any
 }
 
 export interface SignManageItem {
-  id: string
-  username: string
-  depName: string
-  dt: string
-  locationDetail: string
+  attendId: number
+  userId: number
+  type: string
+  attendTime: string
   location: string
-  remark?: string
+  longitude: string
+  latitude: string
+  createBy: string
+  createDt: string
+  remark: string
+  attendType: string
 }

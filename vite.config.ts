@@ -23,7 +23,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/top': {
-        target: 'https://bianxiukaoqing.top',
+        target: 'http://eac5694b.natappfree.cc/ctms-pc',
+        // target: 'https://bianxiukaoqing.top',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/top/, ''),
       },
