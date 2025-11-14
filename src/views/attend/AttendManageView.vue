@@ -67,7 +67,7 @@
         pageindex,
         pagesize,
         userName: userName.value,
-        ...omit(queryParams.value, ['attendDate']),
+        ...queryParams.value,
       })
       return [content, 9999]
     },

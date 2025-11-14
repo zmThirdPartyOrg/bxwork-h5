@@ -12,7 +12,7 @@
           computedStartwork?.attendDt ? formatDate(computedStartwork?.attendDt, 'hh:mm') : '--:--'
         }}
       </div>
-      <div class="card-item"><span>上班时间：</span>{{ endtime }}</div>
+      <div class="card-item"><span>下班时间：</span>{{ endtime }}</div>
       <div class="card-item">
         <span>下班时间：</span>
         {{ computedEndwork?.attendDt ? formatDate(computedEndwork?.attendDt, 'hh:mm') : '--:--' }}

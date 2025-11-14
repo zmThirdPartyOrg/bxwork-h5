@@ -29,7 +29,6 @@
         v-for="(item, index) in pagingData"
         :key="index"
         @del="handleDel(index, item)"
-        @edit="handleEdit(index, item)"
       />
     </HorScroll>
     <HorFixedActions>
@@ -41,14 +40,14 @@
 </template>
 
 <script setup lang="ts">
-  import { omit, sleep } from '@pkstar/utils'
+  import { sleep } from '@pkstar/utils'
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
   import { showConfirmDialog, showToast } from 'vant'
 
   import { doAssignDelAttend, reqSignManageList } from '@/api'
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
-  import type { SignManageItem } from '@/types'
+  import type { AttendManageItem } from '@/types'
   import { refreshTrap } from '@/utils'
 
   import SignManageCell from './components/SignManageCell.vue'
@@ -69,7 +68,7 @@
         pageindex,
         pagesize,
         userName: keyword.value,
-        ...omit(queryParams.value, ['attendDate']),
+        ...queryParams.value,
       })
       return [content, 9999]
     },
@@ -79,7 +78,7 @@
   )
 
   // 删除
-  const handleDel = async (index: number, item: SignManageItem) => {
+  const handleDel = async (index: number, item: AttendManageItem) => {
     console.log(index, item)
     await showConfirmDialog({
       message: `确认删除${item.createBy} ${item.createDt}的签到吗？`,
@@ -88,12 +87,6 @@
     sleep(1000)
     pagingData.value.splice(index, 1)
     showToast('删除成功' + index)
-  }
-  const router = useRouter()
-  // 编辑
-  const handleEdit = (index: number, item: SignManageItem) => {
-    console.log('点击了修改', item)
-    router.push(`/sign/manage/form/${item.attendId}`)
   }
 
   onBeforeMountOrActivated(() => {

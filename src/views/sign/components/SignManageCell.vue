@@ -17,24 +17,41 @@
         <span>{{ item.remark || '-' }}</span>
       </li>
     </ul>
-    <div class="c-item-footer">
-      <button @click="emit('edit')">修改</button>
+    <div class="c-item-footer" v-if="isLeader">
+      <button @click="handleEdit">修改</button>
       <button @click="emit('del')">删除</button>
     </div>
   </dl>
 </template>
 
 <script setup lang="ts">
-  import type { SignManageItem } from '@/types'
+  import { omit } from '@pkstar/utils'
 
-  defineProps({
+  import { useUserinfoStore } from '@/stores'
+  import type { AttendManageItem } from '@/types'
+
+  const { userinfo } = useUserinfoStore()
+  const isLeader = computed(() => userinfo?.content.isLeader === 'Y')
+
+  const props = defineProps({
     item: {
-      type: Object as PropType<SignManageItem>,
+      type: Object as PropType<AttendManageItem>,
       default: () => ({}),
     },
   })
 
   const emit = defineEmits(['edit', 'del'])
+
+  const router = useRouter()
+  const handleEdit = () => {
+    console.log('点击了修改', props.item)
+    router.push({
+      path: `/sign/manage/form/${props.item.attendId}`,
+      query: {
+        detail: JSON.stringify(omit(props.item, ['sysUser'])),
+      },
+    })
+  }
 </script>
 
 <style lang="scss" scoped>

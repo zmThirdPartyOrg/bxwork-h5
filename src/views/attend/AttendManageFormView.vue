@@ -13,8 +13,8 @@
 
     <HorDateTimePicker
       ref="dateTimePickerInstance"
-      value-format="yyyy/MM/dd hh:mm"
-      :columns-type="['year', 'month', 'day', 'hour', 'minute']"
+      value-format="yyyy/MM/dd hh:mm:ss"
+      :columns-type="['year', 'month', 'day', 'hour', 'minute', 'second']"
     ></HorDateTimePicker>
   </HorView>
 </template>
@@ -25,7 +25,7 @@
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useParams, useQuery } from '@pkstar/vue-use'
 
-  import { doAssignAttend, reqAssignUsers, reqLeaveInfo } from '@/api'
+  import { doAssignAttend, reqAssignUsers } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { parseAddressLngLatByBMap, refreshTrap } from '@/utils'
 
@@ -40,6 +40,12 @@
   const dateTimePickerInstance = ref() as Ref<HorDateTimePickerInstance>
 
   const fields = useProSchemaForm({
+    createBy: {
+      value: '',
+      label: '人员',
+      is: 'HorCell',
+      hidden: !id,
+    },
     userId: {
       value: [],
       label: '人员',
@@ -55,7 +61,7 @@
       // },
       options: [{ label: '无可选人员', value: '' }],
       props: {
-        direction: 'column',
+        direction: id ? 'row' : 'column',
         span: '3',
       },
       rules: [
@@ -129,7 +135,6 @@
         maxlength: 150,
         placeholder: '请输入',
       },
-      rules: [{ required: true, message: '请输入备注' }],
     },
   })
 
@@ -149,18 +154,8 @@
   }
 
   onBeforeMount(async () => {
-    const res = await reqLeaveInfo()
-    console.log('value=>', res)
     if (detailObj) {
-      const { startDt, typeName, type, ...res } = detailObj
-      console.log('onBeforeMount=>', res)
-      const dateFormat = 'yyyy/MM/dd hh:mm:ss'
-      banana.assignment(
-        {
-          ...res,
-        },
-        fields,
-      )
+      banana.assignment(detailObj, fields)
     }
 
     // 获取人员数据

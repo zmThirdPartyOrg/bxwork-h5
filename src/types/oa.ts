@@ -388,6 +388,7 @@ export interface AttendManageItem {
   type: string
   attendTime: string
   location: string
+  locationDetail?: string
   longitude: string
   latitude: string
   createBy: string
@@ -395,18 +396,4 @@ export interface AttendManageItem {
   remark: string
   attendType: string
   sysUser?: any
-}
-
-export interface SignManageItem {
-  attendId: number
-  userId: number
-  type: string
-  attendTime: string
-  location: string
-  longitude: string
-  latitude: string
-  createBy: string
-  createDt: string
-  remark: string
-  attendType: string
 }

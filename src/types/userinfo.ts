@@ -28,6 +28,7 @@ export interface UserinfoContent {
   isPlanSign: string
   roleName: string
   smallImage?: string
+  isLeader: BooleanString
 }
 
 export interface UserRole {

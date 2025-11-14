@@ -26,7 +26,7 @@
 <script setup lang="ts">
   import { useKeepAlive } from '@pkstar/vue-use'
 
-  import { __DEV__ } from '@/utils'
+  import { __DEV__, backToApp } from '@/utils'
 
   const router = useRouter()
   const computedTabbarRoutes = computed(() => {
@@ -49,10 +49,17 @@
   })
 
   const handleTab = (e: Event, index: number) => {
-    if (__DEV__) {
+    console.log('index=>', index)
+    // __DEV__ &&
+    if (index === 2) {
       return
     }
-    alert(index)
+    const tabs = {
+      0: 'tab/message',
+      1: 'tab/work',
+      3: 'tab/individual',
+    } as any
+    backToApp(tabs[index])
   }
 </script>
 
@@ -74,6 +81,12 @@
     }
     &.is-pb {
       padding-bottom: j(32);
+    }
+  }
+
+  :deep {
+    .van-tabbar {
+      padding-bottom: 0;
     }
   }
 </style>
