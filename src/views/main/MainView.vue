@@ -51,15 +51,15 @@
   const handleTab = (e: Event, index: number) => {
     console.log('index=>', index)
     // __DEV__ &&
-    if (index === 2) {
-      return
-    }
-    const tabs = {
-      0: 'tab/message',
-      1: 'tab/work',
-      3: 'tab/individual',
-    } as any
-    backToApp(tabs[index])
+    // if (index === 2) {
+    //   return
+    // }
+    // const tabs = {
+    //   0: 'tab/message',
+    //   1: 'tab/work',
+    //   3: 'tab/individual',
+    // } as any
+    // backToApp(tabs[index])
   }
 </script>
 
@@ -84,9 +84,9 @@
     }
   }
 
-  :deep {
-    .van-tabbar {
-      padding-bottom: 0;
-    }
-  }
+  // :deep {
+  //   .van-tabbar {
+  //     padding-bottom: 0;
+  //   }
+  // }
 </style>

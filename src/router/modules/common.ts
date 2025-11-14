@@ -57,7 +57,6 @@ export default defineRoutes([
       },
     ],
   },
-
   {
     path: '/webview',
     name: 'WebviewView',

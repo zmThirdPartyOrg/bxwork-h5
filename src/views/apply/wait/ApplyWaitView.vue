@@ -1,5 +1,5 @@
 <template>
-  <HorView use-tab-scroll :left-arrow="$route.path === '/apply/wait'">
+  <HorView use-tab-scroll :left-arrow="isTabbar !== '1'" :use-left-event="false" @left="goBack">
     <template v-if="[0, 1].includes(active)" #right>
       <VanButton
         size="small"
@@ -27,16 +27,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { useKeepAlive, useKeepPosition } from '@pkstar/vue-use'
+  import { useKeepAlive, useKeepPosition, useQuery } from '@pkstar/vue-use'
 
   import { onBeforeMountOrActivated } from '@/hooks'
-  import { applyListTrap } from '@/utils'
+  import { applyListTrap, goBack } from '@/utils'
 
   import ApplyWaitTabContent from './components/ApplyWaitTabContent.vue'
   import BatchApprovalDialog from './components/BatchApprovalDialog.vue'
 
   const batchApprovalDialogInstance = ref() as Ref<InstanceType<typeof BatchApprovalDialog>>
 
+  const { isTabbar } = useQuery()
   const active = ref(0)
   const tabs = [
     {

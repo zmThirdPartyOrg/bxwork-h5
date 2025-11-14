@@ -1,5 +1,5 @@
 <template>
-  <HorView class="">
+  <HorView class="" :use-left-event="false" @left="goBack">
     <template #right>
       <FilterIconButton path="/attend/manage/filter" :query-params="queryParams" />
     </template>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-  import { omit, sleep } from '@pkstar/utils'
+  import { sleep } from '@pkstar/utils'
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
   import { showConfirmDialog, showToast } from 'vant'
 
@@ -47,7 +47,7 @@
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
   import type { AttendManageItem } from '@/types'
-  import { refreshTrap } from '@/utils'
+  import { goBack, refreshTrap } from '@/utils'
 
   import AttendManageCell from './components/AttendManageCell.vue'
 

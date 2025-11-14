@@ -57,7 +57,7 @@
         keyword: keyword.value,
         waitStatus: '',
       })
-      return [content, 99]
+      return [content, 999]
     },
     {
       immediate: true,

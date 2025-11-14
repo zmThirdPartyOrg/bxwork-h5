@@ -29,6 +29,7 @@
       :with-checkbox="['overtime', 'leave'].includes(props.applyType)"
     />
   </HorScroll>
+  <div class="van-safe-area-bottom"></div>
 </template>
 
 <script setup lang="ts">
@@ -69,7 +70,7 @@
         },
         loading,
       )
-      return [content, 99]
+      return [content, 9999]
     },
     {
       immediate: true,

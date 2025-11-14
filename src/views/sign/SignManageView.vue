@@ -1,5 +1,5 @@
 <template>
-  <HorView class="">
+  <HorView class="" :use-left-event="false" @left="goBack">
     <template #right>
       <FilterIconButton class="filter-btn" path="/attend/manage/filter" :query-params="queryParams">
       </FilterIconButton>
@@ -48,7 +48,7 @@
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
   import type { AttendManageItem } from '@/types'
-  import { refreshTrap } from '@/utils'
+  import { goBack, refreshTrap } from '@/utils'
 
   import SignManageCell from './components/SignManageCell.vue'
 
