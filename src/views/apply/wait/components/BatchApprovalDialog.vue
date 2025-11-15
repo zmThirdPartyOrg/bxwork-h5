@@ -98,7 +98,7 @@
         maxlength: 150,
         placeholder: '请输入内容',
       },
-      hidden: true,
+      // hidden: true,
     },
   })
 
