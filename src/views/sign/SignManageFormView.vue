@@ -45,6 +45,13 @@
       label: '人员',
       is: 'HorCell',
       hidden: !id,
+      get() {
+        return {
+          attendId: detailObj?.attendId,
+          userId: detailObj?.userId,
+          userName: detailObj?.createBy,
+        }
+      },
     },
     userId: {
       value: [],

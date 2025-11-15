@@ -6,7 +6,7 @@
     <ul class="c-item-content">
       <div class="c-item-cell">
         <span>签到时间：</span>
-        <span>{{ item.createDt }}</span>
+        <span>{{ item.attendTime }}</span>
       </div>
       <li class="c-item-cell is-fixed-label">
         <span>签到地点：</span>

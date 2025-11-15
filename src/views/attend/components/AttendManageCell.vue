@@ -12,7 +12,7 @@
     <ul class="c-item-content">
       <div class="c-item-cell">
         <span>打卡时间：</span>
-        <span>{{ item.createDt }} </span>
+        <span>{{ item.attendTime }} </span>
       </div>
       <li class="c-item-cell is-fixed-label">
         <span>打卡地点：</span>
@@ -23,7 +23,7 @@
         <span>{{ item.remark || '-' }}</span>
       </li>
     </ul>
-    <div class="c-item-footer">
+    <div class="c-item-footer" v-if="isLeader">
       <button @click="handleEdit">修改</button>
       <button @click="emit('del')">删除</button>
     </div>
@@ -33,8 +33,11 @@
 <script setup lang="ts">
   import { omit } from '@pkstar/utils'
 
+  import { useUserinfoStore } from '@/stores'
   import type { AttendManageItem } from '@/types'
 
+  const { userinfo } = useUserinfoStore()
+  const isLeader = computed(() => userinfo?.content.isLeader === 'N')
   const props = defineProps({
     item: {
       type: Object as PropType<AttendManageItem>,

@@ -80,7 +80,8 @@
   const handleDel = async (index: number, item: AttendManageItem) => {
     console.log(index, item)
     await showConfirmDialog({
-      message: `确认删除${item.createBy} ${item.createDt}打卡吗？`,
+      message: `确认删除【<strong class="c-text-primary">${item.createBy} ${item.attendTime}打卡</strong>】吗？`,
+      allowHtml: true,
     })
 
     await doAssignDelAttend({ attendId: item.attendId })

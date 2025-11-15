@@ -81,12 +81,13 @@
   const handleDel = async (index: number, item: AttendManageItem) => {
     console.log(index, item)
     await showConfirmDialog({
-      message: `确认删除${item.createBy} ${item.createDt}的签到吗？`,
+      message: `确认删除【<strong class="c-text-primary">${item.createBy} ${item.attendTime}签到</strong>】吗？`,
+      allowHtml: true,
     })
     await doAssignDelAttend({ attendId: item.attendId })
     sleep(1000)
     pagingData.value.splice(index, 1)
-    showToast('删除成功' + index)
+    showToast('删除成功')
   }
 
   onBeforeMountOrActivated(() => {

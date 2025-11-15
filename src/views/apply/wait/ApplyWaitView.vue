@@ -1,5 +1,10 @@
 <template>
-  <HorView use-tab-scroll :left-arrow="isTabbar !== '1'" :use-left-event="false" @left="goBack">
+  <HorView
+    use-tab-scroll
+    :left-arrow="isTabbar !== '1' && $route.path !== '/todo'"
+    :use-left-event="false"
+    @left="goBack"
+  >
     <template v-if="[0, 1].includes(active)" #right>
       <VanButton
         size="small"
@@ -98,6 +103,8 @@
     await batchApprovalDialogInstance.value?.show({
       selected,
     })
+    // 清空已选
+    ref?.clearSelected()
     triggerTabContentRefresh()
   }
 

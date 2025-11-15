@@ -15,7 +15,9 @@
         <div class="c-item" v-for="(i, index) in item.value" :key="index" :item="i">
           <div class="c-item-header">
             <h3>{{ i.title }}</h3>
-            <span class="c-item-status">状态</span>
+            <span class="c-item-status">{{
+              applyStatusLabelMap(i?.submitStatus!, i?.status!)
+            }}</span>
           </div>
           <ul class="c-item-content">
             <li class="c-item-cell">
@@ -54,6 +56,7 @@
   import { useProSchemaForm } from '@/components'
   import { useUserinfoStore } from '@/stores'
   import type { ApplyItem } from '@/types'
+  import { applyStatusLabelMap } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
 

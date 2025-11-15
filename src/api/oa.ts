@@ -270,43 +270,12 @@ export const reqAttendManageList = (
   curl<Array<AttendManageItem>>(`/oa/assignAttendList.json`, {
     attendType: 'attend',
     ...data,
-  }).catch((_) => {
-    return [
-      {
-        attendId: 6276,
-        userId: 966,
-        type: 'attend',
-        attendTime: '2025-09-10 16:41:57',
-        location: '上海市静安区江场西路数据港大厦',
-        createBy: '潘书岳',
-        createDt: '2025-09-10 16:41:57',
-        locationDetail: '上海市静安区江场西路数据港大厦',
-        attendType: 'endwork',
-      },
-    ] as AttendManageItem[]
   })
 
 //签到管理列表
 export const reqSignManageList = (
   data: PagingParams & Partial<{ userName: string; fromDate: string; toDate: string }>,
-) =>
-  curl<Array<AttendManageItem>>(`/oa/assignAttendList.json`, { attendType: 'sign', ...data }).catch(
-    (_) => {
-      return [
-        {
-          attendId: 6276,
-          userId: 966,
-          type: 'attend',
-          attendTime: '2025-09-10 16:41:57',
-          location: '上海市静安区江场西路数据港大厦',
-          createBy: '潘书岳',
-          createDt: '2025-09-10 16:41:57',
-          locationDetail: '上海市静安区江场西路数据港大厦',
-          attendType: 'endwork',
-        },
-      ] as AttendManageItem[]
-    },
-  )
+) => curl<Array<AttendManageItem>>(`/oa/assignAttendList.json`, { attendType: 'sign', ...data })
 
 // 打卡&签到 编辑、新增
 export const doAssignAttend = withLoading(

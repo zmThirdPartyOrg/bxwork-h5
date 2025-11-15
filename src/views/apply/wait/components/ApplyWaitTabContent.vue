@@ -86,6 +86,9 @@
       return res
     }, {})
   })
+  const clearSelected = () => {
+    selected.value = []
+  }
   const limitImportNum = 20
   const handleSelect = (item: ApplyItem) => {
     const { approveId } = item
@@ -103,6 +106,7 @@
   defineExpose({
     pagingRefresh,
     selected,
+    clearSelected,
   })
 </script>
 
