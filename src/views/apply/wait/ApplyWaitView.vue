@@ -21,7 +21,7 @@
         <ApplyWaitTabContent
           :ref="(el: any) => (tabContentRefs[index] = el)"
           :title="item.name"
-          :type="item.type"
+          :waitStatus="item.waitStatus"
           :apply-type="item.applyType"
         ></ApplyWaitTabContent>
       </VanTab>
@@ -48,25 +48,25 @@
     {
       name: '待我审批(加班)',
       is: 'ApplyWaitMeTabContent',
-      type: 'me',
+      waitStatus: 'me',
       applyType: 'overtime',
     },
     {
       name: '待我审批(请假)',
       is: 'ApplyWaitMeTabContent',
-      type: 'me',
+      waitStatus: 'me',
       applyType: 'leave',
     },
-    {
-      name: '等待他人审批',
-      is: 'ApplyWaitOtherTabContent',
-      type: 'other',
-    },
+    // {
+    //   name: '等待他人审批',
+    //   is: 'ApplyWaitOtherTabContent',
+    //   type: 'other',
+    // },
   ]
 
   useKeepAlive()
   useKeepPosition({
-    getTarget: () => document.querySelector(`.tab-content-${tabs[active.value].type}`)!,
+    getTarget: () => document.querySelector(`.tab-content-${tabs[active.value].applyType}`)!,
   })
   // 获取实例
   const tabContentRefs = ref<any[]>([])

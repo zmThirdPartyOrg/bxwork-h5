@@ -23,7 +23,7 @@
         <span>{{ item.remark || '-' }}</span>
       </li>
     </ul>
-    <div class="c-item-footer" v-if="isLeader">
+    <div class="c-item-footer" v-if="isLeader && item.userId !== userinfo?.content.userId">
       <button @click="handleEdit">修改</button>
       <button @click="emit('del')">删除</button>
     </div>

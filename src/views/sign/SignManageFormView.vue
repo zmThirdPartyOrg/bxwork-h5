@@ -58,14 +58,6 @@
       label: '人员',
       is: 'HorCheckboxButton',
       disabled: true,
-      // fn: async (item) => {
-      //   console.log('item.options', item.options)
-      //   const res = await horPickerInstance.value?.show({
-      //     value: item.value,
-      //     columns: item.options,
-      //   })
-      //   item.value = res
-      // },
       options: [{ label: '无可选人员', value: '' }],
       props: {
         direction: 'column',
@@ -106,7 +98,7 @@
       },
     },
     attendTime: {
-      value: '',
+      value: formatDate(Date.now(), 'yyyy/MM/dd hh:mm:ss'),
       label: '时间',
       is: 'HorCellPicker',
       props: {

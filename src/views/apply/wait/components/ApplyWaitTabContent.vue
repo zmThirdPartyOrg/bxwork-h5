@@ -4,7 +4,7 @@
   <!-- 刷新 下拉加载 -->
   <HorScroll
     ref="containerRef"
-    :class="['tab-content-' + type]"
+    :class="['tab-content-' + applyType]"
     :list-disabled="pagingStatus.pagingTotal <= 0"
     :pull-disabled="pagingStatus.pagingTotal <= 0"
     :finished="pagingFinished"
@@ -46,7 +46,7 @@
       type: String,
       default: '',
     },
-    type: {
+    waitStatus: {
       type: String,
     },
     applyType: {
@@ -64,7 +64,7 @@
           pageindex,
           pagesize,
           applyType: 'wait',
-          waitStatus: props.type,
+          waitStatus: props.waitStatus,
           title: keyword.value,
           type: props.applyType,
         },
@@ -74,7 +74,7 @@
     },
     {
       immediate: true,
-      scrollSelector: `.tab-content-${props.type}`,
+      scrollSelector: `.tab-content-${props.waitStatus}`,
     },
   )
 
