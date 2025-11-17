@@ -27,6 +27,7 @@
     </HorScroll>
     <HorFixedActions>
       <VanButton class="c-button" v-if="userinfo?.content.userId === 764" @click="handleTest">
+        <input type="text" v-model="_localHost" />
         {{ userinfo?.content.userId }}
       </VanButton>
       <VanButton class="c-button" type="primary" @click="$router.push('/assign/overtime/form')"
@@ -71,8 +72,9 @@
     },
   )
 
+  const _localHost = ref('http://10.50.105.179:10086/')
   const handleTest = () => {
-    window.location.href = 'http://10.50.105.92:10086/#/work'
+    window.location.href = `${_localHost.value}#/work`
     console.log('handleTest')
   }
   onBeforeMountOrActivated(() => {
