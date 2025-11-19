@@ -50,7 +50,7 @@
         waitStatus: props.type,
         title: keyword.value,
       })
-      return [content, 99]
+      return [content, content.length < pagesize ? 1 : 999]
     },
     {
       immediate: true,

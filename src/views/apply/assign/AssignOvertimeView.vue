@@ -65,7 +65,7 @@
         keyword: keyword.value,
         waitStatus: '',
       })
-      return [content, 999]
+      return [content, content.length < pagesize ? 1 : 999]
     },
     {
       immediate: true,
