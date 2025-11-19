@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite --force --host --port 10086",
     "build": "run-p type-check build-only",
-    "build:dev": "cross-env BASE=/h5-page/ vite build",
+    "build:dev": "cross-env BASE=/bxkq/ vite build",
     "build:prod": "cross-env BASE=/h5-page/ vite build",
     "preview": "vite preview",
     "build-only": "vite build",

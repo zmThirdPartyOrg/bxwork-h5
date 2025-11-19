@@ -13,7 +13,7 @@ DeployDirectoryPath=/ctms/apache-tomcat-8.5.83/webapps/h5-page
 # source ~/.nvm/nvm.sh
 # nvm use 18.15.0
 npm install
-npm run build:dev
+npm run build:prod
 
 cd ./dist
 zip -r ./dist.zip ./*
