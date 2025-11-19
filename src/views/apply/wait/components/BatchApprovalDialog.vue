@@ -144,15 +144,26 @@
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
-  :deep(.selected-cell) {
-    .hor-cell-value {
-      display: flex;
-      flex-direction: column;
-      max-height: 340px;
-      overflow: hidden auto;
+  :deep() {
+    .selected-cell {
+      .hor-cell-value {
+        display: flex;
+        flex-direction: column;
+        max-height: 260px;
+        overflow: hidden auto;
+      }
+      .c-item-status {
+        flex: 0 1 auto;
+      }
     }
-    .c-item-status {
-      flex: 0 1 auto;
+    .c-item-header h3 {
+      font-size: 14px;
+    }
+    .c-item-cell {
+      font-size: 12px;
+    }
+    .hor-textarea-content {
+      min-height: 82px;
     }
   }
   .c-item {

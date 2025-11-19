@@ -13,7 +13,7 @@
         type="primary"
         round
         @click="handleBatchApproval"
-        >批量审批</VanButton
+        >批量审批({{ tabContentRefs[active]?.selected.length }})</VanButton
       >
     </template>
     <VanTabs @change="tabChange" v-model:active="active" sticky>

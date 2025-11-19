@@ -2,8 +2,9 @@
 
 # ---------------------------------------------------------------------------
 # modify these config for the target project
-ServerAddress=root@101.34.8.71
-DeployDirectoryPath=/web/dev/bxkq
+ServerAddress=root@8.140.30.11
+# ServerAddress=root@101.34.8.71
+DeployDirectoryPath=/ctms/apache-tomcat-8.5.83/webapps/h5-page
 # ---------------------------------------------------------------------------
 
 

@@ -59,6 +59,9 @@
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
     async ([pageindex, pagesize], { loading }) => {
+      if (pageindex === 1) {
+        clearSelected()
+      }
       const content = await withLoading(reqApplyList)(
         {
           pageindex,
