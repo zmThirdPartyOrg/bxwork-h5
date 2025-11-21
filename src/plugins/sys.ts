@@ -4,6 +4,7 @@ console.log('sysInfosysInfosysInfosysInfo')
 const fn = (data: string) => {
   console.log('__getUserInfo', data)
   const { userInfo, sysInfo } = JSON.parse(data) as { sysInfo: any; userInfo: Userinfo }
+  console.log('__getUserInfo-userInfo', userInfo)
   const { setUserinfo } = useUserinfoStore()
   const { headers, setHeaders } = useHeadersStore()
   setUserinfo(userInfo)

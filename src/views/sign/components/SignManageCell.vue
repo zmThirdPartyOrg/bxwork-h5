@@ -31,12 +31,15 @@
   import type { AttendManageItem } from '@/types'
 
   const { userinfo } = useUserinfoStore()
-  const isLeader = computed(() => userinfo?.content.isLeader === 'Y')
 
   const props = defineProps({
     item: {
       type: Object as PropType<AttendManageItem>,
       default: () => ({}),
+    },
+    isLeader: {
+      type: Boolean,
+      default: false,
     },
   })
 

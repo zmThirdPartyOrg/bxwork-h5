@@ -29,6 +29,7 @@
         applyType="assign"
         :item="item"
         v-for="(item, index) in pagingData"
+        :isLeader="isLeader"
         :key="index"
         @del="handleDel(index, item)"
       />
@@ -45,24 +46,27 @@
   import { sleep } from '@pkstar/utils'
   import { useKeepAlive, useKeepPosition, usePaging } from '@pkstar/vue-use'
   import { showConfirmDialog, showToast } from 'vant'
-  import { computed, ref } from 'vue'
 
-  import { doAssignDelAttend, reqAttendManageList } from '@/api'
+  import { doAssignDelAttend, reqAttendManageList, reqUserInfo } from '@/api'
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated, useQueryParamsRefresh } from '@/hooks'
   import { useUserinfoStore } from '@/stores'
   import type { AttendManageItem } from '@/types'
-  import { goBack, refreshTrap } from '@/utils'
+  import { goBack, refreshTrap, withLoading } from '@/utils'
 
   import AttendManageCell from './components/AttendManageCell.vue'
 
-  useKeepAlive()
-  useKeepPosition({
-    getTarget: () => document.querySelector(`.attend-manage-scroll`)!,
-  })
+  // useKeepAlive()
+  // useKeepPosition({
+  //   getTarget: () => document.querySelector(`.attend-manage-scroll`)!,
+  // })
 
   const { userinfo } = useUserinfoStore()
-  const isLeader = computed(() => userinfo?.content.isLeader === 'Y')
+  const isLeader = ref(false)
+  reqUserInfo().then((res: any) => {
+    isLeader.value = res.isLeader === 'Y'
+  })
+  // const isLeader = computed(() => userinfo?.content.isLeader === 'Y')
 
   // 日期筛选相关
   const selectedDateRange = ref<string>('')
@@ -89,16 +93,19 @@
 
   // 分页 hooks
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } = usePaging(
-    async ([pageindex, pagesize], {}) => {
-      const content = await reqAttendManageList({
-        pageindex,
-        pagesize,
-        userName: userName.value,
-        ...queryParams.value,
-        // 只在有值时传递日期参数
-        ...(startDate.value ? { fromDate: startDate.value } : {}),
-        ...(endDate.value ? { toDate: endDate.value } : {}),
-      })
+    async ([pageindex, pagesize], { loading }) => {
+      const content = await withLoading(reqAttendManageList)(
+        {
+          pageindex,
+          pagesize,
+          userName: userName.value,
+          ...queryParams.value,
+          // 只在有值时传递日期参数
+          ...(startDate.value ? { fromDate: startDate.value } : {}),
+          ...(endDate.value ? { toDate: endDate.value } : {}),
+        },
+        loading,
+      )
       return [content, 9999]
     },
   )

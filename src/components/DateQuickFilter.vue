@@ -60,7 +60,7 @@
   // 根据选择的值计算日期范围
   const calculateDateRange = (range: string) => {
     const today = new Date()
-    const endDate = new Date(today)
+    const endDate = new Date(today.getTime() + 24 * 60 * 60 * 1000)
     const startDate = new Date(today)
 
     switch (range) {

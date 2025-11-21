@@ -48,7 +48,7 @@
       dynamicProps.value = options
     },
     confirmCallback() {
-      const options = banana.validate(formFileds.value)
+      const options = banana.validate(formFileds)
       console.log('formFileds.value', formFileds.value, options)
       return options
     },

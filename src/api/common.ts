@@ -28,6 +28,9 @@ export const doUserRoleReset = (data: { roleId: number }) =>
 export const doUserInfoUpdate = (data: Partial<UserinfoContent> | { fileIds: number }) =>
   curl<Userinfo>(`/user/updateinfo.json`, { content: data }, { method: 'POST' })
 
+// 获取个人信息
+export const reqUserInfo = () => curl<Userinfo>(`/user/useri.json`, {}, { method: 'POST' })
+
 // 获取部门列表
 export const getDepList = (data: PagingParams) =>
   curl<DepItem[]>(`/oa/depList.json`, data, { method: 'POST' })

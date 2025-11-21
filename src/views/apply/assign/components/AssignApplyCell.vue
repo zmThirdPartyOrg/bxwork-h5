@@ -59,6 +59,7 @@
         query: {
           title: `指派${item.createBy ?? '--'}加班`,
           applyType: props.applyType,
+          from: 'assgin',
         },
       })
     })()

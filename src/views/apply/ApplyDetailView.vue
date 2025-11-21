@@ -74,8 +74,9 @@
 
           <VanButton
             v-if="
-              !['submit'].includes(computedApplyDetail.submitStatus) ||
-              ['deny'].includes(computedApplyDetail.status)
+              (!['submit'].includes(computedApplyDetail.submitStatus) ||
+                ['deny'].includes(computedApplyDetail.status)) &&
+              query.from !== 'assgin'
             "
             class="c-button"
             type="primary"
