@@ -1,6 +1,6 @@
 <template>
   <VanDialog
-    title="批量审批"
+    title="批量操作"
     v-model:show="visible"
     show-cancel-button
     cancel-button-text="拒绝"
@@ -14,9 +14,9 @@
       <template #selected="{ item }">
         <div class="c-item" v-for="(i, index) in item.value" :key="index" :item="i">
           <div class="c-item-header">
-            <h3>{{ i.title }}</h3>
+            <h3>{{ `指派${i.createBy ?? '--'}加班 ` }}</h3>
             <span class="c-item-status">{{
-              applyStatusLabelMap(i?.submitStatus!, i?.status!)
+              applyStatusLabelMap(i?.submitStatus!, i?.auditStatus!)
             }}</span>
           </div>
           <ul class="c-item-content">
@@ -30,8 +30,7 @@
     </ProSchemaForm>
     <template #footer>
       <div class="btn-bar">
-        <VanButton type="danger" size="small" @click="handleRefuse">拒绝</VanButton>
-        <VanButton type="primary" size="small" @click="handleAgree">同意</VanButton>
+        <VanButton type="danger" size="small" @click="handleRefuse">撤回</VanButton>
       </div>
     </template>
   </VanDialog>
@@ -43,10 +42,10 @@
   import { useVisible } from '@pkstar/vue-use'
   import { showSuccessToast } from 'vant'
 
-  import { doApplyAgree, doApplyRefuse } from '@/api'
+  import { doApplyRefuse } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useUserinfoStore } from '@/stores'
-  import type { ApplyItem } from '@/types'
+  import type { AssignOvertimeItem } from '@/types'
   import { applyStatusLabelMap } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
@@ -54,10 +53,10 @@
   const props = defineProps({
     title: {
       type: String,
-      default: '批量审批',
+      default: '批量操作',
     },
     selected: {
-      type: Array as PropType<ApplyItem[]>,
+      type: Array as PropType<AssignOvertimeItem[]>,
       default: () => [],
     },
   })
@@ -82,20 +81,10 @@
         selected: 'default',
       },
     },
-    comment: {
-      value: '',
-      is: 'HorTextarea',
-      props: {
-        maxlength: 150,
-        placeholder: '请输入内容',
-      },
-      // hidden: true,
-    },
   })
 
   const { visible, show, hide, confirm } = useVisible<Partial<typeof props & { selected: any[] }>>({
     showCallback: async (options) => {
-      formFileds.comment.value = ''
       formFileds.selected.label = `共计${options?.selected?.length}条申请`
       formFileds.selected.value = options?.selected || []
     },
@@ -106,24 +95,11 @@
     const { selected, comment } = banana.validate(formFileds)
     await doApplyRefuse({
       approveId: selected.map((item: any) => item.approveId),
+      comment: '',
       approveUserId: userinfo?.content?.userId ?? '',
-      comment,
       status: 'deny',
     })
     showSuccessToast('已拒绝')
-    await sleep(1000)
-    confirm()
-  }
-  // 同意
-  const handleAgree = async () => {
-    const { selected, comment } = banana.validate(formFileds)
-    await doApplyAgree({
-      approveId: selected.map((item: any) => item.approveId),
-      approveUserId: userinfo?.content.userId ?? '',
-      comment,
-      status: 'pass',
-    })
-    showSuccessToast('已同意')
     await sleep(1000)
     confirm()
   }

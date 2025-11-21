@@ -1,5 +1,13 @@
 <template>
   <div class="c-col-item van-hairline--bottom c-m10" @click="handleClick">
+    <VanCheckbox
+      v-if="['init'].includes(item.auditStatus) && ['submit'].includes(item.submitStatus)"
+      class="cell-checkbox"
+      :model-value="checked"
+      @click.stop="emit('select')"
+      shape="square"
+      icon-size="16"
+    ></VanCheckbox>
     <img class="icon" :src="applyTypeValueMap.overtime?.icon" alt="" srcset="" />
     <div class="c-col-item-content">
       <div class="c-col-item-title">
@@ -32,7 +40,13 @@
       type: String,
       default: '',
     },
+    checked: {
+      type: Boolean,
+      default: false,
+    },
   })
+
+  const emit = defineEmits(['select'])
 
   const router = useRouter()
   const handleClick = async () => {
@@ -53,4 +67,8 @@
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
+
+  .cell-checkbox {
+    margin-right: 10px;
+  }
 </style>
