@@ -28,6 +28,7 @@
     </VanTabs>
 
     <BatchApprovalDialog ref="batchApprovalDialogInstance" />
+    <div class="van-safe-area-bottom"></div>
   </HorView>
 </template>
 

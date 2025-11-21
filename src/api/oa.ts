@@ -225,7 +225,7 @@ export const doApplyRemind = withLoading((data: { approveId: number }) =>
 )
 
 // 撤回审批
-export const doApplyWithdraw = withLoading((data: { approvalId: number }) =>
+export const doApplyWithdraw = withLoading((data: { approvalId?: number; approveId?: number[] }) =>
   curl(`/oa/applyWithdraw.json`, data),
 )
 

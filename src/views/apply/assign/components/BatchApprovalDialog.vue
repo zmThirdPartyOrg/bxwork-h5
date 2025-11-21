@@ -30,7 +30,7 @@
     </ProSchemaForm>
     <template #footer>
       <div class="btn-bar">
-        <VanButton type="danger" size="small" @click="handleRefuse">撤回</VanButton>
+        <VanButton type="warning" size="small" @click="handleRefuse">撤回</VanButton>
       </div>
     </template>
   </VanDialog>
@@ -42,13 +42,11 @@
   import { useVisible } from '@pkstar/vue-use'
   import { showSuccessToast } from 'vant'
 
-  import { doApplyRefuse } from '@/api'
+  import { doApplyWithdraw } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useUserinfoStore } from '@/stores'
   import type { AssignOvertimeItem } from '@/types'
   import { applyStatusLabelMap } from '@/utils'
-
-  const { userinfo } = useUserinfoStore()
 
   const props = defineProps({
     title: {
@@ -92,14 +90,11 @@
   })
   // 拒绝
   const handleRefuse = async () => {
-    const { selected, comment } = banana.validate(formFileds)
-    await doApplyRefuse({
-      approveId: selected.map((item: any) => item.approveId),
-      comment: '',
-      approveUserId: userinfo?.content?.userId ?? '',
-      status: 'deny',
+    const { selected } = banana.validate(formFileds)
+    await doApplyWithdraw({
+      approveId: selected.map((item: any) => item.approvalId),
     })
-    showSuccessToast('已拒绝')
+    showSuccessToast('已撤回')
     await sleep(1000)
     confirm()
   }

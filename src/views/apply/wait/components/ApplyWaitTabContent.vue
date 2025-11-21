@@ -73,11 +73,14 @@
         },
         loading,
       )
-      return [content, 9999]
+      return [content, content.length < pagesize ? 1 : 999]
     },
     {
       immediate: true,
       scrollSelector: `.tab-content-${props.waitStatus}`,
+      initialStatus: {
+        pagingSize: 20,
+      },
     },
   )
 

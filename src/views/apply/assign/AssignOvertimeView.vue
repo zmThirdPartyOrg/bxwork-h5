@@ -42,6 +42,10 @@
       />
     </HorScroll>
     <HorFixedActions>
+      <!-- <VanButton class="c-button" v-if="userinfo?.content.userId === 764" @click="handleTest">
+        <input type="text" v-model="_localHost" />
+        {{ userinfo?.content.userId }}
+      </VanButton> -->
       <VanButton class="c-button" type="primary" @click="$router.push('/assign/overtime/form')"
         >新增指派加班</VanButton
       >
@@ -58,6 +62,7 @@
   import { reqAssignOvertimeList } from '@/api'
   import { useProSearch } from '@/components'
   import { onBeforeMountOrActivated } from '@/hooks'
+  import { useUserinfoStore } from '@/stores'
   import type { AssignOvertimeItem } from '@/types'
   import { applyListTrap, goBack } from '@/utils'
 
@@ -70,6 +75,8 @@
   useKeepPosition({
     getTarget: () => document.querySelector(`.assign-overtime-scroll`)!,
   })
+  const { userinfo } = useUserinfoStore()
+
   const [keyword, handleSearch] = useProSearch(() => pagingRefresh(true))
 
   // 分页 hooks
@@ -81,13 +88,19 @@
         keyword: keyword.value,
         waitStatus: '',
       })
-      return [content, 999]
+
+      return [content, content.length < pagesize ? 1 : 999]
     },
     {
       immediate: true,
     },
   )
 
+  const _localHost = ref('http://10.50.105.179:10086/')
+  const handleTest = () => {
+    window.location.href = `${_localHost.value}#/work`
+    console.log('handleTest')
+  }
   onBeforeMountOrActivated(() => {
     applyListTrap.create(pagingRefresh.bind(this, true))
   })
