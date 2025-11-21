@@ -9,6 +9,7 @@
         ></ApplyWaitTabContent>
       </VanTab>
     </VanTabs>
+    <div class="van-safe-area-bottom"></div>
   </HorView>
 </template>
 
@@ -55,7 +56,7 @@
     })
   }
   const tabChange = () => {
-    triggerTabContentRefresh()
+    // triggerTabContentRefresh()
   }
 
   onBeforeMountOrActivated(() => {

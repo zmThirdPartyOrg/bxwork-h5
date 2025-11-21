@@ -55,6 +55,9 @@
     {
       immediate: true,
       scrollSelector: `.tab-content-${props.type}`,
+      initialStatus: {
+        pagingSize: 20,
+      },
     },
   )
 
