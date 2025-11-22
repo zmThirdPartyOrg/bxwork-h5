@@ -79,7 +79,7 @@
       immediate: true,
       scrollSelector: `.tab-content-${props.waitStatus}`,
       initialStatus: {
-        pagingSize: 20,
+        pagingSize: 50,
       },
     },
   )

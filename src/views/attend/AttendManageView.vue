@@ -106,7 +106,7 @@
         },
         loading,
       )
-      return [content, 9999]
+      return [content, content.length < pagesize ? 1 : 999]
     },
   )
 
@@ -121,7 +121,7 @@
     await doAssignDelAttend({ attendId: item.attendId })
     sleep(1000)
     pagingData.value.splice(index, 1)
-    showToast('删除成功' + index)
+    showToast('删除成功')
   }
 
   onBeforeMountOrActivated(() => {

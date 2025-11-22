@@ -109,7 +109,7 @@
         },
         loading,
       )
-      return [content, 9999]
+      return [content, content.length < pagesize ? 1 : 999]
     },
     {
       immediate: false,

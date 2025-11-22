@@ -292,7 +292,7 @@ export const doAssignAttend = withLoading(
       remark: string
     } & Record<string, any>,
   ) => curl<Record<string, any>>(`/oa/assignAttend.json`, { signContent: data }),
-  false,
+  true,
 )
 
 // 打卡&签到 删除
