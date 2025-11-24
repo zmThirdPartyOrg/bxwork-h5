@@ -1,6 +1,6 @@
 import { createTrapInstance } from '@pkstar/utils'
 
-import type { DepItem, SysConfigDict } from '@/types'
+import type { AssignOvertimeUser, DepItem, SysConfigDict } from '@/types'
 
 // 通用页面刷新 & 筛选
 export const refreshTrap = createTrapInstance<Record<string, any>>('trap:view:refresh')
@@ -22,3 +22,6 @@ export const selectDepTrap = createTrapInstance<DepItem>('trap:select-department
 
 // 选择请假类型
 export const selectLeaveTrap = createTrapInstance<SysConfigDict>('trap:select-leave:refresh')
+
+// 选择人员
+export const selectUserTrap = createTrapInstance<AssignOvertimeUser[]>('trap:select-user:refresh')

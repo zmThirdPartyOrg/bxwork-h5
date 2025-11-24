@@ -252,7 +252,8 @@ export const doApplyOvertime = withLoading((content: ApplyOvertimeDto) =>
 )
 
 // 获取组员接口
-export const reqAssignUsers = () => curl<AssignOvertimeUser[]>(`/oa/otAssignUsers.json`)
+export const reqAssignUsers = (keyword?: string) =>
+  curl<AssignOvertimeUser[]>(`/oa/otAssignUsers.json`, { keyword })
 
 // 加班指派
 export const doAssignOvertime = withLoading((content: AssignOvertimeDto) =>

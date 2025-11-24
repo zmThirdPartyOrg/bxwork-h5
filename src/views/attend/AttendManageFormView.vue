@@ -27,6 +27,7 @@
 
   import { doAssignAttend, reqAssignUsers } from '@/api'
   import { useProSchemaForm } from '@/components'
+  import { useUserField } from '@/hooks'
   import { parseAddressLngLatByBMap, refreshTrap } from '@/utils'
 
   useKeepAlive()
@@ -53,34 +54,9 @@
         }
       },
     },
-    userId: {
-      value: [],
-      label: '人员',
-      is: 'HorCheckboxButton',
-      disabled: true,
-      options: [{ label: '无可选人员', value: '' }],
-      props: {
-        direction: id ? 'row' : 'column',
-        span: '3',
-      },
-      rules: [
-        { required: true, message: '请选择人员' },
-        { validator: (v) => v.length > 0, message: '请选择人员' },
-      ],
-      get(v, f) {
-        console.log('userId', v, f)
-        const { options } = f
-        const res = v.map((o: string) => {
-          const item = options.find((item: any) => item.value === o)
-          return item
-        })
-        return {
-          userId: res.map((item: any) => item.value).join(','),
-          userName: res.map((item: any) => item.realName).join(','),
-        }
-      },
+    userId: useUserField({
       hidden: !!id,
-    },
+    }),
     attendType: {
       value: '1',
       label: '打卡类型',
@@ -140,7 +116,6 @@
   const router = useRouter()
   const handleSubmit = async () => {
     const options = await banana.validate(fields)
-    console.log('options=>', options)
     const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
     await doAssignAttend({
       ...options,
@@ -155,18 +130,6 @@
   onBeforeMount(async () => {
     if (detailObj) {
       banana.assignment(detailObj, fields)
-    }
-
-    // 获取人员数据
-    const assignUsers = await reqAssignUsers()
-    if (assignUsers.length) {
-      fields.userId.options = [...assignUsers].map((item) => ({
-        ...item,
-        label: `${item.realName}`,
-        name: `${item.realName}`,
-        value: item.userId,
-      }))
-      fields.userId.disabled = false
     }
   })
 </script>
