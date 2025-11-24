@@ -66,7 +66,7 @@
   // const isLeader = computed(() => userinfo?.content.isLeader === 'Y')
   const isLeader = ref(false)
   reqUserInfo().then((res: any) => {
-    isLeader.value = res.isLeader === 'Y'
+    isLeader.value = res.content.isLeader === 'Y'
   })
   // 日期筛选相关
   const selectedDateRange = ref<string>('')

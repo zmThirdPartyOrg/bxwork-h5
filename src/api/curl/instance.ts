@@ -8,7 +8,7 @@ import { log } from './log'
 export const instance = axios.create(DEFAULT_CONFIG)
 
 // 有些接口需要返回全部内容
-const resAllUrls = ['oa/applyDetail.json', 'user/login.json']
+const resAllUrls = ['oa/applyDetail.json', 'user/login.json', 'user/useri.json']
 
 // 请求拦截器 设置公共参数
 instance.interceptors.request.use(

@@ -63,8 +63,8 @@
 
   const { userinfo } = useUserinfoStore()
   const isLeader = ref(false)
-  reqUserInfo().then((res: any) => {
-    isLeader.value = res.isLeader === 'Y'
+  reqUserInfo().then((res) => {
+    isLeader.value = res.content.isLeader === 'Y'
   })
   // const isLeader = computed(() => userinfo?.content.isLeader === 'Y')
 
