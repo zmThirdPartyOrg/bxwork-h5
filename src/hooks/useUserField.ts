@@ -48,6 +48,7 @@ export function useUserField(options: boolean | Partial<ProSchemaFormField> = fa
             userName: v.map((item) => item.realName).join(','),
           }
     },
+    set() {},
     ...rest,
   })
 
