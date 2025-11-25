@@ -58,7 +58,7 @@
       hidden: !!id,
     }),
     attendType: {
-      value: '1',
+      value: '',
       label: '打卡类型',
       is: 'HorRadio',
       options: [
