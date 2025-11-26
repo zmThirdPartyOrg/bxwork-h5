@@ -25,7 +25,7 @@
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useParams, useQuery } from '@pkstar/vue-use'
 
-  import { doAssignAttend, reqAssignUsers } from '@/api'
+  import { doAssignAttend } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useUserField } from '@/hooks'
   import { parseAddressLngLatByBMap, refreshTrap } from '@/utils'

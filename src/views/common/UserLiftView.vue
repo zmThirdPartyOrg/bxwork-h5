@@ -43,7 +43,7 @@
 <script setup lang="ts">
   import { usePaging, useQuery } from '@pkstar/vue-use'
 
-  import { reqAssignUsers } from '@/api'
+  import { reqAssignRoleUsers } from '@/api'
   import { useProSearch } from '@/components'
   import type { AssignOvertimeUser } from '@/types'
   import { selectUserTrap, withLoading } from '@/utils'
@@ -68,7 +68,7 @@
   const { pagingData, pagingRefresh, pagingLoad, pagingFinished, pagingStatus } =
     usePaging<AssignOvertimeUser>(
       async ([], { loading }) => {
-        const content = await withLoading(reqAssignUsers, loading)(keyword.value)
+        const content = await withLoading(reqAssignRoleUsers, loading)(keyword.value)
         return [content, content.length]
       },
       {

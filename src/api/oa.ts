@@ -255,6 +255,10 @@ export const doApplyOvertime = withLoading((content: ApplyOvertimeDto) =>
 export const reqAssignUsers = (keyword?: string) =>
   curl<AssignOvertimeUser[]>(`/oa/otAssignUsers.json`, { keyword })
 
+// 获取组员接口-用在考勤和签到新增时，会根据角色判断返回人员列表 不包含自己
+export const reqAssignRoleUsers = (keyword?: string) =>
+  curl<AssignOvertimeUser[]>(`/oa/otAssignRoleUsers.json`, { keyword })
+
 // 加班指派
 export const doAssignOvertime = withLoading((content: AssignOvertimeDto) =>
   curl(`/oa/submitOvertimeAssign.json`, { content }),
