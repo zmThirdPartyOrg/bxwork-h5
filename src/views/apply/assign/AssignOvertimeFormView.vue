@@ -187,7 +187,7 @@
         maxlength: 150,
         placeholder: '请输入',
       },
-      rules: [{ required: true, message: '请输入请假说明' }],
+      rules: [{ required: true, message: '请输入加班说明' }],
     },
   })
 
