@@ -43,3 +43,7 @@ export const reqVersionVerify = () => curl<SysConfig>(`/version/verify.json`, {}
 
 // 剩余假期
 export const reqLeaveInfo = () => curl<LeaveInfoItem[]>(`/oa/leave/info.json`, {})
+
+// 获取百度地图ak
+export const reqBmapAk = () =>
+  curl<{ h5: string }>(`/mbicomm/apikey.json`, {}).then((res) => res.h5)

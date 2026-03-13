@@ -2,7 +2,8 @@ import { useState } from '@pkstar/vue-use'
 import { defineStore } from 'pinia'
 
 import type { SysConfig } from '@/types'
-import { createNamespace, isMiniProgram } from '@/utils'
+import { createNamespace } from '@/utils'
+import { isMiniProgram } from '@/utils/isMiniProgram'
 
 import { withOut } from '../withOut'
 import { withToRefs } from '../withToRefs'

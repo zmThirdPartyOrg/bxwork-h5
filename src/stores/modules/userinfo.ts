@@ -4,7 +4,8 @@ import { defineStore } from 'pinia'
 
 import { router } from '@/router'
 import type { Userinfo } from '@/types'
-import { __DEV__, backToApp, createNamespace, isApp, isMiniProgram } from '@/utils'
+import { __DEV__, backToApp, createNamespace, isApp } from '@/utils'
+import { isMiniProgram } from '@/utils/isMiniProgram'
 
 import { withOut } from '../withOut'
 import { withToRefs } from '../withToRefs'

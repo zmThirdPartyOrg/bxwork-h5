@@ -1,10 +1,11 @@
 import { insertScript, sleep } from '@pkstar/utils'
 import { showLoadingToast } from 'vant'
 
+import { reqBmapAk } from '@/api'
 import type { GeocoderResult, SurroundingPois } from '@/types'
 
 export const appendBmap = async () => {
-  const bmpAk = 'CNX7X1fVOrSAODNDCAeMiWTkZjeruZK8'
+  const bmpAk = await reqBmapAk()
   if (typeof (window as any).BMap !== 'undefined') {
     return Promise.resolve()
   }
