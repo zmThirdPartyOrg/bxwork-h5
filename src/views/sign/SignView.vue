@@ -4,7 +4,7 @@
       <HorIcon name="bar-chart-o" size="20" />
     </template>
 
-    <div id="bmap-warp"></div>
+    <div id="mapContainer" class="map-warp"></div>
     <ul class="sign-info">
       <li>
         <HorIcon class="icon" name="location-o" size="30" />
@@ -33,7 +33,7 @@
   import { doSign, reqFaceCheck } from '@/api'
   import SignPopup from '@/components/SignPopup.vue'
   import { useUserinfoStore } from '@/stores'
-  import { __DEV__, appendBmap, isApp } from '@/utils'
+  import { __DEV__, appendBmap, appendTmap, isApp } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
   const router = useRouter()
@@ -45,7 +45,7 @@
   // const week = now.getDay()
   // const weekStr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][week]
   // const time = now.getHours() + ':' + now.getMinutes()
-  let locationInfo = reactive<Partial<GetLocationByBMapResult>>({})
+  const locationInfo = reactive<Partial<GetLocationByBMapResult>>({})
   const computedAddress = computed(() => {
     return locationInfo?.poi || locationInfo?.address
   })
@@ -83,37 +83,48 @@
     }
   }
   onMounted(async () => {
-    const locationRes = await getLocationByBMap()
-    if (!locationRes?.address) {
-      showConfirmDialog({
-        message: '获取定位失败，请开启定位权限和位置信息！',
-        showCancelButton: false,
-      })
-      return
-    }
-    locationInfo = locationRes
+    await appendTmap()
+    // 临时设置一个默认中心点（例如北京），待定位成功后更新
+    const defaultCenter = new T.LatLng(39.908823, 116.39747)
+    const map = new T.Map('mapContainer')
+    map.centerAndZoom(defaultCenter, 12)
+    // 添加一个临时的标记，后续会被覆盖或删除
+    // const marker = new TMap.Marker({
+    //   position: defaultCenter,
+    //   map: map,
+    // })
 
-    await appendBmap()
-    const longitude = locationRes.longitude
-    const latitude = locationRes.latitude
-    // 百度地图API功能
-    const map = new BMap.Map('bmap-warp') //,{minZoom:18.5,maxZoom:18.5}
-    const point = new BMap.Point(longitude, latitude)
-    map.centerAndZoom(point, 17) // 初始化地图,设置中心点坐标和地图级别
-    map.disableDragging() // 禁用地图拖拽
-    map.disableDoubleClickZoom() // 取消地图双击缩放
-    map.disablePinchToZoom() // 禁用双指缩放地图
-    map.clearOverlays()
+    // const locationRes = await getLocationByBMap()
+    // if (!locationRes?.address) {
+    //   showConfirmDialog({
+    //     message: '获取定位失败，请开启定位权限和位置信息！',
+    //     showCancelButton: false,
+    //   })
+    //   return
+    // }
+    // locationInfo = locationRes
 
-    const bpt = new BMap.Point(longitude, latitude)
-    const marker = new BMap.Marker(bpt) // 创建标注
-    map.addOverlay(marker)
+    // await appendBmap()
+    // const longitude = locationRes.longitude
+    // const latitude = locationRes.latitude
+    // // 百度地图API功能
+    // const map = new BMap.Map('bmap-warp') //,{minZoom:18.5,maxZoom:18.5}
+    // const point = new BMap.Point(longitude, latitude)
+    // map.centerAndZoom(point, 17) // 初始化地图,设置中心点坐标和地图级别
+    // map.disableDragging() // 禁用地图拖拽
+    // map.disableDoubleClickZoom() // 取消地图双击缩放
+    // map.disablePinchToZoom() // 禁用双指缩放地图
+    // map.clearOverlays()
+
+    // const bpt = new BMap.Point(longitude, latitude)
+    // const marker = new BMap.Marker(bpt) // 创建标注
+    // map.addOverlay(marker)
   })
 </script>
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
-  #bmap-warp {
+  .map-warp {
     flex: 1;
   }
   .sign-info {

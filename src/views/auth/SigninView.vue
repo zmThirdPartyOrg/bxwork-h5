@@ -51,7 +51,7 @@
       rules: [{ required: true, message: '请输入手机号码' }],
     },
     password: {
-      value: __DEV__ ? '111111' : '',
+      value: __DEV__ ? 'bx@#2507!' : '',
       is: markRaw(FormField),
       use: [2],
       get: (v) => md5(v),

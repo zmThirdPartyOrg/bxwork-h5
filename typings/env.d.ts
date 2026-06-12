@@ -32,6 +32,9 @@ declare global {
   const BMapGL: any
   const BMap: any
 
+  const TMap: any
+  const T: any
+
   const webkit: any
   const app: any
   interface Window {
