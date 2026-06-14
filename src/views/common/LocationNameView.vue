@@ -9,19 +9,20 @@
     />
     <VanCell
       v-else
-      v-for="item in locationList"
-      :key="item.uid"
-      :title="item.title"
+      v-for="(item, index) in locationList"
+      :key="index"
+      :title="item.name"
       @click="handleSelect(item)"
     ></VanCell>
   </HorView>
 </template>
 
 <script setup lang="ts">
-  import { getLocationByBMap } from '@pkstar/horn-jssdk'
+  import { getLocation, type GetLocationResult } from '@pkstar/horn-jssdk'
   import { useAsyncTask } from '@pkstar/vue-use'
 
-  import { getLocationNameByPoint, locationNameTrap, withLoading } from '@/utils'
+  import { getPoiByTmapPoint } from '@/api'
+  import { getLocationByNavigator, isApp, locationNameTrap, withLoading } from '@/utils'
 
   const {
     data: locationList,
@@ -30,9 +31,17 @@
     trigger,
   } = useAsyncTask(
     withLoading(async () => {
-      const { longitude, latitude } = await getLocationByBMap()
-      const res = await getLocationNameByPoint(+longitude, +latitude)
-      return res
+      let locationRes = null as GetLocationResult | null
+      if (isApp) {
+        locationRes = await getLocation()
+      }
+      if (!locationRes) {
+        locationRes = await getLocationByNavigator()
+        console.log('locationRes', locationRes)
+      }
+      const res = await getPoiByTmapPoint(locationRes.longitude!, locationRes.latitude!, '电')
+      console.log('res=>>>>>>>', res)
+      return res.pois ?? []
     }),
     {
       immediate: true,

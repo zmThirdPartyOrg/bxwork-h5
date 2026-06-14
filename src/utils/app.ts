@@ -45,6 +45,13 @@ export const backToApp = (path: string = '') => {
   }
 }
 
+// 拍照
+export const takePhoto = (data = {}) => {
+  return new Promise((resolve) => {
+    callNative({ handler: 'takePhoto', data }, resolve)
+  })
+}
+
 // 获取用户信息和公共参数
 export const getUserInfo = () => {
   console.log('getUserInfo => ', __w)

@@ -38,6 +38,13 @@
       <VanButton class="c-button" type="primary" @click="$router.push('/attend/manage/form')"
         >新增打卡</VanButton
       >
+      <VanButton
+        v-if="userinfo?.content.userId === 963"
+        class="c-button"
+        type="primary"
+        @click="$router.push('/work')"
+        >test</VanButton
+      >
     </HorFixedActions>
   </HorView>
 </template>

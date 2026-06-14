@@ -1,5 +1,6 @@
 export * from './bmap'
 export * from './common'
+export * from './map'
 export * from './message'
 export * from './mine'
 export * from './oa'

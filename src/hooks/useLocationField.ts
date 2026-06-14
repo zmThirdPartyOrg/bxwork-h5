@@ -27,7 +27,7 @@ export function useLocationField(options: boolean | Partial<ProSchemaFormField> 
 
   onBeforeMountOrActivated(() => {
     locationNameTrap.create((data) => {
-      filed.value = data.title
+      filed.value = data.name
     })
   })
 

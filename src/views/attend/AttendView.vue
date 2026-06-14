@@ -18,8 +18,8 @@
         {{ computedEndwork?.attendDt ? formatDate(computedEndwork?.attendDt, 'hh:mm') : '--:--' }}
       </div>
     </div>
-    <div id="bmap-warp"></div>
-    <button class="attend-btn" :disabled="!locationInfo" @click="handleAttend">
+    <div id="mapContainer" class="map-warp"></div>
+    <button class="attend-btn" :disabled="!locationInfo.addressComponent" @click="handleAttend">
       <span>{{ time }}</span>
       {{ computedStartwork?.attendDt ? '下班打卡' : '上班打卡' }}
     </button>
@@ -29,19 +29,23 @@
 </template>
 
 <script setup lang="ts">
-  import {
-    getLocationByBMap,
-    type GetLocationByBMapResult,
-    openAppAuthorizeSetting,
-  } from '@pkstar/horn-jssdk'
+  import { getLocation, type GetLocationResult, openAppAuthorizeSetting } from '@pkstar/horn-jssdk'
   import { formatDate, isIOS } from '@pkstar/utils'
   import { useAsyncTask, useKeepAlive } from '@pkstar/vue-use'
   import { showConfirmDialog, showSuccessToast } from 'vant'
 
-  import { doAttend, reqAttendInit, reqFaceCheck } from '@/api'
+  import { doAttend, getLocationNameByTmapPoint, reqAttendInit, reqFaceCheck } from '@/api'
   import SignPopup from '@/components/SignPopup.vue'
   import { useSysConfigStore, useUserinfoStore } from '@/stores'
-  import { __DEV__, appendBmap, isApp } from '@/utils'
+  import type { GetLocationNameByTmapPointResult } from '@/types'
+  import {
+    __DEV__,
+    appendTmap,
+    getLocationByNavigator,
+    isApp,
+    takePhoto,
+    takePhotoByBrowser,
+  } from '@/utils'
 
   useKeepAlive()
 
@@ -56,7 +60,7 @@
   // const week = now.getDay()
   // const weekStr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][week]
   const time = formatDate(now, 'hh:mm')
-  const locationInfo = ref<GetLocationByBMapResult>()
+  const locationInfo = reactive<Partial<GetLocationNameByTmapPointResult>>({})
 
   const { data: attendData, trigger } = useAsyncTask(reqAttendInit, {
     immediate: true,
@@ -75,22 +79,22 @@
     router.push('/attend/attend-list')
   }
   const handleAttend = async () => {
-    if (isApp && !__DEV__) {
-      const res = await reqFaceCheck({
-        dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
-        username: userinfo?.content.mobile!,
-        image: 'base64',
-      })
-      if (res !== '0') {
-        router.back()
-        throw '非本人打卡，系统不允许'
-      }
+    const image = await takePhotoByBrowser()
+    console.log('image=>>>>>>>', image)
+    const res = await reqFaceCheck({
+      dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
+      username: userinfo?.content.mobile!,
+      image: 'base64',
+    })
+    if (res !== '0') {
+      router.back()
+      throw '非本人打卡，系统不允许'
     }
 
-    const remarkData = await signPopupRef.value?.show({ ...toRaw(locationInfo.value) })
+    const remarkData = await signPopupRef.value?.show({ ...toRaw(locationInfo) })
     await doAttend({
-      longitude: locationInfo.value?.longitude!,
-      latitude: locationInfo.value?.latitude!,
+      longitude: locationInfo?.location?.lon!,
+      latitude: locationInfo?.location?.lat!,
       type: 'attend',
       attendType: computedStartwork.value?.attendDt ? 'endwork' : 'startwork',
       ...remarkData!,
@@ -100,32 +104,42 @@
   }
 
   onMounted(async () => {
-    const locationRes = await getLocationByBMap()
-    if (!locationRes.address) {
+    await nextTick()
+    await appendTmap()
+
+    const map = new T.Map('mapContainer')
+    map.disableDoubleClickZoom()
+    map.disableScrollWheelZoom()
+    map.disableInertia()
+    try {
+      let locationRes = null as GetLocationResult | null
+      if (isApp) {
+        locationRes = await getLocation()
+      }
+      if (!locationRes) {
+        locationRes = await getLocationByNavigator()
+      }
+      if (!locationRes) {
+        throw new Error('获取定位失败')
+      }
+
+      Object.assign(locationInfo, locationRes)
+      const p = await getLocationNameByTmapPoint(locationRes.longitude!, locationRes.latitude!)
+      Object.assign(locationInfo, p)
+      const point = new T.LngLat(locationRes.longitude, locationRes.latitude)
+      map.centerAndZoom(point, 17)
+      map.clearOverLays()
+      map.addOverLay(new T.Marker(point))
+    } catch (err) {
+      console.error(err)
       await showConfirmDialog({
         message: '获取定位失败，请开启定位权限和位置信息！',
         showCancelButton: false,
       })
-      openAppAuthorizeSetting()
-      return
+      if (isApp) {
+        openAppAuthorizeSetting()
+      }
     }
-
-    locationInfo.value = locationRes
-    await appendBmap()
-    // const longitude = 116.404
-    // const latitude = 39.915
-    // 百度地图API功能
-    const map = new BMap.Map('bmap-warp') //,{minZoom:18.5,maxZoom:18.5}
-    const point = new BMap.Point(locationRes.longitude, locationRes.latitude)
-    map.centerAndZoom(point, 17) // 初始化地图,设置中心点坐标和地图级别
-    map.disableDragging() // 禁用地图拖拽
-    map.disableDoubleClickZoom() // 取消地图双击缩放
-    map.disablePinchToZoom() // 禁用双指缩放地图
-
-    map.clearOverlays()
-    const bpt = new BMap.Point(locationRes.longitude, locationRes.latitude)
-    const marker = new BMap.Marker(bpt) // 创建标注
-    map.addOverlay(marker)
   })
 </script>
 
@@ -152,12 +166,13 @@
       }
     }
   }
-  #bmap-warp {
+  .map-warp {
     flex: 1;
   }
 
   .attend-btn {
     position: fixed;
+    z-index: 1000;
     bottom: j(60);
     left: 50%;
     transform: translateX(-50%);

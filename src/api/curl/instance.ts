@@ -8,7 +8,12 @@ import { log } from './log'
 export const instance = axios.create(DEFAULT_CONFIG)
 
 // 有些接口需要返回全部内容
-const resAllUrls = ['oa/applyDetail.json', 'user/login.json', 'user/useri.json']
+const resAllUrls = [
+  'oa/applyDetail.json',
+  'user/login.json',
+  'user/useri.json',
+  'api.tianditu.gov.cn/v2/search',
+]
 
 // 请求拦截器 设置公共参数
 instance.interceptors.request.use(
@@ -36,7 +41,7 @@ instance.interceptors.response.use(
     }
 
     // eslint-disable-next-line prefer-const
-    let { rtnCode, rtnMsg, content, mark } = respData
+    let { rtnCode, rtnMsg, content, mark, result, status } = respData
     // token 过期
     if (['2'].includes(rtnCode)) {
       const { logout } = useUserinfoStore()
@@ -46,7 +51,7 @@ instance.interceptors.response.use(
       return Promise.reject(`登录已失效，请重新登录`)
     }
 
-    if (rtnCode !== '0') {
+    if (rtnCode !== '0' && status !== '0' && status.infocode !== 1000) {
       return Promise.reject(rtnMsg || `网络繁忙，请稍后再试(2)`)
     }
 
@@ -54,7 +59,7 @@ instance.interceptors.response.use(
     if (resAllUrls.find((item) => config.url?.includes(item))) {
       return respData
     } else {
-      return content || mark
+      return content || mark || result
     }
   },
   (error) => {
