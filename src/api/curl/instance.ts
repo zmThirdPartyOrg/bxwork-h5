@@ -36,7 +36,7 @@ instance.interceptors.response.use(
     }
 
     // eslint-disable-next-line prefer-const
-    let { rtnCode, rtnMsg, content, mark } = respData
+    let { rtnCode, rtnMsg, content, mark, data } = respData
     // token 过期
     if (['2'].includes(rtnCode)) {
       const { logout } = useUserinfoStore()
@@ -54,7 +54,7 @@ instance.interceptors.response.use(
     if (resAllUrls.find((item) => config.url?.includes(item))) {
       return respData
     } else {
-      return content || mark
+      return content || data || mark
     }
   },
   (error) => {
