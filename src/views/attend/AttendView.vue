@@ -1,5 +1,5 @@
 <template>
-  <HorView class="attend-view" @right="handleRight">
+  <HorView class="attend-view" @right="handleRight" @left="goBack">
     <template #right>
       <HorIcon name="bar-chart-o" size="20" />
     </template>
@@ -42,6 +42,7 @@
     __DEV__,
     appendTmap,
     getLocationByNavigator,
+    goBack,
     isApp,
     takePhoto,
     takePhotoByBrowser,

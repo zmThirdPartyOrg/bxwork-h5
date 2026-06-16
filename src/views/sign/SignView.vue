@@ -1,5 +1,5 @@
 <template>
-  <HorView class="attend-view" @right="handleRight">
+  <HorView class="attend-view" @right="handleRight" @left="goBack">
     <template #right>
       <HorIcon name="bar-chart-o" size="20" />
     </template>
@@ -34,7 +34,7 @@
   import SignPopup from '@/components/SignPopup.vue'
   import { useUserinfoStore } from '@/stores'
   import type { GetLocationNameByTmapPointResult } from '@/types'
-  import { __DEV__, appendTmap, getLocationByNavigator, isApp } from '@/utils'
+  import { __DEV__, appendTmap, getLocationByNavigator, goBack, isApp } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
   const router = useRouter()
