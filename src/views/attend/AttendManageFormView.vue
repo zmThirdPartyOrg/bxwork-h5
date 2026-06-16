@@ -116,12 +116,12 @@
   const router = useRouter()
   const handleSubmit = async () => {
     const options = await banana.validate(fields)
-    const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
+    // const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
     await doAssignAttend({
       ...options,
       type: 'attend',
-      latitude: lat || 0,
-      longitude: lng || 0,
+      latitude: 0,
+      longitude: 0,
     })
     refreshTrap.trigger()
     router.go(-1)

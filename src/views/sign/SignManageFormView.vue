@@ -106,12 +106,12 @@
   const handleSubmit = async () => {
     const options = await banana.validate(fields)
     console.log('options=>', options)
-    const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
+    // const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
     await doAssignAttend({
       ...options,
       type: 'sign',
-      latitude: lat || 0,
-      longitude: lng || 0,
+      latitude: 0,
+      longitude: 0,
     })
     refreshTrap.trigger()
     router.go(-1)
