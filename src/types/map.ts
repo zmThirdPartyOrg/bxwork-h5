@@ -1,10 +1,13 @@
 export interface GetLocationNameByTmapPointResult {
   formatted_address: string
-  location: Location
+  location: {
+    lon: number
+    lat: number
+  }
   addressComponent: AddressComponent
 }
 
-interface AddressComponent {
+export interface AddressComponent {
   address: string
   town: string
   nation: string
@@ -24,16 +27,15 @@ interface AddressComponent {
   poi_distance: number
 }
 
-interface Location {
-  lon: number
-  lat: number
-}
-
 export interface GetPoiByTmapPointResult {
   pois: Poi[]
+  status: {
+    infocode: number
+    cndesc: string
+  }
 }
 
-interface Poi {
+export interface Poi {
   address: string
   distance: string
   phone: string
@@ -42,4 +44,20 @@ interface Poi {
   source: string
   hotPointID: string
   lonlat: string
+}
+
+export type TmapBaseResult<T> = {
+  searchVersion?: string
+  status: '0' | '101' | '404'
+  msg?: string
+} & T
+
+export interface GetPointByTmapAddressResult {
+  location: {
+    score: number
+    level: string
+    lon: string
+    lat: string
+    keyWord: string
+  }
 }

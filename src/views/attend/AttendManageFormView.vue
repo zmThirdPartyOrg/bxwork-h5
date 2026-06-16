@@ -25,10 +25,10 @@
   import { formatDate } from '@pkstar/utils'
   import { useKeepAlive, useParams, useQuery } from '@pkstar/vue-use'
 
-  import { doAssignAttend } from '@/api'
+  import { doAssignAttend, getPointByTmapAddress } from '@/api'
   import { useProSchemaForm } from '@/components'
   import { useUserField } from '@/hooks'
-  import { parseAddressLngLatByBMap, refreshTrap } from '@/utils'
+  import { refreshTrap } from '@/utils'
 
   useKeepAlive()
 
@@ -116,12 +116,12 @@
   const router = useRouter()
   const handleSubmit = async () => {
     const options = await banana.validate(fields)
-    const { lat, lng } = await parseAddressLngLatByBMap(options.locationDetail)
+    const { lat, lon } = await getPointByTmapAddress(options.locationDetail)
     await doAssignAttend({
       ...options,
       type: 'attend',
       latitude: lat || 0,
-      longitude: lng || 0,
+      longitude: lon || 0,
     })
     refreshTrap.trigger()
     router.go(-1)

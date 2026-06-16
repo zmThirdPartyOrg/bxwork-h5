@@ -8,12 +8,12 @@ import { log } from './log'
 export const instance = axios.create(DEFAULT_CONFIG)
 
 // 有些接口需要返回全部内容
-const resAllUrls = [
-  'oa/applyDetail.json',
-  'user/login.json',
-  'user/useri.json',
-  'api.tianditu.gov.cn/v2/search',
-]
+const resAllUrls = ['oa/applyDetail.json', 'user/login.json', 'user/useri.json']
+
+// 是否是地图
+const isMapUrl = (url: string) => {
+  return url.includes('api.tianditu.gov.cn')
+}
 
 // 请求拦截器 设置公共参数
 instance.interceptors.request.use(
@@ -41,7 +41,7 @@ instance.interceptors.response.use(
     }
 
     // eslint-disable-next-line prefer-const
-    let { rtnCode, rtnMsg, content, mark, result, status, data } = respData
+    let { rtnCode, rtnMsg, content, mark, result, status, data, msg } = respData
     // token 过期
     if (['2'].includes(rtnCode)) {
       const { logout } = useUserinfoStore()
@@ -51,8 +51,16 @@ instance.interceptors.response.use(
       return Promise.reject(`登录已失效，请重新登录`)
     }
 
-    if (rtnCode !== '0' && status !== '0' && status?.infocode !== 1000) {
-      return Promise.reject(rtnMsg || `网络繁忙，请稍后再试(2)`)
+    // 地图接口返回数据特殊处理
+    if (config.url && isMapUrl(config.url)) {
+      return respData
+      // if (status !== '0' && status?.infocode !== 1000) {
+      //   return Promise.reject(msg || `网络繁忙，请稍后再试(2)`)
+      // }
+    } else {
+      if (rtnCode !== '0') {
+        return Promise.reject(rtnMsg || `网络繁忙，请稍后再试(2)`)
+      }
     }
 
     // 登录接口返回数据特殊处理

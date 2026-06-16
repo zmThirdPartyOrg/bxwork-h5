@@ -41,7 +41,7 @@
       }
       const res = await getPoiByTmapPoint(locationRes.longitude!, locationRes.latitude!, '电')
       console.log('res=>>>>>>>', res)
-      return res.pois ?? []
+      return res ?? []
     }),
     {
       immediate: true,

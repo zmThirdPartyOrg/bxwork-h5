@@ -89,3 +89,14 @@ export const getLocationByNavigator = () => {
     )
   })
 }
+
+/** 天地图地图地理编码: 地址转经纬度 */
+export const getPointByTmapAddress = async (address: string) => {
+  await appendTmap()
+  return new Promise<{ longitude: number; latitude: number }>((resolve, reject) => {
+    const geocoder = new T.Geocoder()
+    geocoder.getLocation(address, (result: any) => {
+      resolve(result.getPoint())
+    })
+  })
+}

@@ -80,7 +80,7 @@
     router.push('/attend/attend-list')
   }
   const handleAttend = async () => {
-    const image = await takePhotoByBrowser()
+    const image = await takePhoto()
     console.log('image=>>>>>>>', image)
     const res = await reqFaceCheck({
       dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,

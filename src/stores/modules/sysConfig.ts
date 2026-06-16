@@ -1,9 +1,9 @@
 import { useState } from '@pkstar/vue-use'
 import { defineStore } from 'pinia'
 
+import { reqConfig } from '@/api'
 import type { SysConfig } from '@/types'
 import { createNamespace } from '@/utils'
-import { isMiniProgram } from '@/utils/isMiniProgram'
 
 import { withOut } from '../withOut'
 import { withToRefs } from '../withToRefs'
@@ -15,11 +15,16 @@ export const useSysConfigStore = withToRefs(
       () => {
         const [sysConfig, setSysConfig] = useState<SysConfig>()
 
+        if (!sysConfig.value) {
+          reqConfig().then((res) => {
+            setSysConfig({ ...res })
+          })
+        }
         return { sysConfig, setSysConfig }
       },
       {
         persist: {
-          storage: isMiniProgram ? window.sessionStorage : window.localStorage,
+          storage: window.localStorage,
         },
       },
     ),
