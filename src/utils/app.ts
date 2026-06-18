@@ -47,8 +47,14 @@ export const backToApp = (path: string = '') => {
 
 // 拍照
 export const takePhoto = (data = {}) => {
-  return new Promise((resolve) => {
-    callNative({ handler: 'takePhoto', data }, resolve)
+  return new Promise<{ base64: string }>((resolve, reject) => {
+    callNative({ handler: 'takePhoto', data }, (data) => {
+      if (data && data.base64) {
+        resolve(data)
+      } else {
+        reject('拍照失败')
+      }
+    })
   })
 }
 

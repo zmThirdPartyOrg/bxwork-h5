@@ -57,6 +57,7 @@ export const parseAddressLngLatByBMap = async (address: string): Promise<any> =>
   const getPoint = function () {
     return new Promise((resolve, reject) => {
       geocoder.setSearchCompleteCallback(function (data: any) {
+        console.log('data=>', data)
         loading.close()
         const sda = []
         for (let i = 0; i < data.getCurrentNumPois(); i++) {

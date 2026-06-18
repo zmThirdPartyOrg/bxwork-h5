@@ -39,22 +39,25 @@
   import { useSysConfigStore, useUserinfoStore } from '@/stores'
   import type { GetLocationNameByTmapPointResult } from '@/types'
   import {
-    __DEV__,
     appendTmap,
     getLocationByNavigator,
     goBack,
     isApp,
     takePhoto,
-    takePhotoByBrowser,
+    withLoading,
   } from '@/utils'
 
   useKeepAlive()
 
   const router = useRouter()
   const { userinfo } = useUserinfoStore()
-  const { sysConfig } = useSysConfigStore()
-  const starttime = sysConfig?.para.find((item) => item.paraCode === 'oa.work.starttime')?.paraValue
-  const endtime = sysConfig?.para.find((item) => item.paraCode === 'oa.work.endtime')?.paraValue
+  const { sysConfig } = useSysConfigStore(true)
+  const starttime = computed(
+    () => sysConfig?.value?.para.find((item) => item.paraCode === 'oa.work.starttime')?.paraValue,
+  )
+  const endtime = computed(
+    () => sysConfig?.value?.para.find((item) => item.paraCode === 'oa.work.endtime')?.paraValue,
+  )
 
   const now = new Date()
   const nowStr = formatDate(now, 'yyyy年MM月dd日 hh:mm:ss')
@@ -80,12 +83,11 @@
     router.push('/attend/attend-list')
   }
   const handleAttend = async () => {
-    const image = await takePhoto()
-    console.log('image=>>>>>>>', image)
+    const { base64 } = await takePhoto()
     const res = await reqFaceCheck({
       dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
       username: userinfo?.content.mobile!,
-      image: 'base64',
+      image: base64,
     })
     if (res !== '0') {
       router.back()
@@ -105,7 +107,6 @@
   }
 
   onMounted(async () => {
-    await nextTick()
     await appendTmap()
 
     const map = new T.Map('mapContainer')
@@ -118,7 +119,7 @@
         locationRes = await getLocation()
       }
       if (!locationRes) {
-        locationRes = await getLocationByNavigator()
+        locationRes = await withLoading(getLocationByNavigator)()
       }
       if (!locationRes) {
         throw new Error('获取定位失败')

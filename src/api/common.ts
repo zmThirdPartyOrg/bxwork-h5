@@ -7,7 +7,7 @@ import { curl } from './curl'
 // 获取h5版本
 export const reqH5Version = () =>
   curl<{ version: number }>(
-    `${__DEV__ ? `${window.location.origin}` : '//www.bianxiukaoqing.top/h5-page'}/version.json`,
+    `${__DEV__ ? `${window.location.origin}` : `${window.location.origin + window.location.pathname}`}/version.json`,
     { t: Date.now() },
     { method: 'GET', withPublicParams: false },
   )

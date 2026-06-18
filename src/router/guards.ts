@@ -1,10 +1,9 @@
 // import { setStatusBarStyle } from '@pkstar/horn-jssdk'
-import { sleep } from '@pkstar/utils'
 import type { Router } from 'vue-router'
 
-import { checkVersion } from '@/api'
+import { checkVersion, reqUserInfo } from '@/api'
 import { useUserinfoStore } from '@/stores'
-import { __DEV__, backToApp, errorHandler, getUserInfo, isApp, isMiniProgram } from '@/utils'
+import { __DEV__, backToApp, errorHandler, isApp, isMiniProgram } from '@/utils'
 
 export function setupGuards(router: Router) {
   router.onError((error) => {
@@ -22,7 +21,11 @@ export function setupGuards(router: Router) {
     console.log('bxkq-webview', window.location.href, token)
     // ios app获取__getUserInfo太慢，这里先取url token使用下
     if (token && token !== userinfo.value?.token) {
+      // 先设置token，再获取用户信息
       setUserinfo({ ...userinfo.value, token } as any)
+      const res = await reqUserInfo()
+      // 再更新用户信息
+      setUserinfo({ ...res, token } as any)
     }
 
     // 小程序希望早点触发 title

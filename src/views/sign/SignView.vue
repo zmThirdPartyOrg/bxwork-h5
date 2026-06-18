@@ -34,7 +34,14 @@
   import SignPopup from '@/components/SignPopup.vue'
   import { useUserinfoStore } from '@/stores'
   import type { GetLocationNameByTmapPointResult } from '@/types'
-  import { __DEV__, appendTmap, getLocationByNavigator, goBack, isApp } from '@/utils'
+  import {
+    appendTmap,
+    getLocationByNavigator,
+    goBack,
+    isApp,
+    takePhoto,
+    withLoading,
+  } from '@/utils'
 
   const { userinfo } = useUserinfoStore()
   const router = useRouter()
@@ -55,21 +62,21 @@
     router.push('/sign-list')
   }
   const handleSign = async () => {
-    if (isApp && !__DEV__) {
-      const res = await reqFaceCheck({
-        dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
-        username: userinfo?.content.mobile ?? '',
-        image: 'base64',
-      })
-      if (res !== '0') {
-        router.back()
-        throw '非本人签到，系统不允许'
-      }
+    const { base64 } = await takePhoto()
+
+    const res = await reqFaceCheck({
+      dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
+      username: userinfo?.content.mobile ?? '',
+      image: base64,
+    })
+    if (res !== '0') {
+      router.back()
+      throw '非本人签到，系统不允许'
     }
 
-    const res = await signPopupRef.value?.show({ ...toRaw(locationInfo) })
-    if (res) {
-      const { locationName, remark, fileIds } = res
+    const remarkData = await signPopupRef.value?.show({ ...toRaw(locationInfo) })
+    if (remarkData) {
+      const { locationName, remark, fileIds } = remarkData
       locationInfo!.formatted_address = locationName
       await doSign({
         longitude: locationInfo?.location?.lon!,
@@ -84,7 +91,6 @@
     }
   }
   onMounted(async () => {
-    await nextTick()
     await appendTmap()
 
     const map = new T.Map('mapContainer')
@@ -93,25 +99,27 @@
     map.disableInertia()
 
     try {
-      let locationRes = null as GetLocationResult | null
-      if (isApp) {
-        locationRes = await getLocation()
-      }
-      if (!locationRes) {
-        locationRes = await getLocationByNavigator()
-      }
-      console.log('locationRes', locationRes)
-      if (!locationRes) {
-        throw new Error('获取定位失败')
-      }
+      withLoading(async () => {
+        let locationRes = null as GetLocationResult | null
+        if (isApp) {
+          locationRes = await getLocation()
+        }
+        if (!locationRes) {
+          locationRes = await getLocationByNavigator()
+        }
+        console.log('locationRes', locationRes)
+        if (!locationRes) {
+          throw new Error('获取定位失败')
+        }
 
-      Object.assign(locationInfo, locationRes)
-      const p = await getLocationNameByTmapPoint(locationRes.longitude!, locationRes.latitude!)
-      Object.assign(locationInfo, p)
-      const point = new T.LngLat(locationRes.longitude, locationRes.latitude)
-      map.centerAndZoom(point, 17)
-      map.clearOverLays()
-      map.addOverLay(new T.Marker(point))
+        Object.assign(locationInfo, locationRes)
+        const p = await getLocationNameByTmapPoint(locationRes.longitude!, locationRes.latitude!)
+        Object.assign(locationInfo, p)
+        const point = new T.LngLat(locationRes.longitude, locationRes.latitude)
+        map.centerAndZoom(point, 17)
+        map.clearOverLays()
+        map.addOverLay(new T.Marker(point))
+      })()
     } catch (err) {
       console.error(err)
       await showConfirmDialog({

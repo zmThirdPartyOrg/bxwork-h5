@@ -180,6 +180,10 @@ export const reqSignRecord = (data: { requestMonth: string }) =>
 export const reqFaceCheck = withLoading(
   (data: { dataId: string; username: string; image: string }) =>
     curl<'0' | '1'>(`/mbicomm/facematch`, data),
+  {
+    message: '人脸校验中...',
+    duration: 0,
+  },
 )
 
 // 审批列表
