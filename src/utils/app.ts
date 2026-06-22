@@ -46,11 +46,16 @@ export const backToApp = (path: string = '') => {
 }
 
 // 拍照
-export const takePhoto = (data = {}) => {
+export const takePhoto = (
+  data: { capture: 'environment' | 'user'; withMask: 0 | 1 } = {
+    capture: 'environment',
+    withMask: 0,
+  },
+) => {
   return new Promise<{ base64: string }>((resolve, reject) => {
-    callNative({ handler: 'takePhoto', data }, (data) => {
-      if (data && data.base64) {
-        resolve(data)
+    callNative({ handler: 'takePhoto', data }, (res) => {
+      if (res && res.base64) {
+        resolve(res)
       } else {
         reject('拍照失败')
       }

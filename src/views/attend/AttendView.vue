@@ -83,7 +83,10 @@
     router.push('/attend/attend-list')
   }
   const handleAttend = async () => {
-    const { base64 } = await takePhoto()
+    const { base64 } = await takePhoto({
+      capture: 'user',
+      withMask: 1,
+    })
     const res = await reqFaceCheck({
       dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
       username: userinfo?.content.mobile!,

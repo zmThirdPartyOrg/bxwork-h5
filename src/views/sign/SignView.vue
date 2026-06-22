@@ -62,7 +62,10 @@
     router.push('/sign-list')
   }
   const handleSign = async () => {
-    const { base64 } = await takePhoto()
+    const { base64 } = await takePhoto({
+      capture: 'user',
+      withMask: 1,
+    })
 
     const res = await reqFaceCheck({
       dataId: `${isIOS() ? 'ios' : 'android'}${Date.now()}`,
@@ -99,7 +102,7 @@
     map.disableInertia()
 
     try {
-      withLoading(async () => {
+      await withLoading(async () => {
         let locationRes = null as GetLocationResult | null
         if (isApp) {
           locationRes = await getLocation()

@@ -11,7 +11,7 @@
             <ProImg
               class="upload-img"
               :src="item.url"
-              :preview="props.modelValue.map((item) => item.url)"
+              :preview="modelValue.map((item) => item.url)"
               :preview-index="index"
             />
             <HorIcon
@@ -46,7 +46,7 @@
   import { showConfirmDialog } from 'vant'
 
   import { doFileUpload, doFileUploadWithBase64, doFileUploadWithSdk } from '@/api'
-  import { __DEV__, isApp, showChooseSourceType, withLoading } from '@/utils'
+  import { __DEV__, isApp, showChooseSourceType, takePhoto, withLoading } from '@/utils'
 
   import { ProImg } from '../ProImg'
   import { omitHorCellPropsInUploader, proUploaderProps } from './types'
@@ -67,7 +67,6 @@
       const value = [...props.modelValue, ...opt]
       emits('update:modelValue', value)
     }
-    console.log(window.navigator.userAgent, window.navigator.userAgent.includes('HornApp'))
     // 原生容器app
     if (isApp && isIOS()) {
       //&& !__DEV__
@@ -104,7 +103,6 @@
       } else {
         // 默认上传
         const data = await doFileToBase64(res)
-
         const upRes = await withLoading(() =>
           Promise.all(
             data.map((item) => doFileUploadWithBase64({ data: item.base64 }, props.source)),
@@ -113,10 +111,15 @@
         console.log(upRes)
         callback(upRes)
       }
+    } else if (props.sourceType === 'camera') {
+      const { base64 } = await takePhoto()
+      const res = await doFileUploadWithBase64({ data: base64 }, props.source)
+      callback([res])
     } else {
       const input = document.createElement('input')
       input.type = 'file'
       input.accept = 'image/*'
+      input.capture = 'environment'
       input.multiple = props.multiple
       input.className = 'pro-uploader__input'
       const max = props.maxCount - props.modelValue.length || 1

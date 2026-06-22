@@ -15,7 +15,6 @@ export const doFileUpload = async (data: { file: File }, source: FileSourceType)
   const arrayBuffer = await data.file.arrayBuffer()
   const blob = new Blob([arrayBuffer], { type: data.file.type })
   const base64Str = (await blobToBase64(blob)) as string
-  console.log(base64Str)
   // 去除base64Str前缀
   const base64StrWithoutPrefix = base64Str.replace(/^data:image\/\w+;base64,/, '')
   return doFileUploadWithBase64({ data: base64StrWithoutPrefix }, source)
@@ -31,7 +30,6 @@ export const doFileUploadWithBase64 = (data: { data: string }, source: FileSourc
       ...data,
     },
   ]
-  console.log('content', content)
   return curl<{ id: number; url: string }[]>(
     `/user/upload.json`,
     {

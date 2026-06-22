@@ -37,6 +37,7 @@
       defaultValue: () => [],
       is: 'ProUploader',
       props: {
+        sourceType: 'camera',
         label: '图片附件',
         maxCount: 4,
         direction: 'column',
@@ -60,7 +61,6 @@
     { remark: string; locationName: string; fileIds: string }
   >({
     showCallback: async (options: GetLocationByBMapResult) => {
-      console.log('optionsoptionsoptionsoptionsoptions=>', options)
       fields.locationName.value = options.poi || options.address
       fields.locationName.to = `/location/lift?longitude=${options.longitude}&latitude=${options.latitude}`
     },
