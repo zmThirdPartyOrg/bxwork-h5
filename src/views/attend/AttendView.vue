@@ -116,6 +116,7 @@
     map.disableDoubleClickZoom()
     map.disableScrollWheelZoom()
     map.disableInertia()
+    map.disableDrag()
     try {
       let locationRes = null as GetLocationResult | null
       if (isApp) {
@@ -173,6 +174,12 @@
   }
   .map-warp {
     flex: 1;
+    touch-action: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .attend-btn {

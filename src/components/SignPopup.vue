@@ -60,9 +60,10 @@
     any,
     { remark: string; locationName: string; fileIds: string }
   >({
-    showCallback: async (options: GetLocationByBMapResult) => {
+    showCallback: async (options: GetLocationByBMapResult & { source?: string }) => {
       fields.locationName.value = options.poi || options.address
       fields.locationName.to = `/location/lift?longitude=${options.longitude}&latitude=${options.latitude}`
+      fields.fileIds.props!.source = options.source || 'attend'
     },
     confirmCallback: () => {
       const options = banana.validate(fields)

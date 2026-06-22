@@ -77,7 +77,10 @@
       throw '非本人签到，系统不允许'
     }
 
-    const remarkData = await signPopupRef.value?.show({ ...toRaw(locationInfo) })
+    const remarkData = await signPopupRef.value?.show({
+      ...toRaw(locationInfo),
+      source: 'timeover',
+    })
     if (remarkData) {
       const { locationName, remark, fileIds } = remarkData
       locationInfo!.formatted_address = locationName
@@ -100,6 +103,7 @@
     map.disableDoubleClickZoom()
     map.disableScrollWheelZoom()
     map.disableInertia()
+    map.disableDrag()
 
     try {
       await withLoading(async () => {
@@ -140,6 +144,12 @@
   @use '@/assets/scss/define.scss' as *;
   .map-warp {
     flex: 1;
+    touch-action: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
   .sign-info {
     padding: 0 j(15);

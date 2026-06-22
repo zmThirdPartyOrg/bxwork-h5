@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
   import { isArray, isBoolean, isString } from '@pkstar/utils'
+  import { showImagePreview } from 'vant'
   import type { PropType } from 'vue'
 
   import { usePreviewImageStore } from '@/stores'
@@ -70,7 +71,7 @@
   const computedUrl = computed(() => getUrl(props))
 
   // 预览
-  const { showPreviewImage } = usePreviewImageStore()
+  // const { showPreviewImage } = usePreviewImageStore()
   const handlePreview = async () => {
     const { preview, previewRatio, previewIndex = 0, src, ...options } = props
     if (preview === false) {
@@ -86,8 +87,9 @@
     }
     images = images.map((src) => getUrl({ ...options, src, ratio: previewRatio }))
 
-    showPreviewImage({
+    showImagePreview({
       images,
+      closeable: true,
       startPosition: +previewIndex,
     })
   }

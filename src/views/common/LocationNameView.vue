@@ -1,12 +1,15 @@
 <template>
   <HorView class="">
+    <ProSearch placeholder="请输入位置名称" :model-value="keyword" @search="handleSearch" />
     <ProSkeleton
       v-if="locationList && !locationList.length"
       :loading="loading"
       :error="error"
+      empty-description="请输入位置名称, 获取附近地点"
       empty-btn-text=""
       @refresh="trigger"
     />
+
     <VanCell
       v-else
       v-for="(item, index) in locationList"
@@ -22,7 +25,10 @@
   import { useAsyncTask } from '@pkstar/vue-use'
 
   import { getPoiByTmapPoint } from '@/api'
+  import { useProSearch } from '@/components'
   import { getLocationByNavigator, isApp, locationNameTrap, withLoading } from '@/utils'
+
+  const [keyword, handleSearch] = useProSearch(() => trigger())
 
   const {
     data: locationList,
@@ -37,14 +43,19 @@
       }
       if (!locationRes) {
         locationRes = await getLocationByNavigator()
-        console.log('locationRes', locationRes)
       }
-      const res = await getPoiByTmapPoint(locationRes.longitude!, locationRes.latitude!, '电')
+      const res = await getPoiByTmapPoint(
+        locationRes.longitude!,
+        locationRes.latitude!,
+        keyword.value,
+      )
       console.log('res=>>>>>>>', res)
       return res ?? []
     }),
     {
-      immediate: true,
+      immediate: false,
+      throwError: true,
+      initialValue: [],
     },
   )
 

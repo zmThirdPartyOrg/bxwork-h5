@@ -33,18 +33,23 @@ export const getLocationNameByTmapPoint = (lon: number, lat: number) => {
 }
 
 // http://api.tianditu.gov.cn/v2/search?postStr={"keyWord":"公园","level":12,"queryRadius":5000,"pointLonlat":"116.48016,39.93136","queryType":3,"start":0,"count":10}&type=query&tk=您的密钥
-export const getPoiByTmapPoint = (lon: number, lat: number, keyWord: string) => {
+export const getPoiByTmapPoint = (
+  lon: number,
+  lat: number,
+  keyWord: string,
+  options: { queryRadius: number } = { queryRadius: 2000 },
+) => {
   return curl<GetPoiByTmapPointResult>(
     `https://api.tianditu.gov.cn/v2/search`,
     {
       postStr: JSON.stringify({
         keyWord,
         level: 12,
-        queryRadius: 5000,
         pointLonlat: `${lon},${lat}`,
         queryType: 3,
         start: 0,
         count: 20,
+        ...options,
       }),
       type: 'query',
       tk: TMAP_TK,

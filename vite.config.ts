@@ -31,6 +31,27 @@ export default defineConfig({
     },
   },
 
+  build: {
+    // // 提高 chunk 大小警告阈值
+    // chunkSizeWarningLimit: 1000,
+    // // 使用 esbuild 压缩（更快，且 Vite 内置）
+    // minify: 'esbuild',
+    // rollupOptions: {
+    //   output: {
+    //     // 手动分包策略
+    //     manualChunks: {
+    //       'vue-vendor': ['vue', 'vue-router', 'pinia'],
+    //       'vant-vendor': ['vant'],
+    //       'utils-vendor': ['axios', 'md5', 'json5', 'copy-to-clipboard'],
+    //     },
+    //     // 分割策略
+    //     chunkFileNames: 'assets/js/[name]-[hash].js',
+    //     entryFileNames: 'assets/js/[name]-[hash].js',
+    //     assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+    //   },
+    // },
+  },
+
   plugins: [
     vue(),
     vueJsx(),
