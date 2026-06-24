@@ -113,7 +113,7 @@
       }
     } else if (props.sourceType === 'camera') {
       const { base64 } = await takePhoto()
-      const res = await doFileUploadWithBase64({ data: base64 }, props.source)
+      const res = await withLoading(doFileUploadWithBase64)({ data: base64 }, props.source)
       callback([res])
     } else {
       const input = document.createElement('input')
