@@ -4,7 +4,18 @@
       <HorIcon name="bar-chart-o" size="20" />
     </template>
 
-    <div id="mapContainer" class="map-warp"></div>
+    <div class="map-container">
+      <div id="mapContainer" class="map-warp"></div>
+      <button
+        class="relocate-btn"
+        type="button"
+        aria-label="重新定位"
+        :disabled="!mapReady || locating"
+        @click.stop="handleRelocate"
+      >
+        <HorIcon name="van-aim" size="24" />
+      </button>
+    </div>
     <ul class="sign-info">
       <li>
         <HorIcon class="icon" name="location-o" size="30" />
@@ -28,7 +39,7 @@
   import { getLocation, type GetLocationResult, openAppAuthorizeSetting } from '@pkstar/horn-jssdk'
   import { formatDate, isIOS } from '@pkstar/utils'
   import { useKeepAlive } from '@pkstar/vue-use'
-  import { showConfirmDialog, showSuccessToast } from 'vant'
+  import { showConfirmDialog, showFailToast, showSuccessToast } from 'vant'
 
   import { doSign, getLocationNameByTmapPoint, reqFaceCheck } from '@/api'
   import SignPopup from '@/components/SignPopup.vue'
@@ -54,9 +65,86 @@
   // const weekStr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][week]
   // const time = now.getHours() + ':' + now.getMinutes()
   const locationInfo = reactive<Partial<GetLocationNameByTmapPointResult>>({})
+  const mapReady = ref(false)
+  const locating = ref(false)
+  let map: any
+  let locationRequestId = 0
   const computedAddress = computed(() => {
     return locationInfo.formatted_address || locationInfo.addressComponent?.address
   })
+
+  const selectLocation = async (
+    longitude: number,
+    latitude: number,
+    centerMap = false,
+    requestId = ++locationRequestId,
+  ) => {
+    const point = new T.LngLat(longitude, latitude)
+    locationInfo.formatted_address = ''
+    locationInfo.addressComponent = undefined
+    locationInfo.location = { lon: longitude, lat: latitude }
+    map.clearOverLays()
+    map.addOverLay(new T.Marker(point))
+    if (centerMap) {
+      map.centerAndZoom(point, 17)
+    }
+
+    const location = await getLocationNameByTmapPoint(longitude, latitude)
+    if (requestId === locationRequestId) {
+      Object.assign(locationInfo, location)
+    }
+  }
+
+  const locateCurrentPosition = async () => {
+    const requestId = ++locationRequestId
+    let locationRes = null as GetLocationResult | null
+    if (isApp) {
+      locationRes = await getLocation()
+    }
+    if (!locationRes) {
+      locationRes = await getLocationByNavigator()
+    }
+    if (!locationRes) {
+      throw new Error('获取定位失败')
+    }
+    if (requestId !== locationRequestId) return
+
+    await selectLocation(locationRes.longitude!, locationRes.latitude!, true, requestId)
+  }
+
+  const handleLocationError = async (err: unknown) => {
+    console.error(err)
+    await showConfirmDialog({
+      message: '获取定位失败，请开启定位权限和位置信息！',
+      showCancelButton: false,
+    })
+    if (isApp) {
+      openAppAuthorizeSetting()
+    }
+  }
+
+  const handleRelocate = async () => {
+    if (locating.value) return
+
+    locating.value = true
+    try {
+      await withLoading(locateCurrentPosition)()
+    } catch (err) {
+      await handleLocationError(err)
+    } finally {
+      locating.value = false
+    }
+  }
+
+  const handleMapClick = async (event: { lnglat: { lng: number; lat: number } }) => {
+    const { lng, lat } = event.lnglat
+    try {
+      await withLoading(() => selectLocation(lng, lat))()
+    } catch (err) {
+      console.error(err)
+      showFailToast('获取所选位置地址失败，请重试')
+    }
+  }
 
   const handleRight = () => {
     router.push('/sign-list')
@@ -88,7 +176,7 @@
         longitude: locationInfo?.location?.lon!,
         latitude: locationInfo?.location?.lat!,
         type: 'sign',
-        locationName,
+        locationName: locationInfo.formatted_address || '',
         remark,
         fileIds,
       })
@@ -99,57 +187,65 @@
   onMounted(async () => {
     await appendTmap()
 
-    const map = new T.Map('mapContainer')
+    map = new T.Map('mapContainer')
     map.disableDoubleClickZoom()
     map.disableScrollWheelZoom()
     map.disableInertia()
     map.disableDrag()
+    map.addEventListener('click', handleMapClick)
+    mapReady.value = true
 
     try {
-      await withLoading(async () => {
-        let locationRes = null as GetLocationResult | null
-        if (isApp) {
-          locationRes = await getLocation()
-        }
-        if (!locationRes) {
-          locationRes = await getLocationByNavigator()
-        }
-        console.log('locationRes', locationRes)
-        if (!locationRes) {
-          throw new Error('获取定位失败')
-        }
-
-        Object.assign(locationInfo, locationRes)
-        const p = await getLocationNameByTmapPoint(locationRes.longitude!, locationRes.latitude!)
-        Object.assign(locationInfo, p)
-        const point = new T.LngLat(locationRes.longitude, locationRes.latitude)
-        map.centerAndZoom(point, 17)
-        map.clearOverLays()
-        map.addOverLay(new T.Marker(point))
-      })()
+      locating.value = true
+      await withLoading(locateCurrentPosition)()
     } catch (err) {
-      console.error(err)
-      await showConfirmDialog({
-        message: '获取定位失败，请开启定位权限和位置信息！',
-        showCancelButton: false,
-      })
-      if (isApp) {
-        openAppAuthorizeSetting()
-      }
+      await handleLocationError(err)
+    } finally {
+      locating.value = false
     }
+  })
+
+  onBeforeUnmount(() => {
+    map?.removeEventListener('click', handleMapClick)
   })
 </script>
 
 <style lang="scss" scoped>
   @use '@/assets/scss/define.scss' as *;
-  .map-warp {
+  .map-container {
     flex: 1;
+    min-height: 0;
+    position: relative;
+  }
+  .map-warp {
+    width: 100%;
+    height: 100%;
     touch-action: none;
     -webkit-user-drag: none;
     user-drag: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+  }
+  .relocate-btn {
+    position: absolute;
+    right: j(15);
+    bottom: j(15);
+    z-index: 1000;
+    width: j(42);
+    height: j(42);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    color: $color-primary;
+    background-color: #fff;
+    box-shadow: 0 px(2) px(8) rgb(0 0 0 / 18%);
+    @extend %df;
+    @extend %aic;
+    @extend %jcc;
+    &:disabled {
+      opacity: 0.6;
+    }
   }
   .sign-info {
     padding: 0 j(15);
