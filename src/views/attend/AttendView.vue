@@ -204,7 +204,7 @@
     map.disableDoubleClickZoom()
     map.disableScrollWheelZoom()
     map.disableInertia()
-    map.disableDrag()
+    // map.disableDrag()
     map.addEventListener('click', handleMapClick)
     mapReady.value = true
 
